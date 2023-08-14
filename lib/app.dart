@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:project_smm/app/constants/theme_app.dart';
 import 'package:project_smm/entities/constants.dart';
-import 'package:project_smm/entities/local_storage.dart';
+import 'package:project_smm/app/local_storage.dart';
 import 'package:project_smm/features/change_app_locale_feature/app_locale_model.dart';
 import 'package:project_smm/pages/auth_page/auth_page.dart';
 

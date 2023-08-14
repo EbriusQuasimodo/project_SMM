@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_smm/entities/constants.dart';
-import 'package:project_smm/entities/local_storage.dart';
+import 'package:project_smm/app/local_storage.dart';
 import 'package:project_smm/features/change_app_locale_feature/app_locale_model.dart';
 import 'package:provider/provider.dart';
 
