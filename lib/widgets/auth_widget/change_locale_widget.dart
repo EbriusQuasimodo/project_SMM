@@ -12,7 +12,6 @@ class ChangeLocaleWidget extends StatelessWidget {
     var selectedLocale = Localizations.localeOf(context).toString();
     return Consumer<LocaleModel>(
       builder: (context, localeModel, child) => DropdownButton(
-        padding: const EdgeInsets.only(top: 10),
         icon: const Icon(Icons.language),
         underline: const SizedBox(),
         value: selectedLocale,
@@ -23,7 +22,7 @@ class ChangeLocaleWidget extends StatelessWidget {
           ),
           DropdownMenuItem(
             value: "kk",
-            child: Text('Қаз'),
+            child: Text('Қазақ'),
           ),
         ],
         onChanged: (String? value) {

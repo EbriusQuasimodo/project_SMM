@@ -1,4 +1,4 @@
-class AppRoutes{
+class AppRoutes {
   static const String mainPage = '/mainPage';
   static const String auth = '/auth';
   static const String statistics = '/statistics';

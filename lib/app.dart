@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:project_smm/app/constants/app_routes.dart';
 import 'package:project_smm/app/constants/theme_app.dart';
 import 'package:project_smm/entities/constants.dart';
 import 'package:project_smm/app/local_storage.dart';
+import 'package:project_smm/features/auth_feature/auth_bloc/auth_bloc.dart';
 import 'package:project_smm/features/change_app_locale_feature/app_locale_model.dart';
 import 'package:project_smm/pages/auth_page/auth_page.dart';
+import 'package:project_smm/pages/main_page/main_page.dart';
 
 import 'package:provider/provider.dart';
 
@@ -40,8 +43,16 @@ class MyApp extends StatelessWidget {
           ),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
-          locale: LocalStorage.getString(AppConstants.LOCALE) != '' ? Locale(LocalStorage.getString(AppConstants.LOCALE)) : Locale(localeModel.locale.languageCode),
-          home: const AuthPage(),
+          locale: LocalStorage.getString(AppConstants.LOCALE) != ''
+              ? Locale(LocalStorage.getString(AppConstants.LOCALE))
+              : Locale(localeModel.locale.languageCode),
+          initialRoute: AppRoutes.auth,
+          routes: {
+            AppRoutes.mainPage: (context) => const MainPage(),
+            AppRoutes.auth: (context) => Provider(
+                create: (context) => AuthBloc()..add(AuthStartEvent()),
+                child: const AuthPage()),
+          },
         ),
       ),
     );

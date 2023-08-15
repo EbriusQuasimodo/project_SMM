@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:project_smm/widgets/auth_widget/change_locale_widget.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:project_smm/app/constants/app_routes.dart';
+import 'package:project_smm/features/auth_feature/auth_bloc/auth_bloc.dart';
 import 'package:project_smm/widgets/auth_widget/text_form_widget.dart';
-import 'package:project_smm/widgets/auth_widget/welcome_text_widget.dart';
+import 'package:project_smm/widgets/auth_widget/logo_picture_widget.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({
@@ -13,37 +15,51 @@ class AuthPage extends StatefulWidget {
 }
 
 class _AuthPageState extends State<AuthPage> {
-  final _formKey = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Form(
-            key: _formKey,
-            child: Padding(
-              padding: const EdgeInsets.all(16),
+      body: BlocBuilder<AuthBloc, AuthState>(
+        builder: (context, state) {
+          if (state is AuthStartState) {
+            return SingleChildScrollView(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
+                  const LogoPictureWidget(),
                   const SizedBox(
-                    height: 140,
+                    height: 131,
                   ),
-                  const WelcomeTextWidget(),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  TextFormWidget(),
-                  const ChangeLocaleWidget(),
+                  FieldAndButtonAuthWidget(),
                 ],
               ),
-            ),
-          ),
-        ],
+            );
+          } else if (state is AuthFailedState) {
+            return SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  const LogoPictureWidget(),
+                  const SizedBox(
+                    height: 131,
+                  ),
+                  FieldAndButtonAuthWidget(),
+                  Text(
+                    state.message,
+                    style: const TextStyle(
+                        color: Colors.red,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400),
+                  ),
+                ],
+              ),
+            );
+          } else if (state is AuthDoneState) {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              Navigator.of(context).pushNamed(AppRoutes.mainPage);
+            });
+          }
+          return const SizedBox.shrink();
+        },
       ),
     );
   }
