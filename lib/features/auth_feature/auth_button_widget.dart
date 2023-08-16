@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:project_smm/app/constants/theme_app.dart';
-import 'package:project_smm/features/auth_feature/auth_bloc/auth_bloc.dart';
 
 class AuthButtonWidget extends StatelessWidget {
-  final String login;
-  final String password;
-  final GlobalKey<FormState> formKey;
-  const AuthButtonWidget({Key? key, required this.login, required this.password, required this.formKey}) : super(key: key);
+  final VoidCallback onTap;
+  const AuthButtonWidget({Key? key, required this.onTap,}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,15 +17,7 @@ class AuthButtonWidget extends StatelessWidget {
         minWidth: MediaQuery.of(context).size.width,
         elevation: 0,
         onPressed: () {
-          print(login);
-          print(password);
-          if (formKey.currentState!.validate()) {
-            print(login);
-            print(password);
-            context.read<AuthBloc>().add(AuthLoginEvent(
-              login: login, password: password,
-            ));
-          }
+          onTap();
         },
         color: ThemeApp.primaryColor,
         child: Text(

@@ -49,9 +49,8 @@ class MyApp extends StatelessWidget {
           initialRoute: AppRoutes.auth,
           routes: {
             AppRoutes.mainPage: (context) => const MainPage(),
-            AppRoutes.auth: (context) => Provider(
-                create: (context) => AuthBloc()..add(AuthStartEvent()),
-                child: const AuthPage()),
+            AppRoutes.auth: (context) =>
+                Provider(create: (context) => AuthBloc(), child: AuthPage()),
           },
         ),
       ),

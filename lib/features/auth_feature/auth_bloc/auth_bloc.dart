@@ -1,4 +1,3 @@
-
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
@@ -16,10 +15,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       } else {
         emit(AuthFailedState(message: 'Неверный логин или пароль'));
       }
-    });
-
-    on<AuthStartEvent>((event, emit) {
-      emit(AuthStartState());
     });
   }
 }
