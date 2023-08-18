@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:project_smm/entities/constants.dart';
-import 'package:project_smm/app/local_storage.dart';
-import 'package:project_smm/features/change_app_locale_feature/app_locale_model.dart';
+import 'package:project_smm/shared/constants/local_storage/local_storage_constants.dart';
+import 'package:project_smm/shared/lib/local_storage/local_storage.dart';
+import 'package:project_smm/shared/lib/language/app_locale_model.dart';
 import 'package:provider/provider.dart';
 
 class ChangeLocaleWidget extends StatelessWidget {

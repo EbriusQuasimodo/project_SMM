@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:project_smm/app/constants/theme_app.dart';
+import 'package:project_smm/shared/lib/theme/theme_app.dart';
 
-class AuthButtonWidget extends StatelessWidget {
+class PrimaryButton extends StatelessWidget {
   final VoidCallback onTap;
-  const AuthButtonWidget({Key? key, required this.onTap,}) : super(key: key);
+  final String buttonName;
+  const PrimaryButton({super.key, required this.onTap, required this.buttonName});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(padding: const EdgeInsets.only(right: 16, left: 16),
+    return Padding(padding: const EdgeInsets.only(right: 16, left: 16, top: 20),
       child: MaterialButton(
         padding: const EdgeInsets.only(right: 20, left: 16, top: 10, bottom: 10),
         shape: RoundedRectangleBorder(
@@ -21,7 +21,7 @@ class AuthButtonWidget extends StatelessWidget {
         },
         color: ThemeApp.primaryColor,
         child: Text(
-          AppLocalizations.of(context)!.signIn,
+          buttonName,
           style: const TextStyle(
               fontWeight: FontWeight.w400,
               fontSize: 14,
