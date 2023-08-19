@@ -1,5 +1,7 @@
 {
   "authorization": "Авторизация",
   "welcome": "Қош келдіңіз!",
-  "signIn": "Кіру"
+  "signIn": "Кіру",
+  "signInApp": "Қолданбаға кіріңіз",
+  "choiceRegion": "Аймақ таңдау"
 }

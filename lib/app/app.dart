@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:project_smm/entities/auth_entities/auth_bloc/auth_bloc.dart';
+import 'package:project_smm/pages/choice_region_page/choice_region_page.dart';
 import 'package:project_smm/shared/lib/routes/app_routes.dart';
 import 'package:project_smm/shared/lib/theme/theme_app.dart';
 import 'package:project_smm/shared/constants/local_storage/local_storage_constants.dart';
@@ -46,11 +47,17 @@ class MyApp extends StatelessWidget {
           locale: LocalStorage.getString(AppConstants.LOCALE) != ''
               ? Locale(LocalStorage.getString(AppConstants.LOCALE))
               : Locale(localeModel.locale.languageCode),
-          initialRoute: LocalStorage.getString(AppConstants.TOKEN) != '' ? AppRoutes.mainPage :AppRoutes.auth,
+          initialRoute: LocalStorage.getString(AppConstants.TOKEN) != '' &&
+                  LocalStorage.getString(AppConstants.REGION) != ''
+              ? AppRoutes.mainPage
+              : LocalStorage.getString(AppConstants.REGION) != ''
+                  ? AppRoutes.auth
+                  : AppRoutes.choiceRegion,
           routes: {
             AppRoutes.mainPage: (context) => const MainPage(),
-            AppRoutes.auth: (context) =>
-                Provider(create: (context) => AuthBloc(), child: const AuthPage()),
+            AppRoutes.auth: (context) => Provider(
+                create: (context) => AuthBloc(), child: const AuthPage()),
+            AppRoutes.choiceRegion: (context) => const ChoiceRegionPage(),
           },
         ),
       ),

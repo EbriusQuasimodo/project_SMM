@@ -8,6 +8,6 @@ class LogoPictureWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(top: 35),
-        child: SvgPicture.asset('assets/images/icons/logo.svg'));
+        child: SvgPicture.asset('assets/images/icons/auth/logoText.svg'));
   }
 }
