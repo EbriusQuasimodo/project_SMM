@@ -18,4 +18,13 @@ class LocalStorage {
     var prefs = await _instance;
     return prefs.setString(key, value);
   }
+
+  static int getInt(String key, [int defValue = -1]) {
+    return _prefsInstance!.getInt(key) ?? defValue;
+  }
+
+  static Future<bool> setInt(String key, int value) async {
+    var prefs = await _instance;
+    return prefs.setInt(key, value);
+  }
 }

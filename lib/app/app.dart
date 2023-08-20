@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:project_smm/entities/auth_entities/auth_bloc/auth_bloc.dart';
 import 'package:project_smm/pages/choice_region_page/choice_region_page.dart';
+import 'package:project_smm/pages/region_list_page/region_list_page.dart';
 import 'package:project_smm/shared/lib/routes/app_routes.dart';
 import 'package:project_smm/shared/lib/theme/theme_app.dart';
 import 'package:project_smm/shared/constants/local_storage/local_storage_constants.dart';
@@ -25,19 +26,18 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             floatingActionButtonTheme:
                 const FloatingActionButtonThemeData().copyWith(
-              backgroundColor: ThemeApp.darkBackgroundColor,
+              backgroundColor: ThemeApp.elevationColorOne,
               elevation: 0,
             ),
             scaffoldBackgroundColor: ThemeApp.whiteColor,
             cardTheme: const CardTheme().copyWith(
-              color: ThemeApp.darkBackgroundColor,
+              color: ThemeApp.elevationColorOne,
             ),
             appBarTheme: const AppBarTheme().copyWith(
-              backgroundColor: ThemeApp.darkBackgroundColor,
-              elevation: 0,
+              backgroundColor: ThemeApp.backgroundColorOne,
               titleTextStyle: const TextStyle(
                 fontSize: 22,
-                fontWeight: FontWeight.w400,
+                fontWeight: FontWeight.w500,
                 color: ThemeApp.secondaryColorTextAndIcons,
               ),
             ),
@@ -58,6 +58,7 @@ class MyApp extends StatelessWidget {
             AppRoutes.auth: (context) => Provider(
                 create: (context) => AuthBloc(), child: const AuthPage()),
             AppRoutes.choiceRegion: (context) => const ChoiceRegionPage(),
+            AppRoutes.regionList : (context) => const RegionListPage(),
           },
         ),
       ),

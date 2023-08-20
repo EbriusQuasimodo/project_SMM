@@ -21,40 +21,40 @@ class _ChangeLocaleWidgetState extends State<ChangeLocaleWidget> {
     return Consumer<LocaleModel>(
         builder: (context, localeModel, child) => Container(
               decoration: const BoxDecoration(
-                color: ThemeApp.lightBackgroundColor,
+                color: ThemeApp.surfaceColorTwo,
                 borderRadius: BorderRadius.all(Radius.circular(8)),
               ),
               height: 48,
-              margin: EdgeInsets.only(left: 16, right: 16),
+              margin: const EdgeInsets.only(left: 16, right: 16),
               child: Row(
                 children: [
                   Expanded(
                       child: ClipRRect(
-                        borderRadius: BorderRadius.only(topLeft: Radius.circular(8), bottomLeft: Radius.circular(8)),
+                        borderRadius: const BorderRadius.only(topLeft: Radius.circular(8), bottomLeft: Radius.circular(8)),
                         child: ChoiceButton(
                     onTap: () {
-                        localeModel.setLocale(context, Locale('kk'));
+                        localeModel.setLocale(context, const Locale('kk'));
                         LocalStorage.setString(AppConstants.LOCALE, 'kk');
                     },
                     buttonName: 'KZ',
                     buttonColor: selectedLocale == 'ru'
-                          ? ThemeApp.lightBackgroundColor
-                          : ThemeApp.darkBackgroundColor,
+                          ? ThemeApp.surfaceColorTwo
+                          : ThemeApp.elevationColorOne,
                     buttonIconPath: 'assets/images/icons/auth/kz_flag.svg',
                   ),
                       )),
                   Expanded(
                       child: ClipRRect(
-                        borderRadius: BorderRadius.only(topRight: Radius.circular(8), bottomRight: Radius.circular(8)),
+                        borderRadius: const BorderRadius.only(topRight: Radius.circular(8), bottomRight: Radius.circular(8)),
                         child: ChoiceButton(
                     onTap: () {
-                        localeModel.setLocale(context, Locale('ru'));
+                        localeModel.setLocale(context, const Locale('ru'));
                         LocalStorage.setString(AppConstants.LOCALE, 'ru');
                     },
                     buttonName: 'RU',
                     buttonColor: selectedLocale == 'ru'
-                          ? ThemeApp.darkBackgroundColor
-                          : ThemeApp.lightBackgroundColor,
+                          ? ThemeApp.elevationColorOne
+                          : ThemeApp.surfaceColorTwo,
                     buttonIconPath: 'assets/images/icons/auth/rus_flag.svg',
                   ),
                       )),

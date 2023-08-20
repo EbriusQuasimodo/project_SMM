@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project_smm/entities/auth_entities/auth_bloc/auth_bloc.dart';
-import 'package:project_smm/features/language_change_button/change_locale_widget.dart';
 import 'package:project_smm/shared/ui/buttons/primary_button/primary_button.dart';
 import 'package:project_smm/shared/ui/fomr_item/form_input_item/form_input_item.dart';
 import 'package:project_smm/widgets/auth_widgets/logo_picture_widget.dart';
@@ -43,7 +42,6 @@ class LoginWidget extends StatelessWidget {
                       );
                     }
                   }, buttonName: AppLocalizations.of(context)!.signIn),
-                  const ChangeLocaleWidget(),
                 ],
               ),
             ),
