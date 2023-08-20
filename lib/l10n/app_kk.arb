@@ -3,5 +3,11 @@
   "welcome": "Қош келдіңіз!",
   "signIn": "Кіру",
   "signInApp": "Қолданбаға кіріңіз",
-  "choiceRegion": "Аймақ таңдау"
+  "choiceRegion": "Аймақ таңдау",
+  "loginToYourProfile": "Профильге кіріңіз",
+  "regionNotSelected": "Аймақ таңдалмаған",
+  "fieldMustBeFilled": "Жолды толтыру керек",
+  "wrongLoginOrPassword": "Қате логин немесе құпиясөз",
+  "password": "Құпия сөз",
+  "login": "Кіру"
 }

@@ -3,5 +3,11 @@
   "welcome": "Добро пожаловать",
   "signIn": "Войти",
   "signInApp": "Войти в приложение",
-  "choiceRegion": "Выбор региона"
+  "choiceRegion": "Выбор региона",
+  "loginToYourProfile": "Войдите в свой профиль",
+  "regionNotSelected": "Регион не выбран",
+  "fieldMustBeFilled": "Поле должно быть заполнено",
+  "wrongLoginOrPassword": "Неверный логин или пароль",
+  "password": "Пароль",
+  "login": "Логин"
 }
