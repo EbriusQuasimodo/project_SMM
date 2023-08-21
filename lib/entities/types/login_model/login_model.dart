@@ -2,7 +2,7 @@ class LoginModel {
   LoginModel({
     required String error,
     required bool success,
-    required User? user,
+    required UserModel? user,
   }) {
     _error = error;
     _success = success;
@@ -12,18 +12,18 @@ class LoginModel {
   LoginModel.fromJson(dynamic json) {
     _error = json['error'] ?? '';
     _success = json['middle_name'] ?? false;
-    _user = json['user'] != null ?User.fromJson(json['user']) :null;
+    _user = json['user'] != null ?UserModel.fromJson(json['user']) :null;
   }
 
   String _error = '';
   bool _success = false;
-  User? _user;
+  UserModel? _user;
 
   String get error => _error;
 
   bool get success => _success;
 
-  User? get user => _user;
+  UserModel? get user => _user;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -36,15 +36,15 @@ class LoginModel {
   }
 }
 
-class User {
-  User({
+class UserModel {
+  UserModel({
     required int id,
     required String login,
     required int personId,
     required String token,
     required String tokenCreateAt,
-    required Person? person,
-    required List<Substations> substations,
+    required PersonModel? person,
+    required List<SubstationsModel> substations,
   }) {
     _id = id;
     _login = login;
@@ -55,17 +55,17 @@ class User {
     _substations = substations;
   }
 
-  User.fromJson(dynamic json) {
+  UserModel.fromJson(dynamic json) {
     _id = json['id'] ?? '';
     _login = json['login'] ?? '';
     _personId = json['person_id'] ?? '';
     _token = json['token'] ?? '';
     _tokenCreateAt = json['token_create_at'] ?? '';
-    _person = json['person'] != null ? Person.fromJson(json['person']) : null;
+    _person = json['person'] != null ? PersonModel.fromJson(json['person']) : null;
     _substations = [];
     if (json['substations'] != null) {
       json['substations'].forEach((v) {
-        _substations.add(Substations.fromJson(v));
+        _substations.add(SubstationsModel.fromJson(v));
       });
     }
   }
@@ -75,8 +75,8 @@ class User {
   int _personId = 0;
   String _token = '';
   String _tokenCreateAt = '';
-  Person? _person;
-  List<Substations> _substations = [];
+  PersonModel? _person;
+  List<SubstationsModel> _substations = [];
 
   int get id => _id;
 
@@ -88,9 +88,9 @@ class User {
 
   String get tokenCreateAt => _tokenCreateAt;
 
-  Person? get person => _person;
+  PersonModel? get person => _person;
 
-  List<Substations> get substations => _substations;
+  List<SubstationsModel> get substations => _substations;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -108,8 +108,8 @@ class User {
 }
 
 
-class Person {
-  Person({
+class PersonModel {
+  PersonModel({
     required int id,
     required String fio,
     required String code,
@@ -123,7 +123,7 @@ class Person {
     _iin = iin;
   }
 
-  Person.fromJson(dynamic json) {
+  PersonModel.fromJson(dynamic json) {
     _id = json['id'] ?? '';
     _fio = json['fio'] ?? '';
     _code = json['code'] ?? '';
@@ -158,8 +158,8 @@ class Person {
   }
 }
 
-class Substations {
-  Substations({
+class SubstationsModel {
+  SubstationsModel({
     required int id,
     required String code,
     required String name,
@@ -171,7 +171,7 @@ class Substations {
     _nameAdd = nameAdd;
   }
 
-  Substations.fromJson(dynamic json) {
+  SubstationsModel.fromJson(dynamic json) {
     _id = json['id'] ?? '';
     _code = json['code'] ?? '';
     _name = json['name'] ?? '';

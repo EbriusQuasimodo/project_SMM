@@ -41,6 +41,11 @@ class MyApp extends StatelessWidget {
                 color: ThemeApp.secondaryColorTextAndIcons,
               ),
             ),
+            bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+              selectedItemColor: ThemeApp.primaryColor,
+              unselectedItemColor: ThemeApp.dividerColor,
+              backgroundColor: ThemeApp.backgroundColorOne,
+            ),
           ),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,

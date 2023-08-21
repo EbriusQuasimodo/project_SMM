@@ -22,3 +22,5 @@ class AuthFailedState extends AuthState {
     required this.message,
   });
 }
+
+class UnAuthState extends AuthState {}

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_smm/app/nav_bar/nav_bar.dart';
 
 class MainPage extends StatelessWidget {
   const MainPage({super.key});
@@ -11,6 +12,8 @@ class MainPage extends StatelessWidget {
         'главная страница',
         style: TextStyle(color: Colors.black, fontSize: 14),
       ),
-    ));
+    ),
+    bottomNavigationBar: NavBar(),
+    );
   }
 }
