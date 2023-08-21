@@ -16,7 +16,8 @@ class LoginData {
             'Content-Type': "application/json"
           },
           body: jsonEncode({'login': params.login, 'password': params.password}));
-     if(re.statusCode == 200){
+      print(re.statusCode);
+      if(re.statusCode == 200){
         final LoginModel body = LoginModel.fromJson(jsonDecode(utf8.decode(re.bodyBytes)));
       return body;
      }else if(re.statusCode == 401){

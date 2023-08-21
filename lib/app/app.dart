@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:project_smm/entities/auth_entities/auth_bloc/auth_bloc.dart';
+import 'package:project_smm/pages/analytics_page/analytics_page.dart';
 import 'package:project_smm/pages/choice_region_page/choice_region_page.dart';
+import 'package:project_smm/pages/favorites_page/favorites_page.dart';
+import 'package:project_smm/pages/home_page.dart';
+import 'package:project_smm/pages/login_page/login_page.dart';
+import 'package:project_smm/pages/profile_page/profile_page.dart';
 import 'package:project_smm/pages/region_list_page/region_list_page.dart';
+import 'package:project_smm/pages/reports_page/reports_page.dart';
 import 'package:project_smm/shared/lib/routes/app_routes.dart';
 import 'package:project_smm/shared/lib/theme/theme_app.dart';
 import 'package:project_smm/shared/constants/local_storage/local_storage_constants.dart';
 import 'package:project_smm/shared/lib/local_storage/local_storage.dart';
 import 'package:project_smm/shared/lib/language/app_locale_model.dart';
-import 'package:project_smm/pages/auth_page/auth_page.dart';
 import 'package:project_smm/pages/main_page/main_page.dart';
 
 import 'package:provider/provider.dart';
@@ -42,8 +47,12 @@ class MyApp extends StatelessWidget {
               ),
             ),
             bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-              selectedItemColor: ThemeApp.primaryColor,
-              unselectedItemColor: ThemeApp.dividerColor,
+              selectedLabelStyle: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: ThemeApp.secondaryColorTextAndIcons),
+              selectedItemColor: ThemeApp.secondaryColorTextAndIcons,
+              unselectedItemColor: ThemeApp.tertiaryColorTextAndIcons,
+              unselectedLabelStyle: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: ThemeApp.tertiaryColorTextAndIcons),
+              selectedIconTheme: IconThemeData(color: ThemeApp.primaryColor,),
+              unselectedIconTheme: IconThemeData(color: ThemeApp.tertiaryColorTextAndIcons,),
               backgroundColor: ThemeApp.backgroundColorOne,
             ),
           ),
@@ -54,16 +63,21 @@ class MyApp extends StatelessWidget {
               : Locale(localeModel.locale.languageCode),
           initialRoute: LocalStorage.getString(AppConstants.TOKEN) != '' &&
                   LocalStorage.getString(AppConstants.REGION) != ''
-              ? AppRoutes.mainPage
+              ? AppRoutes.homePage
               : LocalStorage.getString(AppConstants.REGION) != ''
                   ? AppRoutes.auth
                   : AppRoutes.choiceRegion,
           routes: {
-            AppRoutes.mainPage: (context) => const MainPage(),
             AppRoutes.auth: (context) => Provider(
-                create: (context) => AuthBloc(), child: const AuthPage()),
+                create: (context) => AuthBloc(), child: const LoginPage()),
+            AppRoutes.homePage: (context) => const HomePage(),
+            AppRoutes.mainPage: (context) => const MainPage(),
             AppRoutes.choiceRegion: (context) => const ChoiceRegionPage(),
-            AppRoutes.regionList : (context) => const RegionListPage(),
+            AppRoutes.regionList: (context) => const RegionListPage(),
+            AppRoutes.analytics: (context) => const AnalyticsPage(),
+            AppRoutes.favorites: (context) => const FavoritesPage(),
+            AppRoutes.reports: (context) => const ReportsPage(),
+            AppRoutes.profile: (context) => const ProfilePage(),
           },
         ),
       ),

@@ -9,5 +9,10 @@
   "fieldMustBeFilled": "Жолды толтыру керек",
   "wrongLoginOrPassword": "Қате логин немесе құпиясөз",
   "password": "Құпия сөз",
-  "login": "Кіру"
+  "login": "Кіру",
+  "mainPage": "Басты бет",
+  "analyticsPage": "Аналитика",
+  "favoritesPage": "Таңдаулылар",
+  "reportsPage": "Есептер",
+  "profilePage": "Профиль"
 }

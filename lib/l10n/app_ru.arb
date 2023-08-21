@@ -9,5 +9,10 @@
   "fieldMustBeFilled": "Поле должно быть заполнено",
   "wrongLoginOrPassword": "Неверный логин или пароль",
   "password": "Пароль",
-  "login": "Логин"
+  "login": "Логин",
+  "mainPage": "Главная",
+  "analyticsPage": "Аналитика",
+  "favoritesPage": "Избранное",
+  "reportsPage": "Отчеты",
+  "profilePage": "Профиль"
 }
