@@ -40,6 +40,7 @@ class _RegionListState extends State<RegionList> {
               LocalStorage.setString(
                   AppConstants.REGION, regions.regionsList[_selectedIndex]);
               LocalStorage.setInt(AppConstants.REGIONINDEX, _selectedIndex);
+              Navigator.of(context).pop();
             },
             title: Row(
               children: [
