@@ -38,10 +38,13 @@ class LoginWidget extends StatelessWidget {
                   children: [
                     FormInputItem(
                         controller: _controllerLogin,
-                        formName: AppLocalizations.of(context)!.login),
+                        formName: AppLocalizations.of(context)!.login,
+                    canHidePassword: false,),
                     FormInputItem(
                         controller: _controllerPassword,
-                        formName: AppLocalizations.of(context)!.password),
+                        formName: AppLocalizations.of(context)!.password,
+                    canHidePassword: true,
+                    ),
                     PrimaryButton(
                         onTap: () {
                           if (_formKey.currentState!.validate()) {

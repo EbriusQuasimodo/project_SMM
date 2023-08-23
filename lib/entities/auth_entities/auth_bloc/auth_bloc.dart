@@ -18,7 +18,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         if (l is UnAuthFailure) {
           emit(UnAuthState());
         } else if (l is ServerFailure) {
-          emit(AuthFailedState(message: l.message));
+          emit(AuthFailedState(message: l.error));
         }
       }, (r) => emit(AuthDoneState(token: r.user!.token)));
     });
