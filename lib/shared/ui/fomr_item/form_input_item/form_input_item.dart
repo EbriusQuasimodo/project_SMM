@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:project_smm/shared/constants/errors_constants/errors_constants.dart';
 import 'package:project_smm/shared/lib/theme/theme_app.dart';
 
@@ -40,12 +41,10 @@ class _FormInputItemState extends State<FormInputItem> {
           }
           return null;
         },
-        obscureText: widget.canHidePassword ? !passwordObscured : false,
+        obscureText: widget.canHidePassword ? passwordObscured : false,
         decoration: InputDecoration(
           counterText: '',
           counterStyle: const TextStyle(fontSize: 0),
-          prefixIconConstraints:
-              const BoxConstraints(minWidth: 0, minHeight: 0),
           border: const OutlineInputBorder(
               borderRadius: BorderRadius.all(
                 Radius.circular(8),
@@ -54,15 +53,18 @@ class _FormInputItemState extends State<FormInputItem> {
                   BorderSide(color: ThemeApp.secondaryColorTextAndIcons)),
           labelText: widget.formName,
           suffixIcon: widget.canHidePassword
-              ? IconButton(
+              ? MaterialButton(
+                  shape: const CircleBorder(),
                   onPressed: () {
                     setState(() {
                       passwordObscured = !passwordObscured;
                     });
                   },
-                  icon: Icon(passwordObscured
-                      ? Icons.remove_red_eye_outlined
-                      : Icons.remove_red_eye),
+                  child: SvgPicture.asset(
+                    'assets/images/icons/shared/eye.svg',
+                    height: 24,
+                    width: 24,
+                  ),
                 )
               : const SizedBox.shrink(),
         ),

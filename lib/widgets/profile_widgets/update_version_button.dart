@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:project_smm/shared/lib/theme/theme_app.dart';
 
 class UpdateVersionButton extends StatelessWidget {
@@ -7,13 +8,15 @@ class UpdateVersionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
+      height: 44,
       onPressed: () {},
       elevation: 0,
-      color: Colors.transparent,
-      child: const Row(
+     // color: Colors.transparent,
+      child: Row(
         children: [
-          Icon(Icons.download),
-          Column(
+          SvgPicture.asset('assets/images/icons/profile/update_version.svg'),
+          const SizedBox(width: 12,),
+          const Column(
             children: [
               Text(
                 'Обновить версию',
@@ -22,13 +25,10 @@ class UpdateVersionButton extends StatelessWidget {
                     fontWeight: FontWeight.w500,
                     color: ThemeApp.secondaryColorTextAndIcons),
               ),
-              SizedBox(
-                height: 8,
-              ),
               Text(
                 'Текущая версия 1.0.0',
                 style: TextStyle(
-                    fontSize: 12,
+                    fontSize: 14,
                     fontWeight: FontWeight.w400,
                     color: ThemeApp.tertiaryColorTextAndIcons),
               )
