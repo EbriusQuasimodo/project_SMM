@@ -7,5 +7,7 @@ class AppRoutes {
   static const String analytics = '/analytics';
   static const String favorites = '/favorites';
   static const String profile = '/profile';
+  static const String changeLanguage = '/changeLanguage';
+  static const String changePassword = '/changePassword';
   static const String reports = '/reports';
 }

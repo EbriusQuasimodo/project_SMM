@@ -8,6 +8,7 @@ class UpdateVersionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
+      padding: EdgeInsets.zero,
       height: 44,
       onPressed: () {},
       elevation: 0,

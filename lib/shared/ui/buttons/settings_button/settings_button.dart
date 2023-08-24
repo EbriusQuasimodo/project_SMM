@@ -11,6 +11,7 @@ final String buttonName;
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
+      padding: EdgeInsets.zero,
       height: 44,
       onPressed: () {
         onTap();

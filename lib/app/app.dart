@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:project_smm/entities/auth_entities/auth_bloc/auth_bloc.dart';
 import 'package:project_smm/pages/analytics_page/analytics_page.dart';
+import 'package:project_smm/pages/change_language_page/change_language_page.dart';
+import 'package:project_smm/pages/change_password_page/change_password_page.dart';
 import 'package:project_smm/pages/choice_region_page/choice_region_page.dart';
 import 'package:project_smm/pages/favorites_page/favorites_page.dart';
 import 'package:project_smm/pages/home_page.dart';
@@ -78,6 +80,8 @@ class MyApp extends StatelessWidget {
             AppRoutes.favorites: (context) => const FavoritesPage(),
             AppRoutes.reports: (context) => const ReportsPage(),
             AppRoutes.profile: (context) => const ProfilePage(),
+            AppRoutes.changeLanguage: (context) => const ChangeLanguagePage(),
+            AppRoutes.changePassword: (context) => ChangePasswordPage(),
           },
         ),
       ),
