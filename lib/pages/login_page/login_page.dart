@@ -21,7 +21,13 @@ class LoginPage extends StatelessWidget {
               content: Text(state.message),
             ),
           );
-        } else if (state is AuthDoneState) {
+        } else if(state is UnAuthState){
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.message),
+            ),
+          );
+        }else if (state is AuthDoneState) {
           LocalStorage.setString(AppConstants.TOKEN, state.token);
           Navigator.of(context).pushNamedAndRemoveUntil(AppRoutes.homePage, (route) => false);
         }

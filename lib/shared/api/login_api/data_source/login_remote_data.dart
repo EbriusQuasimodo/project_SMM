@@ -20,9 +20,9 @@ class LoginData {
       if(re.statusCode == 200){
         final LoginModel body = LoginModel.fromJson(jsonDecode(utf8.decode(re.bodyBytes)));
       return body;
-     }else if(re.statusCode == 401){
-       throw UnAuthException(message: Errors.undefinedPerson);
-     } else{
+     }else if(re.statusCode == 400){
+        throw UnAuthException(message: Errors.wrongLoginOrPassword);
+      } else{
        throw ServerException(message: Errors.criticalServerErrorTitle);
      }
     }on SocketException catch(_){

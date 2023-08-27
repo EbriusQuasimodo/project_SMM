@@ -16,7 +16,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           LoginParams(login: event.login, password: event.password));
       re.fold((l) {
         if (l is UnAuthFailure) {
-          emit(UnAuthState());
+          emit(UnAuthState(message: l.error));
         } else if (l is ServerFailure) {
           emit(AuthFailedState(message: l.error));
         }

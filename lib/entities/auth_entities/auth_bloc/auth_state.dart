@@ -23,4 +23,8 @@ class AuthFailedState extends AuthState {
   });
 }
 
-class UnAuthState extends AuthState {}
+class UnAuthState extends AuthState {
+  final String message;
+
+  UnAuthState({required this.message});
+}
