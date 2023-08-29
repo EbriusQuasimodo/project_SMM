@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:project_smm/shared/lib/theme/theme_app.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class UpdateVersionButton extends StatelessWidget {
   const UpdateVersionButton({super.key});
@@ -17,16 +18,16 @@ class UpdateVersionButton extends StatelessWidget {
         children: [
           SvgPicture.asset('assets/images/icons/profile/update_version.svg'),
           const SizedBox(width: 12,),
-          const Column(
+          Column(
             children: [
               Text(
-                'Обновить версию',
-                style: TextStyle(
+                AppLocalizations.of(context)!.updateVersion,
+                style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
                     color: ThemeApp.secondaryColorTextAndIcons),
               ),
-              Text(
+              const Text(
                 'Текущая версия 1.0.0',
                 style: TextStyle(
                     fontSize: 14,

@@ -14,5 +14,14 @@
   "analyticsPage": "Аналитика",
   "favoritesPage": "Избранное",
   "reportsPage": "Отчеты",
-  "profilePage": "Профиль"
+  "profilePage": "Профиль",
+  "changePassword": "Сменить пароль",
+  "updateVersion": "Обновить версию",
+  "signOut": "Выйти из аккаунта?",
+  "yes": "Да",
+  "no": "Нет",
+  "enterOldPassword": "Введите старый пароль",
+  "enterNewPassword": "Введите новый пароль",
+  "save": "Сохранить",
+  "switchLanguage": "Смена языка"
 }

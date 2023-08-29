@@ -14,5 +14,14 @@
   "analyticsPage": "Аналитика",
   "favoritesPage": "Таңдаулылар",
   "reportsPage": "Есептер",
-  "profilePage": "Профиль"
+  "profilePage": "Профиль",
+  "changePassword": "Құпия сөзді өзгерту",
+  "updateVersion": "Жаңарту нұсқасы",
+  "signOut": "Шығу?",
+  "yes": "Иә",
+  "no": "Жоқ",
+  "enterOldPassword": "Ескі құпия сөзді енгізіңіз",
+  "enterNewPassword": "Жаңа құпия сөзді енгізіңіз",
+  "save": "Сақтау",
+  "switchLanguage": "Тілді ауыстыру"
 }

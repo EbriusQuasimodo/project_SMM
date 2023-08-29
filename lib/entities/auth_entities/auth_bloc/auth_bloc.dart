@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:project_smm/shared/api/login_api/data_source/login_remote_data.dart';
-import 'package:project_smm/shared/api/login_api/repository/login_repository.dart';
+import 'package:project_smm/entities/auth_entities/auth_api/data_source/login_remote_data.dart';
+import 'package:project_smm/entities/auth_entities/auth_api/repository/login_repository.dart';
 import 'package:project_smm/shared/lib/errors/failure/failure.dart';
 
 part 'auth_event.dart';

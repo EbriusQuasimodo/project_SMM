@@ -7,6 +7,7 @@ import 'package:project_smm/shared/ui/buttons/settings_button/settings_button.da
 import 'package:project_smm/shared/ui/custom_dialogs/custom_dialog_with_two_buttons/custom_dialog_with_two_buttons.dart';
 import 'package:project_smm/widgets/profile_widgets/update_version_button.dart';
 import 'package:project_smm/widgets/profile_widgets/user_name_text.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -20,14 +21,14 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Профиль'),
+        title: Text(AppLocalizations.of(context)!.profilePage),
         actions: [
           IconButton(
             onPressed: () {
               showDialog(
                 context: context,
                 builder: (builder) => CustomDialogWithTwoButtons(
-                  title: 'Выйти из аккаунта?',
+                  title: AppLocalizations.of(context)!.signOut,
                   onTapFirstButton: () {
                     Navigator.of(context).pop();
                   },
@@ -65,7 +66,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 Navigator.of(context).pushNamed(AppRoutes.changePassword);
               },
               leadingPicture: 'assets/images/icons/profile/change_password.svg',
-              buttonName: 'Сменить пароль',
+              buttonName: AppLocalizations.of(context)!.changePassword,
             ),
             const SizedBox(
               height: 6,

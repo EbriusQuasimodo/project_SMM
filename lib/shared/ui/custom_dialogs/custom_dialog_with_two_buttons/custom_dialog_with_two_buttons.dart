@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_smm/shared/lib/theme/theme_app.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CustomDialogWithTwoButtons extends StatelessWidget {
   final String title;
@@ -45,9 +46,9 @@ class CustomDialogWithTwoButtons extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),
                       ),
-                      child: const Text(
-                       'Нет',
-                        style: TextStyle(
+                      child: Text(
+                        AppLocalizations.of(context)!.no,
+                        style: const TextStyle(
                             fontSize: 14,
                             color: ThemeApp.primaryColor,
                             fontWeight: FontWeight.w400),
@@ -69,9 +70,9 @@ class CustomDialogWithTwoButtons extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),
                       ),
-                      child: const Text(
-                        'Да',
-                        style: TextStyle(
+                      child: Text(
+                        AppLocalizations.of(context)!.yes,
+                        style: const TextStyle(
                             fontSize: 14,
                             color: ThemeApp.whiteColor,
                             fontWeight: FontWeight.w400),
