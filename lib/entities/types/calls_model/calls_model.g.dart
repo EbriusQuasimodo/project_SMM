@@ -29,36 +29,52 @@ CallsListModel _$CallsListModelFromJson(Map<String, dynamic> json) =>
       receiptDate: json['receipt_date'] as String,
       status: json['status'] as int,
       street: json['street'] as String,
-      street2: json['street2'] as String,
+      street2: json['street2'] as String?,
       house: json['house'] as String,
-      apartment: json['apartment'] as String,
+      apartment: json['apartment'] as String?,
+      patientInfo: json['patient_info'] as String?,
       city: json['city'] == null
           ? null
           : CityModel.fromJson(json['city'] as Map<String, dynamic>),
       reason: json['reason'] == null
           ? null
           : ReasonModel.fromJson(json['reason'] as Map<String, dynamic>),
+      substation: json['substation'] == null
+          ? null
+          : SubstationModel.fromJson(
+              json['substation'] as Map<String, dynamic>),
       dutyOutfit: json['duty_outfit'] == null
           ? null
           : DutyOutfitModel.fromJson(
               json['duty_outfit'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$CallsListModelToJson(CallsListModel instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'day_number': instance.dayNumber,
-      'year_number': instance.yearNumber,
-      'receipt_date': instance.receiptDate,
-      'status': instance.status,
-      'street': instance.street,
-      'street2': instance.street2,
-      'house': instance.house,
-      'apartment': instance.apartment,
-      'city': instance.city,
-      'reason': instance.reason,
-      'duty_outfit': instance.dutyOutfit,
-    };
+Map<String, dynamic> _$CallsListModelToJson(CallsListModel instance) {
+  final val = <String, dynamic>{
+    'id': instance.id,
+    'day_number': instance.dayNumber,
+    'year_number': instance.yearNumber,
+    'receipt_date': instance.receiptDate,
+    'status': instance.status,
+    'street': instance.street,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('street2', instance.street2);
+  val['house'] = instance.house;
+  writeNotNull('apartment', instance.apartment);
+  writeNotNull('patient_info', instance.patientInfo);
+  writeNotNull('city', instance.city);
+  writeNotNull('reason', instance.reason);
+  writeNotNull('substation', instance.substation);
+  writeNotNull('duty_outfit', instance.dutyOutfit);
+  return val;
+}
 
 CityModel _$CityModelFromJson(Map<String, dynamic> json) => CityModel(
       id: json['id'] as int,
@@ -91,135 +107,117 @@ Map<String, dynamic> _$ReasonModelToJson(ReasonModel instance) =>
       'priority': instance.priority,
     };
 
+SubstationModel _$SubstationModelFromJson(Map<String, dynamic> json) =>
+    SubstationModel(
+      id: json['id'] as int?,
+      code: json['code'] as String?,
+      name: json['name'] as String?,
+      nameAdd: json['name_add'] as String?,
+      cityStation: json['city_station'] == null
+          ? null
+          : CityStationModel.fromJson(
+              json['city_station'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$SubstationModelToJson(SubstationModel instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('id', instance.id);
+  writeNotNull('code', instance.code);
+  writeNotNull('name', instance.name);
+  writeNotNull('name_add', instance.nameAdd);
+  writeNotNull('city_station', instance.cityStation);
+  return val;
+}
+
+CityStationModel _$CityStationModelFromJson(Map<String, dynamic> json) =>
+    CityStationModel(
+      id: json['id'] as int,
+      code: json['code'] as String,
+      name: json['name'] as String,
+      nameAdd: json['name_add'] as String,
+    );
+
+Map<String, dynamic> _$CityStationModelToJson(CityStationModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'code': instance.code,
+      'name': instance.name,
+      'name_add': instance.nameAdd,
+    };
+
 DutyOutfitModel _$DutyOutfitModelFromJson(Map<String, dynamic> json) =>
     DutyOutfitModel(
-      id: json['id'] as int,
-      shiftStart: json['shift_start'] as String,
-      shiftEnd: json['shift_end'] as String,
-      status: json['status'] as int,
-      isActive: json['is_active'] as bool,
-      statusStartTime: json['status_start_time'] as String,
-      latitude: (json['latitude'] as num).toDouble(),
-      longitude: (json['longitude'] as num).toDouble(),
-      substation: json['substation'] == null
+      brigade: json['brigade'] == null
           ? null
-          : SubstationModel.fromJson(
-              json['substation'] as Map<String, dynamic>),
-      car: json['car'] == null
-          ? null
-          : CarModel.fromJson(json['car'] as Map<String, dynamic>),
+          : BrigadeModel.fromJson(json['brigade'] as Map<String, dynamic>),
       profile: json['profile'] == null
           ? null
           : BrigadeProfileModel.fromJson(
               json['profile'] as Map<String, dynamic>),
-      leader: json['leader'] == null
-          ? null
-          : PersonModel.fromJson(json['leader'] as Map<String, dynamic>),
-      firstHelper: json['first_helper'] == null
-          ? null
-          : PersonModel.fromJson(json['first_helper'] as Map<String, dynamic>),
-      secondHelper: json['second_helper'] == null
-          ? null
-          : PersonModel.fromJson(json['second_helper'] as Map<String, dynamic>),
-      carDriver: json['car_driver'] == null
-          ? null
-          : PersonModel.fromJson(json['car_driver'] as Map<String, dynamic>),
-      brigade: json['brigade'] == null
-          ? null
-          : BrigadeModel.fromJson(json['brigade'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$DutyOutfitModelToJson(DutyOutfitModel instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'shift_start': instance.shiftStart,
-      'shift_end': instance.shiftEnd,
-      'status': instance.status,
-      'is_active': instance.isActive,
-      'status_start_time': instance.statusStartTime,
-      'latitude': instance.latitude,
-      'longitude': instance.longitude,
-      'substation': instance.substation,
-      'car': instance.car,
-      'profile': instance.profile,
-      'leader': instance.leader,
-      'first_helper': instance.firstHelper,
-      'second_helper': instance.secondHelper,
-      'car_driver': instance.carDriver,
-      'brigade': instance.brigade,
-    };
+Map<String, dynamic> _$DutyOutfitModelToJson(DutyOutfitModel instance) {
+  final val = <String, dynamic>{};
 
-SubstationModel _$SubstationModelFromJson(Map<String, dynamic> json) =>
-    SubstationModel(
-      id: json['id'] as int,
-      code: json['code'] as String,
-      name: json['name'] as String,
-      nameAdd: json['name_add'] as String,
-    );
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
 
-Map<String, dynamic> _$SubstationModelToJson(SubstationModel instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'code': instance.code,
-      'name': instance.name,
-      'name_add': instance.nameAdd,
-    };
-
-CarModel _$CarModelFromJson(Map<String, dynamic> json) => CarModel(
-      id: json['id'] as int,
-      governmentNumber: json['government_number'] as String,
-      sideNumber: json['side_number'] as String,
-    );
-
-Map<String, dynamic> _$CarModelToJson(CarModel instance) => <String, dynamic>{
-      'id': instance.id,
-      'government_number': instance.governmentNumber,
-      'side_number': instance.sideNumber,
-    };
+  writeNotNull('brigade', instance.brigade);
+  writeNotNull('profile', instance.profile);
+  return val;
+}
 
 BrigadeProfileModel _$BrigadeProfileModelFromJson(Map<String, dynamic> json) =>
     BrigadeProfileModel(
-      id: json['id'] as int,
-      code: json['code'] as String,
-      name: json['name'] as String,
-      nameAdd: json['name_add'] as String,
+      id: json['id'] as int?,
+      code: json['code'] as String?,
+      name: json['name'] as String?,
+      nameAdd: json['name_add'] as String?,
     );
 
-Map<String, dynamic> _$BrigadeProfileModelToJson(
-        BrigadeProfileModel instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'code': instance.code,
-      'name': instance.name,
-      'name_add': instance.nameAdd,
-    };
+Map<String, dynamic> _$BrigadeProfileModelToJson(BrigadeProfileModel instance) {
+  final val = <String, dynamic>{};
 
-PersonModel _$PersonModelFromJson(Map<String, dynamic> json) => PersonModel(
-      id: json['id'] as int,
-      fio: json['fio'] as String,
-      code: json['code'] as String,
-      isFired: json['is_fired'] as bool,
-      iin: json['iin'] as String,
-    );
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
 
-Map<String, dynamic> _$PersonModelToJson(PersonModel instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'fio': instance.fio,
-      'code': instance.code,
-      'is_fired': instance.isFired,
-      'iin': instance.iin,
-    };
+  writeNotNull('id', instance.id);
+  writeNotNull('code', instance.code);
+  writeNotNull('name', instance.name);
+  writeNotNull('name_add', instance.nameAdd);
+  return val;
+}
 
 BrigadeModel _$BrigadeModelFromJson(Map<String, dynamic> json) => BrigadeModel(
-      id: json['id'] as int,
-      number: json['number'] as String,
-      substationId: json['substation_id'] as int,
+      id: json['id'] as int?,
+      number: json['number'] as String?,
+      substationId: json['substation_id'] as int?,
     );
 
-Map<String, dynamic> _$BrigadeModelToJson(BrigadeModel instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'number': instance.number,
-      'substation_id': instance.substationId,
-    };
+Map<String, dynamic> _$BrigadeModelToJson(BrigadeModel instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('id', instance.id);
+  writeNotNull('number', instance.number);
+  writeNotNull('substation_id', instance.substationId);
+  return val;
+}

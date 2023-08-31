@@ -20,7 +20,7 @@ class CallsModel {
   Map<String, dynamic> toJson() => _$CallsModelToJson(this);
 }
 
-@JsonSerializable(fieldRename: FieldRename.snake)
+@JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
 class CallsListModel {
   final int id;
   @JsonKey(name: 'day_number')
@@ -31,11 +31,14 @@ class CallsListModel {
   final String receiptDate;
   final int status;
   final String street;
-  final String street2;
+  final String? street2;
   final String house;
-  final String apartment;
+  final String? apartment;
+  @JsonKey(name: 'patient_info')
+  final String? patientInfo;
   final CityModel? city;
   final ReasonModel? reason;
+  final SubstationModel? substation;
   @JsonKey(name: 'duty_outfit')
   final DutyOutfitModel? dutyOutfit;
 
@@ -49,8 +52,10 @@ class CallsListModel {
     required this.street2,
     required this.house,
     required this.apartment,
+    required this.patientInfo,
     required this.city,
     required this.reason,
+    required this.substation,
     required this.dutyOutfit,
   });
 
@@ -102,69 +107,23 @@ class ReasonModel {
   Map<String, dynamic> toJson() => _$ReasonModelToJson(this);
 }
 
-@JsonSerializable(fieldRename: FieldRename.snake)
-class DutyOutfitModel {
-  final int id;
-  @JsonKey(name: 'shift_start')
-  final String shiftStart;
-  @JsonKey(name: 'shift_end')
-  final String shiftEnd;
-  final int status;
-  @JsonKey(name: 'is_active')
-  final bool isActive;
-  @JsonKey(name: 'status_start_time')
-  final String statusStartTime;
-  final double latitude;
-  final double longitude;
-  final SubstationModel? substation;
-  final CarModel? car;
-  final BrigadeProfileModel? profile;
-  final PersonModel? leader;
-  @JsonKey(name: 'first_helper')
-  final PersonModel? firstHelper;
-  @JsonKey(name: 'second_helper')
-  final PersonModel? secondHelper;
-  @JsonKey(name: 'car_driver')
-  final PersonModel? carDriver;
-  final BrigadeModel? brigade;
-
-  DutyOutfitModel(
-      {required this.id,
-      required this.shiftStart,
-      required this.shiftEnd,
-      required this.status,
-      required this.isActive,
-      required this.statusStartTime,
-      required this.latitude,
-      required this.longitude,
-      required this.substation,
-      required this.car,
-      required this.profile,
-      required this.leader,
-      required this.firstHelper,
-      required this.secondHelper,
-      required this.carDriver,
-      required this.brigade});
-
-  factory DutyOutfitModel.fromJson(Map<String, dynamic> json) =>
-      _$DutyOutfitModelFromJson(json);
-
-  Map<String, dynamic> toJson() => _$DutyOutfitModelToJson(this);
-}
-
-@JsonSerializable(fieldRename: FieldRename.snake)
+@JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
 class SubstationModel {
-  final int id;
-  final String code;
-  final String name;
+  final int? id;
+  final String? code;
+  final String? name;
   @JsonKey(name: 'name_add')
-  final String nameAdd;
+  final String? nameAdd;
+  @JsonKey(name: 'city_station')
+  final CityStationModel? cityStation;
 
-  SubstationModel(
-      {required this.id,
-      required this.code,
-      required this.name,
-      required this.nameAdd});
+  SubstationModel({
+    required this.id,
+    required this.code,
+    required this.name,
+    required this.nameAdd,
+    required this.cityStation,
+  });
 
   factory SubstationModel.fromJson(Map<String, dynamic> json) =>
       _$SubstationModelFromJson(json);
@@ -172,32 +131,49 @@ class SubstationModel {
   Map<String, dynamic> toJson() => _$SubstationModelToJson(this);
 }
 
-@JsonSerializable(fieldRename: FieldRename.snake)
-class CarModel {
-  final int id;
-  @JsonKey(name: 'government_number')
-  final String governmentNumber;
-  @JsonKey(name: 'side_number')
-  final String sideNumber;
-
-  CarModel(
-      {required this.id,
-      required this.governmentNumber,
-      required this.sideNumber});
-
-  factory CarModel.fromJson(Map<String, dynamic> json) =>
-      _$CarModelFromJson(json);
-
-  Map<String, dynamic> toJson() => _$CarModelToJson(this);
-}
-
-@JsonSerializable(fieldRename: FieldRename.snake)
-class BrigadeProfileModel {
+@JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
+class CityStationModel {
   final int id;
   final String code;
   final String name;
   @JsonKey(name: 'name_add')
   final String nameAdd;
+
+  CityStationModel(
+      {required this.id,
+      required this.code,
+      required this.name,
+      required this.nameAdd});
+
+  factory CityStationModel.fromJson(Map<String, dynamic> json) =>
+      _$CityStationModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$CityStationModelToJson(this);
+}
+
+@JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
+class DutyOutfitModel {
+  final BrigadeModel? brigade;
+  final BrigadeProfileModel? profile;
+
+  DutyOutfitModel({
+    required this.brigade,
+    required this.profile,
+  });
+
+  factory DutyOutfitModel.fromJson(Map<String, dynamic> json) =>
+      _$DutyOutfitModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$DutyOutfitModelToJson(this);
+}
+
+@JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
+class BrigadeProfileModel {
+  final int? id;
+  final String? code;
+  final String? name;
+  @JsonKey(name: 'name_add')
+  final String? nameAdd;
 
   BrigadeProfileModel(
       {required this.id,
@@ -211,34 +187,12 @@ class BrigadeProfileModel {
   Map<String, dynamic> toJson() => _$BrigadeProfileModelToJson(this);
 }
 
-@JsonSerializable(fieldRename: FieldRename.snake)
-class PersonModel {
-  final int id;
-  final String fio;
-  final String code;
-  @JsonKey(name: 'is_fired')
-  final bool isFired;
-  final String iin;
-
-  PersonModel(
-      {required this.id,
-      required this.fio,
-      required this.code,
-      required this.isFired,
-      required this.iin});
-
-  factory PersonModel.fromJson(Map<String, dynamic> json) =>
-      _$PersonModelFromJson(json);
-
-  Map<String, dynamic> toJson() => _$PersonModelToJson(this);
-}
-
-@JsonSerializable(fieldRename: FieldRename.snake)
+@JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
 class BrigadeModel {
-  final int id;
-  final String number;
+  final int? id;
+  final String? number;
   @JsonKey(name: 'substation_id')
-  final int substationId;
+  final int? substationId;
 
   BrigadeModel(
       {required this.id, required this.number, required this.substationId});

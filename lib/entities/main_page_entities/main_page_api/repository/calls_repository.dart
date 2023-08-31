@@ -1,6 +1,5 @@
 import 'package:project_smm/entities/main_page_entities/main_page_api/data_source/calls_remote_data.dart';
 import 'package:project_smm/entities/types/calls_model/calls_model.dart';
-import 'package:project_smm/shared/constants/errors_constants/errors_constants.dart';
 import 'package:project_smm/shared/lib/errors/exceptions/exceptions.dart';
 import 'package:project_smm/shared/lib/errors/failure/failure.dart';
 import 'package:dartz/dartz.dart';
@@ -16,7 +15,7 @@ class CallsRepository{
       return Left(ConnectionFailure(message: e.message));
     }on UnAuthException catch (e){
       return Left(UnAuthFailure(message: e.message));
-    } catch(_){
-      return Left(ServerFailure(message: Errors.criticalServerErrorTitle));
+    }on LogOutException catch (e){
+      return Left(LogOutFailure(message: e.message));
     }
   }}

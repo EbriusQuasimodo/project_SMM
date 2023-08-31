@@ -43,6 +43,7 @@ dependencies:
   equatable: ^2.0.5
   dartz: ^0.10.1
   json_annotation: ^4.8.1
+  badges: ^3.0.2
 
 
 

@@ -19,6 +19,12 @@ class UnAuthFailure extends Failure{
   @override
   String get error => message;
 }
+class LogOutFailure extends Failure{
+  final String message;
+  LogOutFailure({required this.message});
+  @override
+  String get error => message;
+}
 
 class ConnectionFailure extends Failure{
   final String message;

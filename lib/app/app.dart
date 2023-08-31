@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:project_smm/entities/auth_entities/auth_bloc/auth_bloc.dart';
+import 'package:project_smm/entities/main_page_entities/main_page_bloc/main_page_bloc.dart';
 import 'package:project_smm/pages/analytics_page/analytics_page.dart';
 import 'package:project_smm/pages/change_language_page/change_language_page.dart';
 import 'package:project_smm/pages/change_password_page/change_password_page.dart';
@@ -72,8 +73,9 @@ class MyApp extends StatelessWidget {
           routes: {
             AppRoutes.auth: (context) => Provider(
                 create: (context) => AuthBloc(), child: const LoginPage()),
-            AppRoutes.homePage: (context) => const HomePage(),
-            AppRoutes.mainPage: (context) => const MainPage(),
+            AppRoutes.homePage: (context) => Provider(
+        create: (context) => MainPageBloc()..add(MainPageStartLoadingEvent()), child:const HomePage()),
+            AppRoutes.mainPage: (context) => MainPage(),
             AppRoutes.choiceRegion: (context) => const ChoiceRegionPage(),
             AppRoutes.regionList: (context) => const RegionListPage(),
             AppRoutes.analytics: (context) => const AnalyticsPage(),

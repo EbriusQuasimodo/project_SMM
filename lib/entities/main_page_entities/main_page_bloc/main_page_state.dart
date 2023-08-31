@@ -6,7 +6,7 @@ abstract class MainPageState {}
 class MainPageLoadingState extends MainPageState {}
 
 class MainPageDoneState extends MainPageState {
-  final CallsModel calls;
+  final List<CallsListModel> calls;
   MainPageDoneState({required this.calls});
 }
 class MainPageFailedState extends MainPageState {
