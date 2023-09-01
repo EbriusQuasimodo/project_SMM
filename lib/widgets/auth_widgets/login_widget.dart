@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project_smm/entities/auth_entities/auth_bloc/auth_bloc.dart';
 import 'package:project_smm/shared/lib/routes/app_routes.dart';
 import 'package:project_smm/shared/ui/buttons/primary_button/primary_button.dart';
-import 'package:project_smm/shared/ui/fomr_item/form_input_item/form_input_item.dart';
+import 'package:project_smm/shared/ui/form_item/form_input_item/form_input_item.dart';
 import 'package:project_smm/shared/ui/text_items/big_welcome_text/big_welcome_text.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 

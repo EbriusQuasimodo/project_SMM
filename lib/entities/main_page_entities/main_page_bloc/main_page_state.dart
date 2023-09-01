@@ -5,9 +5,13 @@ abstract class MainPageState {}
 
 class MainPageLoadingState extends MainPageState {}
 
-class MainPageDoneState extends MainPageState {
+class MainPageCallsDoneState extends MainPageState {
   final List<CallsListModel> calls;
-  MainPageDoneState({required this.calls});
+  MainPageCallsDoneState({required this.calls});
+}
+class MainPageBrigadesDoneState extends MainPageState {
+  final List<BrigadesListModel> brigades;
+  MainPageBrigadesDoneState({required this.brigades});
 }
 class MainPageFailedState extends MainPageState {
   final String message;

@@ -3,11 +3,12 @@ import 'package:project_smm/shared/constants/local_storage/local_storage_constan
 import 'package:project_smm/shared/lib/local_storage/local_storage.dart';
 import 'package:project_smm/shared/lib/routes/app_routes.dart';
 import 'package:project_smm/shared/lib/theme/theme_app.dart';
-import 'package:project_smm/shared/ui/buttons/settings_button/settings_button.dart';
-import 'package:project_smm/shared/ui/custom_dialogs/custom_dialog_with_two_buttons/custom_dialog_with_two_buttons.dart';
 import 'package:project_smm/widgets/profile_widgets/update_version_button.dart';
 import 'package:project_smm/widgets/profile_widgets/user_name_text.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import 'ui/exit_button/exit_button.dart';
+import 'ui/settings_button/settings_button.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -22,28 +23,8 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.profilePage),
-        actions: [
-          IconButton(
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (builder) => CustomDialogWithTwoButtons(
-                  title: AppLocalizations.of(context)!.signOut,
-                  onTapFirstButton: () {
-                    Navigator.of(context).pop();
-                  },
-                  onTapSecondButton: () {
-                    Navigator.of(context).pushNamed(AppRoutes.auth);
-                    LocalStorage.setString(AppConstants.TOKEN, '');
-                  },
-                ),
-              );
-            },
-            icon: const Icon(
-              Icons.exit_to_app,
-              color: ThemeApp.secondaryColorTextAndIcons,
-            ),
-          )
+        actions: const [
+          ExitButton(),
         ],
       ),
       body: Padding(

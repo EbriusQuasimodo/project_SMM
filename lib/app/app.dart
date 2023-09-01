@@ -74,7 +74,7 @@ class MyApp extends StatelessWidget {
             AppRoutes.auth: (context) => Provider(
                 create: (context) => AuthBloc(), child: const LoginPage()),
             AppRoutes.homePage: (context) => Provider(
-        create: (context) => MainPageBloc()..add(MainPageStartLoadingEvent()), child:const HomePage()),
+        create: (context) => MainPageBloc()..add(MainPageCallsStartLoadingEvent()), child:const HomePage()),
             AppRoutes.mainPage: (context) => MainPage(),
             AppRoutes.choiceRegion: (context) => const ChoiceRegionPage(),
             AppRoutes.regionList: (context) => const RegionListPage(),
