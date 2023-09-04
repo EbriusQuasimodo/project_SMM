@@ -17,7 +17,7 @@ class SwitchCallsOrBrigadeItem extends StatelessWidget {
         children: [
           Button(
             onTap: (){context.read<MainPageBloc>().add(
-              MainPageCallsStartLoadingEvent()
+              MainPageStartLoadingEvent()
             );},
             itemsLength: itemsLength,
             buttonName: 'Вызовы',

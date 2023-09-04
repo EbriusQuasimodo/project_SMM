@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_smm/pages/analytics_page/analytics_page.dart';
-import 'package:project_smm/pages/favorites_page/favorites_page.dart';
+import 'package:project_smm/pages/favourites_page/favourites_page.dart';
 import 'package:project_smm/pages/main_page/main_page.dart';
 import 'package:project_smm/pages/profile_page/profile_page.dart';
 import 'package:project_smm/pages/reports_page/reports_page.dart';
@@ -36,7 +36,7 @@ class _NavBarState extends State<NavBar> {
         children: [
           MainPage(),
           const AnalyticsPage(),
-          const FavoritesPage(),
+          const FavouritesPage(),
           const ReportsPage(),
           const ProfilePage(),
         ],
@@ -55,7 +55,7 @@ class _NavBarState extends State<NavBar> {
                 'assets/images/icons/shared/icon_analytics.svg'),
             bottomNavigationItem(
                 AppLocalizations.of(context)!.favoritesPage,
-                'assets/images/icons/shared/icon_favorites.svg'),
+                'assets/images/icons/shared/icon_favourites.svg'),
             bottomNavigationItem(
                 AppLocalizations.of(context)!.reportsPage,
                 'assets/images/icons/shared/icon_reports.svg'),

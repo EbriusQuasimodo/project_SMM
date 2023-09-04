@@ -10,7 +10,7 @@ BrigadesModel _$BrigadesModelFromJson(Map<String, dynamic> json) =>
     BrigadesModel(
       error: json['error'] as String,
       success: json['success'] as bool,
-      calls: (json['calls'] as List<dynamic>)
+      brigades: (json['brigades'] as List<dynamic>)
           .map((e) => BrigadesListModel.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
@@ -19,7 +19,7 @@ Map<String, dynamic> _$BrigadesModelToJson(BrigadesModel instance) =>
     <String, dynamic>{
       'error': instance.error,
       'success': instance.success,
-      'calls': instance.calls,
+      'brigades': instance.brigades,
     };
 
 BrigadesListModel _$BrigadesListModelFromJson(Map<String, dynamic> json) =>
@@ -59,10 +59,10 @@ BrigadesListModel _$BrigadesListModelFromJson(Map<String, dynamic> json) =>
       brigade: json['brigade'] == null
           ? null
           : BrigadeModel.fromJson(json['brigade'] as Map<String, dynamic>),
-      calls: json['calls'] == null
-          ? null
-          : BrigadeCallsListModel.fromJson(
-              json['calls'] as Map<String, dynamic>),
+      calls: (json['calls'] as List<dynamic>?)
+          ?.map(
+              (e) => BrigadeCallsListModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$BrigadesListModelToJson(BrigadesListModel instance) {
@@ -176,21 +176,29 @@ Map<String, dynamic> _$ProfileBrigadeModelToJson(
     };
 
 ProfileModel _$ProfileModelFromJson(Map<String, dynamic> json) => ProfileModel(
-      id: json['id'] as int,
-      fio: json['fio'] as String,
-      code: json['code'] as String,
-      nameAdd: json['is_fired'] as bool,
-      iin: json['iin'] as String,
+      id: json['id'] as int?,
+      fio: json['fio'] as String?,
+      code: json['code'] as String?,
+      isFired: json['is_fired'] as bool?,
+      iin: json['iin'] as String?,
     );
 
-Map<String, dynamic> _$ProfileModelToJson(ProfileModel instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'fio': instance.fio,
-      'code': instance.code,
-      'is_fired': instance.nameAdd,
-      'iin': instance.iin,
-    };
+Map<String, dynamic> _$ProfileModelToJson(ProfileModel instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('id', instance.id);
+  writeNotNull('fio', instance.fio);
+  writeNotNull('code', instance.code);
+  writeNotNull('is_fired', instance.isFired);
+  writeNotNull('iin', instance.iin);
+  return val;
+}
 
 BrigadeModel _$BrigadeModelFromJson(Map<String, dynamic> json) => BrigadeModel(
       id: json['id'] as int?,

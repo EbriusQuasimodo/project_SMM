@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:project_smm/entities/auth_entities/auth_bloc/auth_bloc.dart';
+import 'package:project_smm/entities/filter_entities/filter_bloc/filters_bloc.dart';
 import 'package:project_smm/entities/main_page_entities/main_page_bloc/main_page_bloc.dart';
 import 'package:project_smm/pages/analytics_page/analytics_page.dart';
 import 'package:project_smm/pages/change_language_page/change_language_page.dart';
 import 'package:project_smm/pages/change_password_page/change_password_page.dart';
 import 'package:project_smm/pages/choice_region_page/choice_region_page.dart';
-import 'package:project_smm/pages/favorites_page/favorites_page.dart';
+import 'package:project_smm/pages/favourites_page/favourites_page.dart';
+import 'package:project_smm/pages/filter_page/filter_page.dart';
 import 'package:project_smm/pages/home_page.dart';
 import 'package:project_smm/pages/login_page/login_page.dart';
 import 'package:project_smm/pages/profile_page/profile_page.dart';
@@ -74,12 +76,14 @@ class MyApp extends StatelessWidget {
             AppRoutes.auth: (context) => Provider(
                 create: (context) => AuthBloc(), child: const LoginPage()),
             AppRoutes.homePage: (context) => Provider(
-        create: (context) => MainPageBloc()..add(MainPageCallsStartLoadingEvent()), child:const HomePage()),
-            AppRoutes.mainPage: (context) => MainPage(),
+        create: (context) => MainPageBloc()..add(MainPageStartLoadingEvent()), child: const HomePage()),
+            AppRoutes.mainPage: (context) => const MainPage(),
+            AppRoutes.filter: (context) => Provider(
+        create: (context) => FiltersBloc()..add(FiltersStartLoadingEvent()), child: const FilterPage()),
             AppRoutes.choiceRegion: (context) => const ChoiceRegionPage(),
             AppRoutes.regionList: (context) => const RegionListPage(),
             AppRoutes.analytics: (context) => const AnalyticsPage(),
-            AppRoutes.favorites: (context) => const FavoritesPage(),
+            AppRoutes.favorites: (context) => const FavouritesPage(),
             AppRoutes.reports: (context) => const ReportsPage(),
             AppRoutes.profile: (context) => const ProfilePage(),
             AppRoutes.changeLanguage: (context) => const ChangeLanguagePage(),

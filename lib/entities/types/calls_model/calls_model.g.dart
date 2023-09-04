@@ -41,7 +41,7 @@ CallsListModel _$CallsListModelFromJson(Map<String, dynamic> json) =>
           : ReasonModel.fromJson(json['reason'] as Map<String, dynamic>),
       substation: json['substation'] == null
           ? null
-          : SubstationModel.fromJson(
+          : SubstationsCallsModel.fromJson(
               json['substation'] as Map<String, dynamic>),
       dutyOutfit: json['duty_outfit'] == null
           ? null
@@ -107,19 +107,21 @@ Map<String, dynamic> _$ReasonModelToJson(ReasonModel instance) =>
       'priority': instance.priority,
     };
 
-SubstationModel _$SubstationModelFromJson(Map<String, dynamic> json) =>
-    SubstationModel(
+SubstationsCallsModel _$SubstationsCallsModelFromJson(
+        Map<String, dynamic> json) =>
+    SubstationsCallsModel(
       id: json['id'] as int?,
       code: json['code'] as String?,
       name: json['name'] as String?,
       nameAdd: json['name_add'] as String?,
       cityStation: json['city_station'] == null
           ? null
-          : CityStationModel.fromJson(
+          : CityStationCallsModel.fromJson(
               json['city_station'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$SubstationModelToJson(SubstationModel instance) {
+Map<String, dynamic> _$SubstationsCallsModelToJson(
+    SubstationsCallsModel instance) {
   final val = <String, dynamic>{};
 
   void writeNotNull(String key, dynamic value) {
@@ -136,15 +138,17 @@ Map<String, dynamic> _$SubstationModelToJson(SubstationModel instance) {
   return val;
 }
 
-CityStationModel _$CityStationModelFromJson(Map<String, dynamic> json) =>
-    CityStationModel(
+CityStationCallsModel _$CityStationCallsModelFromJson(
+        Map<String, dynamic> json) =>
+    CityStationCallsModel(
       id: json['id'] as int,
       code: json['code'] as String,
       name: json['name'] as String,
       nameAdd: json['name_add'] as String,
     );
 
-Map<String, dynamic> _$CityStationModelToJson(CityStationModel instance) =>
+Map<String, dynamic> _$CityStationCallsModelToJson(
+        CityStationCallsModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'code': instance.code,

@@ -6,12 +6,12 @@ part 'brigade_model.g.dart';
 class BrigadesModel {
   final String error;
   final bool success;
-  final List<BrigadesListModel> calls;
+  final List<BrigadesListModel> brigades;
 
   BrigadesModel({
     required this.error,
     required this.success,
-    required this.calls,
+    required this.brigades,
   });
 
   factory BrigadesModel.fromJson(Map<String, dynamic> json) =>
@@ -45,7 +45,7 @@ class BrigadesListModel {
   @JsonKey(name: 'car_driver')
   final ProfileModel? carDriver;
   final BrigadeModel? brigade;
-  final BrigadeCallsListModel? calls;
+  final List<BrigadeCallsListModel>? calls;
 
   BrigadesListModel({
     required this.id,
@@ -160,18 +160,18 @@ class ProfileBrigadeModel {
 
 @JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
 class ProfileModel {
-  final int id;
-  final String fio;
-  final String code;
+  final int? id;
+  final String? fio;
+  final String? code;
   @JsonKey(name: 'is_fired')
-  final bool nameAdd;
-  final String iin;
+  final bool? isFired;
+  final String? iin;
 
   ProfileModel(
       {required this.id,
       required this.fio,
       required this.code,
-      required this.nameAdd,
+      required this.isFired,
       required this.iin});
 
   factory ProfileModel.fromJson(Map<String, dynamic> json) =>

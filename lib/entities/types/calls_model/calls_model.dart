@@ -38,7 +38,7 @@ class CallsListModel {
   final String? patientInfo;
   final CityModel? city;
   final ReasonModel? reason;
-  final SubstationModel? substation;
+  final SubstationsCallsModel? substation;
   @JsonKey(name: 'duty_outfit')
   final DutyOutfitModel? dutyOutfit;
 
@@ -108,16 +108,16 @@ class ReasonModel {
 }
 
 @JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
-class SubstationModel {
+class SubstationsCallsModel {
   final int? id;
   final String? code;
   final String? name;
   @JsonKey(name: 'name_add')
   final String? nameAdd;
   @JsonKey(name: 'city_station')
-  final CityStationModel? cityStation;
+  final CityStationCallsModel? cityStation;
 
-  SubstationModel({
+  SubstationsCallsModel({
     required this.id,
     required this.code,
     required this.name,
@@ -125,30 +125,30 @@ class SubstationModel {
     required this.cityStation,
   });
 
-  factory SubstationModel.fromJson(Map<String, dynamic> json) =>
-      _$SubstationModelFromJson(json);
+  factory SubstationsCallsModel.fromJson(Map<String, dynamic> json) =>
+      _$SubstationsCallsModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$SubstationModelToJson(this);
+  Map<String, dynamic> toJson() => _$SubstationsCallsModelToJson(this);
 }
 
 @JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
-class CityStationModel {
+class CityStationCallsModel {
   final int id;
   final String code;
   final String name;
   @JsonKey(name: 'name_add')
   final String nameAdd;
 
-  CityStationModel(
+  CityStationCallsModel(
       {required this.id,
       required this.code,
       required this.name,
       required this.nameAdd});
 
-  factory CityStationModel.fromJson(Map<String, dynamic> json) =>
-      _$CityStationModelFromJson(json);
+  factory CityStationCallsModel.fromJson(Map<String, dynamic> json) =>
+      _$CityStationCallsModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$CityStationModelToJson(this);
+  Map<String, dynamic> toJson() => _$CityStationCallsModelToJson(this);
 }
 
 @JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)

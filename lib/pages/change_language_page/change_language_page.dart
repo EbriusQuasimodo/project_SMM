@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project_smm/features/language_change_button/change_locale_widget.dart';
-import 'package:project_smm/shared/ui/app_bar_items/app_bar_with_leading_and_title/app_bar_with_leading_and_title.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:project_smm/shared/ui/app_bars/app_bar_with_leading_and_title/app_bar_with_leading_and_title.dart';
 
 class ChangeLanguagePage extends StatelessWidget {
   const ChangeLanguagePage({super.key});

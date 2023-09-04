@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project_smm/shared/ui/app_bar_items/app_bar_with_leading_and_title/app_bar_with_leading_and_title.dart';
+import 'package:project_smm/shared/ui/app_bars/app_bar_with_leading_and_title/app_bar_with_leading_and_title.dart';
 import 'package:project_smm/widgets/region_list_widgets/region_list.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 

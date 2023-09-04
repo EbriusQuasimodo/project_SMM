@@ -9,7 +9,8 @@ import 'package:project_smm/shared/lib/local_storage/local_storage.dart';
 import 'package:project_smm/shared/lib/routes/app_routes.dart';
 import 'package:project_smm/shared/lib/theme/theme_app.dart';
 import 'package:project_smm/shared/ui/buttons/switch_calls_or_brigade_item/switch_item.dart';
-import 'package:project_smm/shared/ui/list_item_card/list_item_card.dart';
+import 'package:project_smm/shared/ui/list_item_cards/brigades_card/brigades_card.dart';
+import 'package:project_smm/shared/ui/list_item_cards/calls_card/calls_card.dart';
 
 class MainPage extends StatelessWidget {
   const MainPage({super.key});
@@ -30,15 +31,20 @@ class MainPage extends StatelessWidget {
               ),
             ),
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context)
+                    .pushNamed(AppRoutes.filter);
+              },
               icon: SvgPicture.asset('assets/images/icons/shared/filter.svg'),
             )
           ],
         ),
       ),
       body: SingleChildScrollView(
-        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          SwitchCallsOrBrigadeItem(itemsLength: 10),
+        child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center, children: [
+          const SwitchCallsOrBrigadeItem(itemsLength: 10),
           BlocBuilder<MainPageBloc, MainPageState>(
             builder: (context, state) {
               if (state is MainPageLoadingState) {
@@ -60,8 +66,8 @@ class MainPage extends StatelessWidget {
                       shrinkWrap: true,
                       itemCount: state.calls.length,
                       itemBuilder: (BuildContext context, int index) {
-                        return ListItemCard(
-                          itemCallsInfo: state.calls[index],
+                        return CallsCard(
+                          callsInfo: state.calls[index],
                         );
                       }),
                 );
@@ -72,8 +78,8 @@ class MainPage extends StatelessWidget {
                       shrinkWrap: true,
                       itemCount: state.brigades.length,
                       itemBuilder: (BuildContext context, int index) {
-                        return ListItemCard(
-                          itemBrigadesInfo: state.brigades[index],
+                        return BrigadesCard(
+                          brigadesInfo: state.brigades[index],
                         );
                       }),
                 );

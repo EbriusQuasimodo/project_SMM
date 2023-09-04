@@ -12,7 +12,7 @@ part 'main_page_state.dart';
 
 class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
   MainPageBloc() : super(MainPageLoadingState()) {
-    on<MainPageCallsStartLoadingEvent>((event, emit) async {
+    on<MainPageStartLoadingEvent>((event, emit) async {
       emit(MainPageLoadingState());
       final re = await CallsRepository.calls();
       re.fold((l) {
@@ -33,7 +33,7 @@ class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
         } else if (l is ServerFailure) {
           emit(MainPageFailedState(message: l.error));
         }
-      }, (r) => emit(MainPageBrigadesDoneState(brigades: r.calls)));
+      }, (r) => emit(MainPageBrigadesDoneState(brigades: r.brigades)));
     });
   }
 }
