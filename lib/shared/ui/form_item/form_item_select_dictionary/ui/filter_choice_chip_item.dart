@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:project_smm/shared/lib/local_storage/local_storage.dart';
 import 'package:project_smm/shared/lib/theme/theme_app.dart';
 
 class FilterChipItem extends StatefulWidget {
   final String? itemName;
   final int? itemId;
   final List<int> filters;
-  final VoidCallback? onCityChoice;
-  const FilterChipItem({super.key,this.onCityChoice, required this.itemName, required this.itemId, required this.filters});
+  final VoidCallback onCityChoice;
+  const FilterChipItem({super.key,required this.onCityChoice, required this.itemName, required this.itemId, required this.filters,});
 
   @override
   State<FilterChipItem> createState() => _FilterChipItemState();
@@ -32,15 +33,13 @@ class _FilterChipItemState extends State<FilterChipItem> {
           if (value) {
             if (!widget.filters.contains(widget.itemId)) {
               widget.filters.add(widget.itemId!);
-              widget.onCityChoice!();
-              print(widget.filters);
+              widget.onCityChoice();
             }
           } else {
             widget.filters.removeWhere((int id) {
               return id == widget.itemId;
             });
-            widget.onCityChoice!();
-            print(widget.filters);
+            widget.onCityChoice();
           }
 
         });

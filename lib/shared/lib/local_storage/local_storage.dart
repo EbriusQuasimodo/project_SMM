@@ -27,4 +27,13 @@ class LocalStorage {
     var prefs = await _instance;
     return prefs.setInt(key, value);
   }
+
+  static List<String> getList(String key, [List<String> defValue = const []]) {
+    return _prefsInstance!.getStringList(key) ?? defValue;
+  }
+
+  static Future<bool> setList(String key, List<String> value) async {
+    var prefs = await _instance;
+    return prefs.setStringList(key, value);
+  }
 }
