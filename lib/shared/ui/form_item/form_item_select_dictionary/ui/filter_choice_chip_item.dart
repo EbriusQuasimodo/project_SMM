@@ -7,7 +7,8 @@ class FilterChipItem extends StatefulWidget {
   final int? itemId;
   final List<int> filters;
   final VoidCallback onCityChoice;
-  const FilterChipItem({super.key,required this.onCityChoice, required this.itemName, required this.itemId, required this.filters,});
+  final List<String>? substationsName;
+  const FilterChipItem({super.key,required this.onCityChoice, required this.itemName, required this.itemId, required this.filters, this.substationsName,});
 
   @override
   State<FilterChipItem> createState() => _FilterChipItemState();
@@ -33,11 +34,15 @@ class _FilterChipItemState extends State<FilterChipItem> {
           if (value) {
             if (!widget.filters.contains(widget.itemId)) {
               widget.filters.add(widget.itemId!);
+              widget.substationsName?.add(widget.itemName!);
               widget.onCityChoice();
             }
           } else {
             widget.filters.removeWhere((int id) {
               return id == widget.itemId;
+            });
+            widget.substationsName?.removeWhere((String name){
+              return name == widget.itemName!;
             });
             widget.onCityChoice();
           }

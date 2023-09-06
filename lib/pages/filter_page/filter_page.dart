@@ -7,7 +7,16 @@ import 'package:project_smm/shared/lib/local_storage/local_storage.dart';
 import 'package:project_smm/shared/lib/theme/theme_app.dart';
 import 'package:project_smm/shared/ui/buttons/primary_button/primary_button.dart';
 import 'package:project_smm/shared/ui/form_item/form_item_select_dictionary/ui/filter_choice_chip_item.dart';
+class SubstationsByCity {
+  const SubstationsByCity({
+    required this.name,
+    required this.id,
+  });
 
+  final int id;
+  final String name;
+
+}
 class FilterPage extends StatefulWidget {
   const FilterPage({super.key});
 
@@ -21,52 +30,44 @@ class _FilterPageState extends State<FilterPage> {
   List<int> substations = [];
   List<String> substationsName = [];
 
-  bool isCitySelected = false;
-
-  List<String> cacheCity = LocalStorage.getList(AppConstants.CITYSTATIONLIST);
-  List<int> cacheCityContent = [];
-  List<String> cachePriority = LocalStorage.getList(AppConstants.PRIORITYLIST);
-  List<int> cachePriorityContent = [];
-  List<String> cacheSubstation = LocalStorage.getList(AppConstants.SUBSTATIONLIST);
-  List<int> cacheSubstationContent = [];
-
-  void saveFilters(List<int> filters, String filtersName){
-    List<String> stringsList=  filters.map((i)=>i.toString()).toList();
-    LocalStorage.setList(filtersName, stringsList);
-  }
+  List<int> cacheCity = [];
+  List<int> cachePriority = [];
+  List<int> cacheSubstation = [];
+  List<String> cacheSubstationsName = [];
 
   @override
   void initState(){
     super.initState();
-    if(cacheCity.isNotEmpty){
+    if(LocalStorage.getList(AppConstants.CITYSTATIONLIST).isNotEmpty){
       for(int i = 0;
-      i < cacheCity.length;
+      i < LocalStorage.getList(AppConstants.CITYSTATIONLIST).length;
       i++){
-        List <int> filters = cacheCity.map((e) => int.parse(e)).toList();
+        List <int> filters = LocalStorage.getList(AppConstants.CITYSTATIONLIST).map((e) => int.parse(e)).toList();
 
-        cacheCityContent.add(filters[i]);
+        cacheCity.add(filters[i]);
       }
     }
-    if(cachePriority.isNotEmpty){
+    if(LocalStorage.getList(AppConstants.PRIORITYLIST).isNotEmpty){
       for(int i = 0;
-      i < cachePriority.length;
+      i < LocalStorage.getList(AppConstants.PRIORITYLIST).length;
       i++){
-        List <int> filters = cachePriority.map((e) => int.parse(e)).toList();
+        List <int> filters = LocalStorage.getList(AppConstants.PRIORITYLIST).map((e) => int.parse(e)).toList();
 
-        cachePriorityContent.add(filters[i]);
+        cachePriority.add(filters[i]);
       }
     }
-    if(cacheSubstation.isNotEmpty){
+    if(LocalStorage.getList(AppConstants.SUBSTATIONLISTID).isNotEmpty){
       for(int i = 0;
-      i < cacheSubstation.length;
+      i < LocalStorage.getList(AppConstants.SUBSTATIONLISTID).length;
       i++){
-        List <int> filters = cacheSubstation.map((e) => int.parse(e)).toList();
+        List <int> filters = LocalStorage.getList(AppConstants.SUBSTATIONLISTID).map((e) => int.parse(e)).toList();
 
-        cacheSubstationContent.add(filters[i]);
+        cacheSubstationsName.add(LocalStorage.getList(AppConstants.SUBSTATIONLISTNAME)[i]);
+        cacheSubstation.add(filters[i]);
       }
     }
 
-    print ('123213 e rewrewr  $cacheSubstationContent');
+    print ('123213 e rewrewr  $cacheSubstation');
   }
 
 
@@ -90,27 +91,38 @@ class _FilterPageState extends State<FilterPage> {
       body: BlocBuilder<FiltersBloc, FiltersState>(
         builder: (context, state) {
           if (state is FiltersDoneState) {
-            if(cacheCityContent.isNotEmpty){
-              List<int> substationsList = [];
-              List<String> substationsNameList = [];
+            List<int> tempSubstationsIdList = [];
+            List<String> tempSubstationsNameList = [];
+            if(cacheSubstation.isNotEmpty){
+              for (int i = 0;
+              i < cacheSubstation.length;
+              i++){
+                tempSubstationsIdList
+                    .add(cacheSubstation[i]);
+                tempSubstationsNameList.add(cacheSubstationsName[i]);
+              }
+            }
+            if(cacheCity.isNotEmpty){
               for (int i = 0;
               i < state.substations.length;
               i++) {
-                if (cacheCityContent.contains(
+                if (cacheCity.contains(
                     state.substations[i].cityStation!.id)) {
                   //setState(() {
-                    substationsList
+                    tempSubstationsIdList
                         .add(state.substations[i].id!);
-                    substationsNameList
-                        .add(state.substations[i].name!);
+                    tempSubstationsNameList
+                          .add(state.substations[i].name!);
+
+
                  // });
-                } else if (!cacheCityContent
-                    .contains(state.substations[i].cityStation!.id)) {
+                } else if (!cacheCity
+                    .contains(state.substations[i].cityStation!.id) && cacheSubstation.isEmpty) {
                 //  setState(() {
-                    substationsList.removeWhere((int id) {
+                    tempSubstationsIdList.removeWhere((int id) {
                       return id == state.substations[i].id!;
                     });
-                    substationsNameList
+                    tempSubstationsNameList
                         .removeWhere((String name) {
                       return name ==
                           state.substations[i].name!;
@@ -118,8 +130,10 @@ class _FilterPageState extends State<FilterPage> {
                   });
                 }
               }
-              substationsName = substationsNameList.toSet().toList();
-              substations = substationsList.toSet().toList();
+              substationsName = tempSubstationsNameList.toSet().toList();
+              substations = tempSubstationsIdList.toSet().toList();
+              print(substations);
+              print(substationsName);
             }
             return SingleChildScrollView(
               child: Container(
@@ -168,28 +182,37 @@ class _FilterPageState extends State<FilterPage> {
                               child: FilterChipItem(
                                 itemName: state.cityStations[index].name,
                                 itemId: state.cityStations[index].id,
-                                filters: cacheCityContent,
+                                filters: cacheCity,
                                 onCityChoice: () {
-                                  List<int> substationsList = [];
-                                  List<String> substationsNameList = [];
+                                  List<int> tempSubstationsIdList = [];
+                                  List<String> tempSubstationsNameList = [];
+                                  if(cacheSubstation.isNotEmpty){
+                                    for (int i = 0;
+                                    i < cacheSubstation.length;
+                                    i++){
+                                      tempSubstationsIdList
+                                          .add(cacheSubstation[i]);
+                                      tempSubstationsNameList.add(cacheSubstationsName[i]);
+                                    }
+                                  }
                                   for (int i = 0;
                                       i < state.substations.length;
                                       i++) {
-                                    if (cacheCityContent.contains(
+                                    if (cacheCity.contains(
                                         state.substations[i].cityStation!.id)) {
                                       setState(() {
-                                        substationsList
+                                        tempSubstationsIdList
                                             .add(state.substations[i].id!);
-                                        substationsNameList
+                                        tempSubstationsNameList
                                             .add(state.substations[i].name!);
                                       });
-                                    } else if (!cacheCityContent
-                                        .contains(state.substations[i].cityStation!.id)) {
+                                    } else if (!cacheCity
+                                        .contains(state.substations[i].cityStation!.id) && cacheSubstation.isEmpty) {
                                       setState(() {
-                                        substationsList.removeWhere((int id) {
+                                        tempSubstationsIdList.removeWhere((int id) {
                                           return id == state.substations[i].id!;
                                         });
-                                        substationsNameList
+                                        tempSubstationsNameList
                                             .removeWhere((String name) {
                                           return name ==
                                               state.substations[i].name!;
@@ -197,10 +220,9 @@ class _FilterPageState extends State<FilterPage> {
                                       });
                                     }
                                   }
-                                  substationsName = substationsNameList.toSet().toList();
-                                  substations = substationsList.toSet().toList();
-                                  print(substationsName);
-                                 // print(substationsName);
+                                  substationsName = tempSubstationsNameList.toSet().toList();
+                                  substations = tempSubstationsIdList.toSet().toList();
+
                                 },
                               ));
                         }).toList(),
@@ -221,7 +243,7 @@ class _FilterPageState extends State<FilterPage> {
 
                                 itemName: priorityList[index].toString(),
                                 itemId: priorityList[index],
-                                filters: cachePriorityContent,
+                                filters: cachePriority,
                                 onCityChoice: () {},
                               ));
                         }).toList(),
@@ -248,7 +270,7 @@ class _FilterPageState extends State<FilterPage> {
                                 itemId: substations.isNotEmpty
                                     ? substations[index]
                                     : state.substations[index].id!,
-                                filters: cacheSubstationContent,
+                                filters: cacheSubstation,
                                 onCityChoice: () {},
                               ));
                         }).toList(),
@@ -263,11 +285,12 @@ class _FilterPageState extends State<FilterPage> {
         },
       ),
       floatingActionButton: PrimaryButton(onTap: (){
-        LocalStorage.setList(AppConstants.CITYSTATIONLIST, cacheCityContent.map((i)=>i.toString()).toList());
+        LocalStorage.setList(AppConstants.CITYSTATIONLIST, cacheCity.map((i)=>i.toString()).toList());
 
-        LocalStorage.setList(AppConstants.PRIORITYLIST, cachePriorityContent.map((i)=>i.toString()).toList());
+        LocalStorage.setList(AppConstants.PRIORITYLIST, cachePriority.map((i)=>i.toString()).toList());
 
-        LocalStorage.setList(AppConstants.SUBSTATIONLIST, cacheSubstationContent.map((i)=>i.toString()).toList());
+        LocalStorage.setList(AppConstants.SUBSTATIONLISTID, cacheSubstation.map((i)=>i.toString()).toList());
+        LocalStorage.setList(AppConstants.SUBSTATIONLISTNAME, substationsName);
 
       }, buttonName: 'Подтвердить'),
     );

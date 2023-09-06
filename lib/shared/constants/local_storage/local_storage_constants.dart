@@ -6,5 +6,6 @@ class AppConstants {
 
   static const String CITYSTATIONLIST = 'CITYSTATIONLIST';
   static const String PRIORITYLIST = 'PRIORITYLIST';
-  static const String SUBSTATIONLIST = 'SUBSTATIONLIST';
+  static const String SUBSTATIONLISTID = 'SUBSTATIONLISTID';
+  static const String SUBSTATIONLISTNAME = 'SUBSTATIONLISTNAME';
 }
