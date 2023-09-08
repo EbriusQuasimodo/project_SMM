@@ -61,7 +61,7 @@ class MainPage extends StatelessWidget {
                 );
               } else if (state is MainPageCallsDoneState) {
                 return SizedBox(
-                  height: MediaQuery.of(context).size.height - 16,
+                  height: MediaQuery.of(context).size.height - 100,
                   child: ListView.builder(
                       shrinkWrap: true,
                       itemCount: state.calls.length,
@@ -73,7 +73,7 @@ class MainPage extends StatelessWidget {
                 );
               } else if (state is MainPageBrigadesDoneState) {
                 return SizedBox(
-                  height: MediaQuery.of(context).size.height - 16,
+                  height: MediaQuery.of(context).size.height - 100,
                   child: ListView.builder(
                       shrinkWrap: true,
                       itemCount: state.brigades.length,

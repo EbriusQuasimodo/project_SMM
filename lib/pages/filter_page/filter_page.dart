@@ -7,6 +7,7 @@ import 'package:project_smm/shared/lib/local_storage/local_storage.dart';
 import 'package:project_smm/shared/lib/theme/theme_app.dart';
 import 'package:project_smm/shared/ui/buttons/primary_button/primary_button.dart';
 import 'package:project_smm/shared/ui/form_item/form_item_select_dictionary/ui/filter_choice_chip_item.dart';
+
 class SubstationsByCity {
   const SubstationsByCity({
     required this.name,
@@ -15,8 +16,8 @@ class SubstationsByCity {
 
   final int id;
   final String name;
-
 }
+
 class FilterPage extends StatefulWidget {
   const FilterPage({super.key});
 
@@ -36,40 +37,46 @@ class _FilterPageState extends State<FilterPage> {
   List<String> cacheSubstationsName = [];
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
-    if(LocalStorage.getList(AppConstants.CITYSTATIONLIST).isNotEmpty){
-      for(int i = 0;
-      i < LocalStorage.getList(AppConstants.CITYSTATIONLIST).length;
-      i++){
-        List <int> filters = LocalStorage.getList(AppConstants.CITYSTATIONLIST).map((e) => int.parse(e)).toList();
+    if (LocalStorage.getList(AppConstants.CITYSTATIONLIST).isNotEmpty) {
+      for (int i = 0;
+          i < LocalStorage.getList(AppConstants.CITYSTATIONLIST).length;
+          i++) {
+        List<int> filters = LocalStorage.getList(AppConstants.CITYSTATIONLIST)
+            .map((e) => int.parse(e))
+            .toList();
 
         cacheCity.add(filters[i]);
       }
     }
-    if(LocalStorage.getList(AppConstants.PRIORITYLIST).isNotEmpty){
-      for(int i = 0;
-      i < LocalStorage.getList(AppConstants.PRIORITYLIST).length;
-      i++){
-        List <int> filters = LocalStorage.getList(AppConstants.PRIORITYLIST).map((e) => int.parse(e)).toList();
+    if (LocalStorage.getList(AppConstants.PRIORITYLIST).isNotEmpty) {
+      for (int i = 0;
+          i < LocalStorage.getList(AppConstants.PRIORITYLIST).length;
+          i++) {
+        List<int> filters = LocalStorage.getList(AppConstants.PRIORITYLIST)
+            .map((e) => int.parse(e))
+            .toList();
 
         cachePriority.add(filters[i]);
       }
     }
-    if(LocalStorage.getList(AppConstants.SUBSTATIONLISTID).isNotEmpty){
-      for(int i = 0;
-      i < LocalStorage.getList(AppConstants.SUBSTATIONLISTID).length;
-      i++){
-        List <int> filters = LocalStorage.getList(AppConstants.SUBSTATIONLISTID).map((e) => int.parse(e)).toList();
+    if (LocalStorage.getList(AppConstants.SUBSTATIONLISTID).isNotEmpty) {
+      for (int i = 0;
+          i < LocalStorage.getList(AppConstants.SUBSTATIONLISTID).length;
+          i++) {
+        List<int> filters = LocalStorage.getList(AppConstants.SUBSTATIONLISTID)
+            .map((e) => int.parse(e))
+            .toList();
 
-        cacheSubstationsName.add(LocalStorage.getList(AppConstants.SUBSTATIONLISTNAME)[i]);
+        cacheSubstationsName
+            .add(LocalStorage.getList(AppConstants.SUBSTATIONLISTNAME)[i]);
         cacheSubstation.add(filters[i]);
       }
     }
 
-    print ('123213 e rewrewr  $cacheSubstation');
+    print('123213 e rewrewr  $cacheSubstation');
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -85,6 +92,41 @@ class _FilterPageState extends State<FilterPage> {
             child:
                 SvgPicture.asset('assets/images/icons/shared/arrow_back.svg'),
           ),
+          actions: [
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: MaterialButton(
+
+                onPressed: () {
+                  setState(() {
+                    LocalStorage.setList(AppConstants.CITYSTATIONLIST, []);
+
+                    LocalStorage.setList(AppConstants.PRIORITYLIST, []);
+
+                    LocalStorage.setList(AppConstants.SUBSTATIONLISTID, []);
+                    LocalStorage.setList(AppConstants.SUBSTATIONLISTNAME, []);
+                    cacheCity = [];
+                    cachePriority = [];
+                    cacheSubstation = [];
+                    cacheSubstationsName = [];
+                    substations = [];
+                    substationsName = [];
+                  });
+                },
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  side: const BorderSide(color: ThemeApp.primaryColor, width: 2),
+                ),
+                child: const Padding(
+                  padding: EdgeInsets.only(top: 10, bottom: 10),
+                  child: Text(
+                    'сброс',
+                    style: TextStyle(color: ThemeApp.primaryColor),
+                  ),
+                ),
+              ),
+            )
+          ],
           titleSpacing: 0,
         ),
       ),
@@ -93,40 +135,31 @@ class _FilterPageState extends State<FilterPage> {
           if (state is FiltersDoneState) {
             List<int> tempSubstationsIdList = [];
             List<String> tempSubstationsNameList = [];
-            if(cacheSubstation.isNotEmpty){
-              for (int i = 0;
-              i < cacheSubstation.length;
-              i++){
-                tempSubstationsIdList
-                    .add(cacheSubstation[i]);
+            if (cacheSubstation.isNotEmpty) {
+              for (int i = 0; i < cacheSubstation.length; i++) {
+                tempSubstationsIdList.add(cacheSubstation[i]);
+
+              }
+            }
+            if (cacheSubstationsName.isNotEmpty) {
+              for (int i = 0; i < cacheSubstationsName.length; i++) {
                 tempSubstationsNameList.add(cacheSubstationsName[i]);
               }
             }
-            if(cacheCity.isNotEmpty){
-              for (int i = 0;
-              i < state.substations.length;
-              i++) {
-                if (cacheCity.contains(
-                    state.substations[i].cityStation!.id)) {
-                  //setState(() {
-                    tempSubstationsIdList
-                        .add(state.substations[i].id!);
-                    tempSubstationsNameList
-                          .add(state.substations[i].name!);
+            if (cacheCity.isNotEmpty) {
+              for (int i = 0; i < state.substations.length; i++) {
+                if (cacheCity.contains(state.substations[i].cityStation!.id)) {
+                  tempSubstationsIdList.add(state.substations[i].id!);
+                  tempSubstationsNameList.add(state.substations[i].name!);
 
-
-                 // });
                 } else if (!cacheCity
-                    .contains(state.substations[i].cityStation!.id) && cacheSubstation.isEmpty) {
-                //  setState(() {
-                    tempSubstationsIdList.removeWhere((int id) {
-                      return id == state.substations[i].id!;
-                    });
-                    tempSubstationsNameList
-                        .removeWhere((String name) {
-                      return name ==
-                          state.substations[i].name!;
-                  //  });
+                        .contains(state.substations[i].cityStation!.id) &&
+                    cacheSubstation.isEmpty) {
+                  tempSubstationsIdList.removeWhere((int id) {
+                    return id == state.substations[i].id!;
+                  });
+                  tempSubstationsNameList.removeWhere((String name) {
+                    return name == state.substations[i].name!;
                   });
                 }
               }
@@ -171,7 +204,13 @@ class _FilterPageState extends State<FilterPage> {
                     const Padding(
                       padding: EdgeInsets.only(
                           top: 16, bottom: 12, left: 16, right: 16),
-                      child: Text('Город'),
+                      child: Text(
+                        'Город',
+                        style: TextStyle(
+                            color: ThemeApp.secondaryColorTextAndIcons,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 22),
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 13, right: 13),
@@ -186,15 +225,7 @@ class _FilterPageState extends State<FilterPage> {
                                 onCityChoice: () {
                                   List<int> tempSubstationsIdList = [];
                                   List<String> tempSubstationsNameList = [];
-                                  if(cacheSubstation.isNotEmpty){
-                                    for (int i = 0;
-                                    i < cacheSubstation.length;
-                                    i++){
-                                      tempSubstationsIdList
-                                          .add(cacheSubstation[i]);
-                                      tempSubstationsNameList.add(cacheSubstationsName[i]);
-                                    }
-                                  }
+
                                   for (int i = 0;
                                       i < state.substations.length;
                                       i++) {
@@ -206,10 +237,12 @@ class _FilterPageState extends State<FilterPage> {
                                         tempSubstationsNameList
                                             .add(state.substations[i].name!);
                                       });
-                                    } else if (!cacheCity
-                                        .contains(state.substations[i].cityStation!.id) && cacheSubstation.isEmpty) {
+                                    } else if (!cacheCity.contains(state
+                                            .substations[i].cityStation!.id) &&
+                                        cacheSubstation.isEmpty) {
                                       setState(() {
-                                        tempSubstationsIdList.removeWhere((int id) {
+                                        tempSubstationsIdList
+                                            .removeWhere((int id) {
                                           return id == state.substations[i].id!;
                                         });
                                         tempSubstationsNameList
@@ -220,9 +253,21 @@ class _FilterPageState extends State<FilterPage> {
                                       });
                                     }
                                   }
-                                  substationsName = tempSubstationsNameList.toSet().toList();
-                                  substations = tempSubstationsIdList.toSet().toList();
+                                  if (cacheSubstation.isNotEmpty) {
+                                    for (int i = 0; i < cacheSubstation.length; i++) {
+                                      tempSubstationsIdList.add(cacheSubstation[i]);
 
+                                    }
+                                  }
+                                  if (cacheSubstationsName.isNotEmpty) {
+                                    for (int i = 0; i < cacheSubstationsName.length; i++) {
+                                      tempSubstationsNameList.add(cacheSubstationsName[i]);
+                                    }
+                                  }
+                                  substationsName =
+                                      tempSubstationsNameList.toSet().toList();
+                                  substations =
+                                      tempSubstationsIdList.toSet().toList();
                                 },
                               ));
                         }).toList(),
@@ -231,7 +276,13 @@ class _FilterPageState extends State<FilterPage> {
                     const Padding(
                       padding: EdgeInsets.only(
                           top: 16, bottom: 12, left: 16, right: 16),
-                      child: Text('Срочность'),
+                      child: Text(
+                        'Срочность',
+                        style: TextStyle(
+                            color: ThemeApp.secondaryColorTextAndIcons,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 22),
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 13, right: 13),
@@ -240,7 +291,6 @@ class _FilterPageState extends State<FilterPage> {
                           return Padding(
                               padding: const EdgeInsets.only(left: 3, right: 3),
                               child: FilterChipItem(
-
                                 itemName: priorityList[index].toString(),
                                 itemId: priorityList[index],
                                 filters: cachePriority,
@@ -252,7 +302,13 @@ class _FilterPageState extends State<FilterPage> {
                     const Padding(
                       padding: EdgeInsets.only(
                           top: 16, bottom: 12, left: 16, right: 16),
-                      child: Text('Подстанция'),
+                      child: Text(
+                        'Подстанция',
+                        style: TextStyle(
+                            color: ThemeApp.secondaryColorTextAndIcons,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 22),
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 13, right: 13),
@@ -276,6 +332,23 @@ class _FilterPageState extends State<FilterPage> {
                         }).toList(),
                       ),
                     ),
+                    PrimaryButton(
+                        onTap: () {
+                          LocalStorage.setList(AppConstants.CITYSTATIONLIST,
+                              cacheCity.map((i) => i.toString()).toList());
+
+                          LocalStorage.setList(AppConstants.PRIORITYLIST,
+                              cachePriority.map((i) => i.toString()).toList());
+
+                          LocalStorage.setList(
+                              AppConstants.SUBSTATIONLISTID,
+                              cacheSubstation
+                                  .map((i) => i.toString())
+                                  .toList());
+                          LocalStorage.setList(
+                              AppConstants.SUBSTATIONLISTNAME, substationsName);
+                        },
+                        buttonName: 'Подтвердить'),
                   ],
                 ),
               ),
@@ -284,15 +357,6 @@ class _FilterPageState extends State<FilterPage> {
           return const SizedBox.shrink();
         },
       ),
-      floatingActionButton: PrimaryButton(onTap: (){
-        LocalStorage.setList(AppConstants.CITYSTATIONLIST, cacheCity.map((i)=>i.toString()).toList());
-
-        LocalStorage.setList(AppConstants.PRIORITYLIST, cachePriority.map((i)=>i.toString()).toList());
-
-        LocalStorage.setList(AppConstants.SUBSTATIONLISTID, cacheSubstation.map((i)=>i.toString()).toList());
-        LocalStorage.setList(AppConstants.SUBSTATIONLISTNAME, substationsName);
-
-      }, buttonName: 'Подтвердить'),
     );
   }
 }
