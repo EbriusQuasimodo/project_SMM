@@ -3,8 +3,9 @@ import 'package:project_smm/shared/constants/local_storage/local_storage_constan
 import 'package:project_smm/shared/lib/local_storage/local_storage.dart';
 import 'package:project_smm/shared/lib/language/app_locale_model.dart';
 import 'package:project_smm/shared/lib/theme/theme_app.dart';
-import 'package:project_smm/shared/ui/buttons/choice_button/choice_button.dart';
 import 'package:provider/provider.dart';
+
+import 'ui/choice_button/choice_button.dart';
 
 class ChangeLocaleWidget extends StatefulWidget {
   const ChangeLocaleWidget({Key? key}) : super(key: key);

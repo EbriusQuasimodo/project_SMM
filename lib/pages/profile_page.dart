@@ -7,8 +7,8 @@ import 'package:project_smm/widgets/profile_widgets/update_version_button.dart';
 import 'package:project_smm/widgets/profile_widgets/user_name_text.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import 'ui/exit_button/exit_button.dart';
-import 'ui/settings_button/settings_button.dart';
+import '../../widgets/profile_widgets/exit_button.dart';
+import '../../widgets/profile_widgets/settings_button.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});

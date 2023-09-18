@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:project_smm/pages/analytics_page/analytics_page.dart';
-import 'package:project_smm/pages/favourites_page/favourites_page.dart';
-import 'package:project_smm/pages/main_page/main_page.dart';
-import 'package:project_smm/pages/profile_page/profile_page.dart';
-import 'package:project_smm/pages/reports_page/reports_page.dart';
+import 'package:project_smm/pages/analytics_page.dart';
+import 'package:project_smm/pages/favourites_page.dart';
+import 'package:project_smm/pages/main_page.dart';
+import 'package:project_smm/pages/profile_page.dart';
+import 'package:project_smm/pages/reports_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:project_smm/widgets/nav_bar_widgets/ui/bottom_navigation_item.dart';
 
@@ -33,12 +33,12 @@ class _NavBarState extends State<NavBar> {
     return Scaffold(
       body: IndexedStack(
         index: _selectedPage,
-        children: [
+        children: const [
           MainPage(),
-          const AnalyticsPage(),
-          const FavouritesPage(),
-          const ReportsPage(),
-          const ProfilePage(),
+          AnalyticsPage(),
+          FavouritesPage(),
+          ReportsPage(),
+          ProfilePage(),
         ],
       ),
       bottomNavigationBar: SizedBox(

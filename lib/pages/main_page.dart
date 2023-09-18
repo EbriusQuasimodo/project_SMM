@@ -1,19 +1,27 @@
 import 'package:flutter/material.dart' hide Badge;
+import 'package:flutter/scheduler.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:project_smm/entities/main_page_entities/main_page_bloc/main_page_bloc.dart';
+import 'package:project_smm/features/calls_list_or_brigades_list/change_list_widget.dart';
 import 'package:project_smm/shared/constants/local_storage/local_storage_constants.dart';
 import 'package:project_smm/shared/lib/local_storage/local_storage.dart';
 import 'package:project_smm/shared/lib/routes/app_routes.dart';
 import 'package:project_smm/shared/lib/theme/theme_app.dart';
-import 'package:project_smm/shared/ui/buttons/switch_calls_or_brigade_item/switch_item.dart';
 import 'package:project_smm/shared/ui/list_item_cards/brigades_card/brigades_card.dart';
 import 'package:project_smm/shared/ui/list_item_cards/calls_card/calls_card.dart';
 
-class MainPage extends StatelessWidget {
+class MainPage extends StatefulWidget {
   const MainPage({super.key});
+
+  @override
+  State<MainPage> createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
+  bool isCall = true;
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +52,21 @@ class MainPage extends StatelessWidget {
         child: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center, children: [
-          const SwitchCallsOrBrigadeItem(itemsLength: 10),
+           SwitchCallsOrBrigadeItem(itemsLength: 10, isCall: isCall, onTapCallButton: (){ context.read<MainPageBloc>().add(
+              MainPageStartLoadingEvent()
+          );
+          setState(() {
+            isCall = true;
+          });
+          },
+           onTapBrigadeButton: (){
+             context.read<MainPageBloc>().add(
+                 MainPageBrigadesStartLoadingEvent()
+             );
+             setState(() {
+               isCall = false;
+             });
+           },),
           BlocBuilder<MainPageBloc, MainPageState>(
             builder: (context, state) {
               if (state is MainPageLoadingState) {
@@ -52,9 +74,11 @@ class MainPage extends StatelessWidget {
                   child: CircularProgressIndicator(),
                 );
               } else if (state is MainPageLogoutState) {
-                LocalStorage.setString(AppConstants.TOKEN, '');
+    SchedulerBinding.instance.addPostFrameCallback((_) {
                 Navigator.of(context)
-                    .pushNamedAndRemoveUntil(AppRoutes.auth, (route) => false);
+                    .pushNamed(AppRoutes.auth,);
+                LocalStorage.setString(AppConstants.TOKEN, '');
+    });
               } else if (state is MainPageFailedState) {
                 return Center(
                   child: Text(state.message),

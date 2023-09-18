@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart' hide Badge;
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:project_smm/entities/main_page_entities/main_page_bloc/main_page_bloc.dart';
-import 'package:project_smm/shared/ui/buttons/switch_calls_or_brigade_item/button.dart';
+import 'package:project_smm/shared/lib/theme/theme_app.dart';
+
+import 'ui/button.dart';
 
 class SwitchCallsOrBrigadeItem extends StatelessWidget {
   final int itemsLength;
+  bool isCall;
+  final VoidCallback onTapCallButton;
+  final VoidCallback onTapBrigadeButton;
 
-  const SwitchCallsOrBrigadeItem({super.key, required this.itemsLength});
+  SwitchCallsOrBrigadeItem({super.key, required this.itemsLength, required this.isCall, required this.onTapCallButton, required this.onTapBrigadeButton});
 
   @override
   Widget build(BuildContext context) {
@@ -16,17 +19,19 @@ class SwitchCallsOrBrigadeItem extends StatelessWidget {
       child: Row(
         children: [
           Button(
-            onTap: (){context.read<MainPageBloc>().add(
-              MainPageStartLoadingEvent()
-            );},
+            buttonBorderColor: isCall ? ThemeApp.primaryColor : ThemeApp.elevationColorOne,
+            onTap: (){
+             onTapCallButton();
+              },
             itemsLength: itemsLength,
             buttonName: 'Вызовы',
             buttonIcon: 'assets/images/icons/shared/phone.svg',
           ),
           Button(
-            onTap: (){context.read<MainPageBloc>().add(
-                MainPageBrigadesStartLoadingEvent()
-            );},
+            buttonBorderColor: isCall ? ThemeApp.elevationColorOne : ThemeApp.primaryColor,
+            onTap: (){
+              onTapBrigadeButton();
+              },
             itemsLength: itemsLength,
             buttonName: 'Бригады',
             buttonIcon: 'assets/images/icons/shared/car.svg',
