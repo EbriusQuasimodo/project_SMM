@@ -10,17 +10,28 @@ BrigadesModel _$BrigadesModelFromJson(Map<String, dynamic> json) =>
     BrigadesModel(
       error: json['error'] as String,
       success: json['success'] as bool,
-      brigades: (json['brigades'] as List<dynamic>)
-          .map((e) => BrigadesListModel.fromJson(e as Map<String, dynamic>))
+      brigades: (json['brigades'] as List<dynamic>?)
+          ?.map((e) => BrigadesListModel.fromJson(e as Map<String, dynamic>))
           .toList(),
+      allCount: json['all_count'] as int,
     );
 
-Map<String, dynamic> _$BrigadesModelToJson(BrigadesModel instance) =>
-    <String, dynamic>{
-      'error': instance.error,
-      'success': instance.success,
-      'brigades': instance.brigades,
-    };
+Map<String, dynamic> _$BrigadesModelToJson(BrigadesModel instance) {
+  final val = <String, dynamic>{
+    'error': instance.error,
+    'success': instance.success,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('brigades', instance.brigades);
+  val['all_count'] = instance.allCount;
+  return val;
+}
 
 BrigadesListModel _$BrigadesListModelFromJson(Map<String, dynamic> json) =>
     BrigadesListModel(

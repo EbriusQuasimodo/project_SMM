@@ -2,16 +2,19 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'calls_model.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
 class CallsModel {
   final String error;
   final bool success;
   final List<CallsListModel> calls;
+  @JsonKey(name: 'all_count')
+  final int allCount;
 
   CallsModel({
     required this.error,
     required this.success,
     required this.calls,
+    required this.allCount,
   });
 
   factory CallsModel.fromJson(Map<String, dynamic> json) =>

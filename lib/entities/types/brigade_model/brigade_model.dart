@@ -2,16 +2,19 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'brigade_model.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
 class BrigadesModel {
   final String error;
   final bool success;
-  final List<BrigadesListModel> brigades;
+  final List<BrigadesListModel>? brigades;
+  @JsonKey(name: 'all_count')
+  final int allCount;
 
   BrigadesModel({
     required this.error,
     required this.success,
     required this.brigades,
+    required this.allCount,
   });
 
   factory BrigadesModel.fromJson(Map<String, dynamic> json) =>

@@ -1,4 +1,3 @@
-import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
@@ -16,22 +15,7 @@ class FiltersBloc extends Bloc<FiltersEvent, FiltersState> {
       final reSubstations = await GetDictionary().fetch(Dictionary.substation);
       final reCityStations = await GetDictionary().fetch(Dictionary.city_station);
       emit (FiltersDoneState(substations: reSubstations.result, cityStations: reCityStations.result));
-      /*final reSubstations = await SubstationRepository.substations();
-      reSubstations.fold((l) {
-        if (l is LogOutFailure) {
-          emit(FiltersLogoutState());
-        } else if (l is ServerFailure) {
-          emit(FiltersFailedState(message: l.error));
-        }
-      }, (r) => emit(FiltersDoneState(substations: r.result)));*/
-      /*final reCities = await CityStationRepository.cities();
-      reCities.fold((l) {
-        if (l is LogOutFailure) {
-          emit(FiltersLogoutState());
-        } else if (l is ServerFailure) {
-          emit(FiltersFailedState(message: l.error));
-        }
-      }, (r) => emit(FiltersDoneState(cities: r.result, substations: [])));*/
+
     });
   }
 }

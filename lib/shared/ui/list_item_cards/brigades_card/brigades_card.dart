@@ -8,7 +8,7 @@ import 'package:project_smm/shared/ui/list_item_cards/text_with_icon/text_with_i
 import 'package:project_smm/shared/ui/list_item_cards/title_text/title_text.dart';
 
 class BrigadesCard extends StatefulWidget {
-  final BrigadesListModel brigadesInfo;
+  final BrigadesListModel? brigadesInfo;
 
   const BrigadesCard({
     super.key,
@@ -36,7 +36,7 @@ class _BrigadesCardState extends State<BrigadesCard> {
 
   void parseDate() {
     DateTime parsedDate = DateTime.parse(
-        widget.brigadesInfo.statusStartTime.replaceAll('T', ' ').toString());
+        widget.brigadesInfo!.statusStartTime.replaceAll('T', ' ').toString());
     var utcDate = dateFormat.format(parsedDate); // pass the UTC time here
     var localDate = dateFormat.parse(utcDate, true).toLocal().toString();
     var utcTime = timeFormat.format(parsedDate); // pass the UTC time here
@@ -60,7 +60,7 @@ class _BrigadesCardState extends State<BrigadesCard> {
           const SizedBox(
             height: 8,
           ),
-          TitleText(text: 'Бригада ${widget.brigadesInfo.id}'),
+          TitleText(text: 'Бригада ${widget.brigadesInfo!.id}'),
           const SizedBox(
             height: 6,
           ),
@@ -77,7 +77,7 @@ class _BrigadesCardState extends State<BrigadesCard> {
           ),
           TextWithIcon(
               iconPath: 'assets/images/icons/shared/icon_profile.svg',
-              text: widget.brigadesInfo.leader!.fio!),
+              text: widget.brigadesInfo!.leader!.fio!),
           const SizedBox(
             height: 6,
           ),
@@ -102,7 +102,7 @@ class _BrigadesCardState extends State<BrigadesCard> {
                     ),
                     TextWithIcon(
                         iconPath: 'assets/images/icons/shared/location.svg',
-                        text: '${widget.brigadesInfo.substation!.name}'),
+                        text: '${widget.brigadesInfo!.substation!.name}'),
                   ],
                 ),
                 const Spacer(),

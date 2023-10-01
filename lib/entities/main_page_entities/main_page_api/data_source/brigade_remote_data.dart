@@ -8,10 +8,12 @@ import 'package:project_smm/shared/constants/local_storage/local_storage_constan
 import 'package:project_smm/shared/lib/errors/exceptions/exceptions.dart';
 import 'package:project_smm/shared/lib/local_storage/local_storage.dart';
 
+import 'types/params_model.dart';
+
 class BrigadesData {
   http.Client client = http.Client();
 
-  Future<BrigadesModel> fetch() async {
+  Future<BrigadesModel> fetch(ParamsModel params) async {
     try {
       var re = await client.post(
           Uri.http('smart103ala.kz', '/sd_mobile/api/brigades/operative'),
@@ -19,11 +21,7 @@ class BrigadesData {
             'Authorization': LocalStorage.getString(AppConstants.TOKEN),
             'Content-Type': "application/json",
           },
-          body: json.encode({
-            'limit': 10,
-            'offset': 0,
-            'parameters':[]
-          }));
+          body: json.encode(params));
       print(LocalStorage.getString(AppConstants.TOKEN));
       print(re.statusCode);
       if (re.statusCode == 200) {

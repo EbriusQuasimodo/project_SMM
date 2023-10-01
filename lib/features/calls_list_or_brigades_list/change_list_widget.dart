@@ -4,12 +4,13 @@ import 'package:project_smm/shared/lib/theme/theme_app.dart';
 import 'ui/button.dart';
 
 class SwitchCallsOrBrigadeItem extends StatelessWidget {
-  final int itemsLength;
+  final int allCountsCalls;
+  final int allCountsBrigades;
   bool isCall;
   final VoidCallback onTapCallButton;
   final VoidCallback onTapBrigadeButton;
 
-  SwitchCallsOrBrigadeItem({super.key, required this.itemsLength, required this.isCall, required this.onTapCallButton, required this.onTapBrigadeButton});
+  SwitchCallsOrBrigadeItem({super.key, required this.allCountsCalls,required this.allCountsBrigades, required this.isCall, required this.onTapCallButton, required this.onTapBrigadeButton});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,7 @@ class SwitchCallsOrBrigadeItem extends StatelessWidget {
             onTap: (){
              onTapCallButton();
               },
-            itemsLength: itemsLength,
+            itemsLength: allCountsCalls,
             buttonName: 'Вызовы',
             buttonIcon: 'assets/images/icons/shared/phone.svg',
           ),
@@ -32,7 +33,7 @@ class SwitchCallsOrBrigadeItem extends StatelessWidget {
             onTap: (){
               onTapBrigadeButton();
               },
-            itemsLength: itemsLength,
+            itemsLength: allCountsBrigades,
             buttonName: 'Бригады',
             buttonIcon: 'assets/images/icons/shared/car.svg',
           ),

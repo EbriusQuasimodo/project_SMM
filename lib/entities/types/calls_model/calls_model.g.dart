@@ -12,6 +12,7 @@ CallsModel _$CallsModelFromJson(Map<String, dynamic> json) => CallsModel(
       calls: (json['calls'] as List<dynamic>)
           .map((e) => CallsListModel.fromJson(e as Map<String, dynamic>))
           .toList(),
+      allCount: json['all_count'] as int,
     );
 
 Map<String, dynamic> _$CallsModelToJson(CallsModel instance) =>
@@ -19,6 +20,7 @@ Map<String, dynamic> _$CallsModelToJson(CallsModel instance) =>
       'error': instance.error,
       'success': instance.success,
       'calls': instance.calls,
+      'all_count': instance.allCount,
     };
 
 CallsListModel _$CallsListModelFromJson(Map<String, dynamic> json) =>

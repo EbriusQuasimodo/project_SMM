@@ -7,7 +7,10 @@ class MainPageLoadingState extends MainPageState {}
 
 class MainPageCallsDoneState extends MainPageState {
   final List<CallsListModel> calls;
-  MainPageCallsDoneState({required this.calls});
+  final int allCountCalls;
+  final List<BrigadesListModel>? brigades;
+  final int allCountBrigades;
+  MainPageCallsDoneState({required this.calls, required this.brigades, required this.allCountCalls, required this.allCountBrigades, });
 }
 class MainPageBrigadesDoneState extends MainPageState {
   final List<BrigadesListModel> brigades;

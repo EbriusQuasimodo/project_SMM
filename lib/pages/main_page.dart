@@ -22,97 +22,102 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   bool isCall = true;
+  int allCountsCalls = 0;
+  int allCountsBrigades = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(64),
-        child: AppBar(
-          title: Text(AppLocalizations.of(context)!.mainPage),
-          actions: [
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.search,
-                color: ThemeApp.secondaryColorTextAndIcons,
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(64),
+          child: AppBar(
+            title: Text(AppLocalizations.of(context)!.mainPage),
+            actions: [
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.search,
+                  color: ThemeApp.secondaryColorTextAndIcons,
+                ),
               ),
-            ),
-            IconButton(
-              onPressed: () {
-                Navigator.of(context)
-                    .pushNamed(AppRoutes.filter);
-              },
-              icon: SvgPicture.asset('assets/images/icons/shared/filter.svg'),
-            )
-          ],
+              IconButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(AppRoutes.filter);
+                },
+                icon: SvgPicture.asset('assets/images/icons/shared/filter.svg'),
+              )
+            ],
+          ),
         ),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center, children: [
-           SwitchCallsOrBrigadeItem(itemsLength: 10, isCall: isCall, onTapCallButton: (){ context.read<MainPageBloc>().add(
-              MainPageStartLoadingEvent()
-          );
-          setState(() {
-            isCall = true;
-          });
-          },
-           onTapBrigadeButton: (){
-             context.read<MainPageBloc>().add(
-                 MainPageBrigadesStartLoadingEvent()
-             );
-             setState(() {
-               isCall = false;
-             });
-           },),
-          BlocBuilder<MainPageBloc, MainPageState>(
-            builder: (context, state) {
-              if (state is MainPageLoadingState) {
-                return const Center(
-                  child: CircularProgressIndicator(),
+        body: BlocBuilder<MainPageBloc, MainPageState>(
+          builder: (context, state) {
+            if (state is MainPageLoadingState) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (state is MainPageLogoutState) {
+              SchedulerBinding.instance.addPostFrameCallback((_) {
+                Navigator.of(context).pushNamed(
+                  AppRoutes.auth,
                 );
-              } else if (state is MainPageLogoutState) {
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-                Navigator.of(context)
-                    .pushNamed(AppRoutes.auth,);
                 LocalStorage.setString(AppConstants.TOKEN, '');
-    });
-              } else if (state is MainPageFailedState) {
-                return Center(
-                  child: Text(state.message),
-                );
-              } else if (state is MainPageCallsDoneState) {
-                return SizedBox(
-                  height: MediaQuery.of(context).size.height - 100,
-                  child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: state.calls.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return CallsCard(
-                          callsInfo: state.calls[index],
-                        );
-                      }),
-                );
-              } else if (state is MainPageBrigadesDoneState) {
-                return SizedBox(
-                  height: MediaQuery.of(context).size.height - 100,
-                  child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: state.brigades.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return BrigadesCard(
-                          brigadesInfo: state.brigades[index],
-                        );
-                      }),
-                );
-              }
-              return const SizedBox.shrink();
-            },
-          )
-        ]),
-      ),
-    );
+              });
+            } else if (state is MainPageFailedState) {
+              return Center(
+                child: Text(state.message),
+              );
+            } else if (state is MainPageCallsDoneState) {
+              return SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SwitchCallsOrBrigadeItem(
+                      allCountsCalls: state.allCountCalls,
+                      allCountsBrigades: state.allCountBrigades,
+                      isCall: isCall,
+                      onTapCallButton: () {
+                        setState(() {
+                          isCall = true;
+                        });
+                      },
+                      onTapBrigadeButton: () {
+                        setState(() {
+                          isCall = false;
+                        });
+                      },
+                    ),
+                    isCall
+                        ? SizedBox(
+                            height: MediaQuery.of(context).size.height - 100,
+                            child: ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: state.calls.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return CallsCard(
+                                    callsInfo: state.calls[index],
+                                  );
+                                }),
+                          )
+                        : state.brigades == null ?Center(child: Text('бригады не найдены'),)
+                        : SizedBox(
+                      height: MediaQuery.of(context).size.height - 100,
+                      child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: state.brigades?.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return BrigadesCard(
+                              brigadesInfo: state.brigades?[index],
+                            );
+                          }),
+                    ),
+                  ],
+                ),
+              );
+            }
+
+            return const SizedBox.shrink();
+          },
+        ));
   }
 }
