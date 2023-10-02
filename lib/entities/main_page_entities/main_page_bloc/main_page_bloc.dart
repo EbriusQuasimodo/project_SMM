@@ -14,13 +14,13 @@ part 'main_page_event.dart';
 part 'main_page_state.dart';
 
 class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
-  MainPageBloc() : super(MainPageLoadingState()) {
+  MainPageBloc() : super(MainPageUninitialisedState()) {
     List<BrigadesListModel>? brigades = [];
     int brigadesCount = 0;
     List<Parameters> callsParametersList = [];
     List<Parameters> brigadesParametersList = [];
 
-    if (LocalStorage.getList(AppConstants.CITYSTATIONLISTCALLS).isNotEmpty ) {
+    if (LocalStorage.getList(AppConstants.CITYSTATIONLISTCALLS).isNotEmpty) {
       callsParametersList.add(Parameters(
           field: 'city_station',
           op: 'in',
@@ -54,49 +54,75 @@ class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
     }
 
     on<MainPageStartLoadingEvent>((event, emit) async {
-      emit(MainPageLoadingState());
+      if (state is MainPageUninitialisedState) {
+        emit(MainPageLoadingState());
+        final reBrigades = await BrigadesRepository.brigades(ParamsModel(
+            parameters: brigadesParametersList, limit: 10, offset: 0));
+        reBrigades.fold((l) {
+          if (l is LogOutFailure) {
+            emit(MainPageLogoutState());
+          } else if (l is ServerFailure) {
+            emit(MainPageFailedState(message: l.error));
+          }
+        }, (r) {
+          brigades = r.brigades;
+          brigadesCount = r.allCount;
+        });
 
-      final reBrigades = await BrigadesRepository.brigades(ParamsModel(parameters: brigadesParametersList, limit: 10, offset: 0));
-      reBrigades.fold((l) {
-        if (l is LogOutFailure) {
-          emit(MainPageLogoutState());
-        } else if (l is ServerFailure) {
-          emit(MainPageFailedState(message: l.error));
-        }
-      }, (r) {
-        brigades = r.brigades;
-        brigadesCount = r.allCount;
-      });
-
-      final reCalls = await CallsRepository.calls(ParamsModel(
-        parameters: callsParametersList,
-        limit: 10,
-        offset: 0,
-      ));
-      reCalls.fold((l) {
-        if (l is LogOutFailure) {
-          emit(MainPageLogoutState());
-        } else if (l is ServerFailure) {
-          emit(MainPageFailedState(message: l.error));
-        }
-      },
-          (r) => emit(MainPageCallsDoneState(
-              calls: r.calls,
-              brigades: brigades,
+        final reCalls = await CallsRepository.calls(ParamsModel(
+          parameters: callsParametersList,
+          limit: 10,
+          offset: 0,
+        ));
+        reCalls.fold((l) {
+          if (l is LogOutFailure) {
+            emit(MainPageLogoutState());
+          } else if (l is ServerFailure) {
+            emit(MainPageFailedState(message: l.error));
+          }
+        }, (r) {
+          emit(MainPageCallsDoneState(
+              calls: r.calls!,
+              brigades: brigades!,
               allCountCalls: r.allCount,
-              allCountBrigades: brigadesCount)));
-    });
+              allCountBrigades: brigadesCount));
+        });
+      } else if (state is MainPageCallsDoneState) {
+        MainPageCallsDoneState newState = state as MainPageCallsDoneState;
+        final reBrigades = await BrigadesRepository.brigades(ParamsModel(
+            parameters: brigadesParametersList,
+            limit: 10,
+            offset: newState.brigades == null ? 0 : newState.brigades!.length));
+        reBrigades.fold((l) {
+          if (l is LogOutFailure) {
+            emit(MainPageLogoutState());
+          } else if (l is ServerFailure) {
+            emit(MainPageFailedState(message: l.error));
+          }
+        }, (r) {
+            brigades = r.brigades;
+            brigadesCount = r.allCount;
+        });
 
-    /*  on<MainPageBrigadesStartLoadingEvent>((event, emit) async {
-      emit(MainPageLoadingState());
-      final re = await BrigadesRepository.brigades();
-      re.fold((l) {
-        if (l is LogOutFailure) {
-          emit(MainPageLogoutState());
-        } else if (l is ServerFailure) {
-          emit(MainPageFailedState(message: l.error));
-        }
-      }, (r) => emit(MainPageBrigadesDoneState(brigades: r.brigades)));
-    });*/
+        final reCalls = await CallsRepository.calls(ParamsModel(
+          parameters: callsParametersList,
+          limit: 10,
+          offset: newState.calls.isEmpty ? 0 : newState.calls.length,
+        ));
+        reCalls.fold((l) {
+          if (l is LogOutFailure) {
+            emit(MainPageLogoutState());
+          } else if (l is ServerFailure) {
+            emit(MainPageFailedState(message: l.error));
+          }
+        }, (r) {
+          emit(MainPageCallsDoneState(
+              calls: newState.calls + (r.calls ?? []),
+              brigades: newState.brigades! + (brigades ?? []),
+              allCountCalls: r.allCount,
+              allCountBrigades: brigadesCount));
+        });
+      }
+    });
   }
 }

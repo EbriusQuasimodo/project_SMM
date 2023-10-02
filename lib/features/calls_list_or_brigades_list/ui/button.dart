@@ -22,7 +22,7 @@ class Button extends StatelessWidget {
     return Expanded(
       child: Container(
         decoration: BoxDecoration(
-          border: Border(bottom: BorderSide(color: buttonBorderColor, width: 2))
+          border: Border(bottom: BorderSide(color: buttonBorderColor, width: 3))
         ),
         child: MaterialButton(
           onPressed: () {
@@ -51,7 +51,7 @@ class Button extends StatelessWidget {
                   '${itemsLength}',
                   style: const TextStyle(
                       fontWeight: FontWeight.w400,
-                      fontSize: 14,
+                      fontSize: 12,
                       color: ThemeApp.whiteColor),
                 ),
               ),

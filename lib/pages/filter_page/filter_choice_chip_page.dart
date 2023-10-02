@@ -342,7 +342,7 @@ class _FilterChoiceChipPageState extends State<FilterChoiceChipPage> {
                               MaterialPageRoute(builder: (context) {
                             return Provider(
                                 create: (context) => MainPageBloc()
-                                  ..add(MainPageStartLoadingEvent()),
+                                  ..add(MainPageStartLoadingEvent(offsetCalls: 0, offsetBrigades: 0)),
                                 child: const HomePage());
                           }), (route) => false);
                         },

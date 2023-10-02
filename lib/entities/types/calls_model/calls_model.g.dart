@@ -9,19 +9,28 @@ part of 'calls_model.dart';
 CallsModel _$CallsModelFromJson(Map<String, dynamic> json) => CallsModel(
       error: json['error'] as String,
       success: json['success'] as bool,
-      calls: (json['calls'] as List<dynamic>)
-          .map((e) => CallsListModel.fromJson(e as Map<String, dynamic>))
+      calls: (json['calls'] as List<dynamic>?)
+          ?.map((e) => CallsListModel.fromJson(e as Map<String, dynamic>))
           .toList(),
       allCount: json['all_count'] as int,
     );
 
-Map<String, dynamic> _$CallsModelToJson(CallsModel instance) =>
-    <String, dynamic>{
-      'error': instance.error,
-      'success': instance.success,
-      'calls': instance.calls,
-      'all_count': instance.allCount,
-    };
+Map<String, dynamic> _$CallsModelToJson(CallsModel instance) {
+  final val = <String, dynamic>{
+    'error': instance.error,
+    'success': instance.success,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('calls', instance.calls);
+  val['all_count'] = instance.allCount;
+  return val;
+}
 
 CallsListModel _$CallsListModelFromJson(Map<String, dynamic> json) =>
     CallsListModel(

@@ -8,10 +8,10 @@ class TitleText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(right: 12, left: 12),
+      padding: const EdgeInsets.only(right: 12, left: 12),
       child: Text(
         text,
-        style: TextStyle(
+        style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w500,
             color: ThemeApp.bodyColorTextAndIcons),

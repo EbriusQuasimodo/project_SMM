@@ -6,7 +6,7 @@ part 'calls_model.g.dart';
 class CallsModel {
   final String error;
   final bool success;
-  final List<CallsListModel> calls;
+  final List<CallsListModel>? calls;
   @JsonKey(name: 'all_count')
   final int allCount;
 
