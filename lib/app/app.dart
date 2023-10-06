@@ -87,7 +87,7 @@ class MyApp extends StatelessWidget {
                 create: (context) => AuthBloc(), child: const LoginPage()),
             AppRoutes.homePage: (context) => Provider(
                 create: (context) =>
-                    MainPageBloc()..add(MainPageStartLoadingEvent(offsetCalls: 0, offsetBrigades: 0)),
+                    MainPageBloc()..add(MainPageStartLoadingEvent(shouldLoadMore: false, callsStatus: [], brigadesStatus: [])),
                 child: const HomePage()),
             AppRoutes.mainPage: (context) => const MainPage(),
             AppRoutes.filter: (context) => Provider(

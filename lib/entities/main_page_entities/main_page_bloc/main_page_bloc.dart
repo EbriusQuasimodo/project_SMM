@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:project_smm/entities/main_page_entities/main_page_api/data_source/types/params_model.dart';
+import 'package:project_smm/entities/main_page_entities/main_page_api/data_source/types/statuses_model.dart';
 import 'package:project_smm/entities/main_page_entities/main_page_api/repository/brigade_repository.dart';
 import 'package:project_smm/entities/main_page_entities/main_page_api/repository/calls_repository.dart';
 import 'package:project_smm/entities/types/brigade_model/brigade_model.dart';
@@ -19,6 +22,28 @@ class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
     int brigadesCount = 0;
     List<Parameters> callsParametersList = [];
     List<Parameters> brigadesParametersList = [];
+
+    List<StatusesList> callsStatusesList = [];
+    List<StatusesList> brigadesStatusesList = [];
+
+    callsStatusesList
+        .add(StatusesList(statusId: 666, statusName: 'Вcе вызовы'));
+    callsStatusesList.add(StatusesList(statusId: 1, statusName: 'В очереди'));
+    callsStatusesList
+        .add(StatusesList(statusId: 3, statusName: 'Обслуживание'));
+    callsStatusesList
+        .add(StatusesList(statusId: 4, statusName: 'Транспортировка'));
+    callsStatusesList.add(StatusesList(statusId: 6, statusName: 'Стационар'));
+    callsStatusesList.add(StatusesList(statusId: 5, statusName: 'Завершено'));
+
+    brigadesStatusesList
+        .add(StatusesList(statusId: 667, statusName: 'Вcе бригады'));
+    brigadesStatusesList.add(StatusesList(
+        statusId: 10, statusName: 'Свободен')); // 0 4 5 10 status number
+    brigadesStatusesList
+        .add(StatusesList(statusId: 2, statusName: 'Обслуживание'));
+    brigadesStatusesList.add(StatusesList(
+        statusId: 6, statusName: 'Перерыв')); // 6 7 8 status number
 
     if (LocalStorage.getList(AppConstants.CITYSTATIONLISTCALLS).isNotEmpty) {
       callsParametersList.add(Parameters(
@@ -54,7 +79,62 @@ class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
     }
 
     on<MainPageStartLoadingEvent>((event, emit) async {
-      if (state is MainPageUninitialisedState) {
+      if (event.callsStatus.isNotEmpty && event.callsStatus.contains('666')) {
+        callsParametersList.removeWhere((element) => element.field == 'status');
+        callsParametersList.add(Parameters(
+            field: 'status', op: 'in', value: ['1', '2', '3', '4', '5', '6']));
+      } else if (event.callsStatus.isNotEmpty) {
+        callsParametersList.removeWhere((element) => element.field == 'status');
+        callsParametersList.add(
+            Parameters(field: 'status', op: 'in', value: event.callsStatus));
+      }
+
+      if (event.brigadesStatus.isNotEmpty &&
+          event.brigadesStatus.contains('667')) {
+        brigadesParametersList
+            .removeWhere((element) => element.field == 'status');
+        brigadesParametersList.add(Parameters(
+            field: 'status',
+            op: 'in',
+            value: [
+              '0',
+              '1',
+              '2',
+              '3',
+              '4',
+              '5',
+              '6',
+              '7',
+              '8',
+              '9',
+              '10',
+              '11',
+              '12'
+            ]));
+      } else if (event.brigadesStatus.isNotEmpty &&
+          event.brigadesStatus.contains('10')) {
+        print('10');
+        brigadesParametersList
+            .removeWhere((element) => element.field == 'status');
+        brigadesParametersList.add(Parameters(
+            field: 'status', op: 'in', value: ['0', '4', '5', '10']));
+      } else if (event.brigadesStatus.isNotEmpty &&
+          event.brigadesStatus.contains('2')) {
+        print('2');
+        brigadesParametersList
+            .removeWhere((element) => element.field == 'status');
+        brigadesParametersList.add(
+            Parameters(field: 'status', op: 'in', value: event.brigadesStatus));
+      } else if (event.brigadesStatus.isNotEmpty &&
+          event.brigadesStatus.contains('6')) {
+        print('6');
+        brigadesParametersList
+            .removeWhere((element) => element.field == 'status');
+        brigadesParametersList
+            .add(Parameters(field: 'status', op: 'in', value: ['6', '7', '8']));
+      }
+      print("asdasdasdas ${json.encode(brigadesParametersList)}");
+      if (!event.shouldLoadMore) {
         emit(MainPageLoadingState());
         final reBrigades = await BrigadesRepository.brigades(ParamsModel(
             parameters: brigadesParametersList, limit: 10, offset: 0));
@@ -82,12 +162,14 @@ class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
           }
         }, (r) {
           emit(MainPageCallsDoneState(
-              calls: r.calls!,
-              brigades: brigades!,
+              brigadesStatusesList: brigadesStatusesList,
+              callsStatusesList: callsStatusesList,
+              calls: r.calls ?? [],
+              brigades: brigades ?? [],
               allCountCalls: r.allCount,
               allCountBrigades: brigadesCount));
         });
-      } else if (state is MainPageCallsDoneState) {
+      } else {
         MainPageCallsDoneState newState = state as MainPageCallsDoneState;
         final reBrigades = await BrigadesRepository.brigades(ParamsModel(
             parameters: brigadesParametersList,
@@ -100,14 +182,14 @@ class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
             emit(MainPageFailedState(message: l.error));
           }
         }, (r) {
-            brigades = r.brigades;
-            brigadesCount = r.allCount;
+          brigades = r.brigades;
+          brigadesCount = r.allCount;
         });
 
         final reCalls = await CallsRepository.calls(ParamsModel(
           parameters: callsParametersList,
           limit: 10,
-          offset: newState.calls.isEmpty ? 0 : newState.calls.length,
+          offset: newState.calls!.isEmpty ? 0 : newState.calls!.length,
         ));
         reCalls.fold((l) {
           if (l is LogOutFailure) {
@@ -117,7 +199,9 @@ class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
           }
         }, (r) {
           emit(MainPageCallsDoneState(
-              calls: newState.calls + (r.calls ?? []),
+              brigadesStatusesList: brigadesStatusesList,
+              callsStatusesList: callsStatusesList,
+              calls: newState.calls! + (r.calls ?? []),
               brigades: newState.brigades! + (brigades ?? []),
               allCountCalls: r.allCount,
               allCountBrigades: brigadesCount));

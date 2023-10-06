@@ -9,9 +9,12 @@ import 'package:project_smm/features/calls_list_or_brigades_list/change_list_wid
 import 'package:project_smm/shared/constants/local_storage/local_storage_constants.dart';
 import 'package:project_smm/shared/lib/local_storage/local_storage.dart';
 import 'package:project_smm/shared/lib/routes/app_routes.dart';
+import 'package:project_smm/shared/lib/statuses/brigades_statuses.dart';
+import 'package:project_smm/shared/lib/statuses/calls_statuses.dart';
 import 'package:project_smm/shared/lib/theme/theme_app.dart';
 import 'package:project_smm/shared/ui/list_item_cards/brigades_card/brigades_card.dart';
 import 'package:project_smm/shared/ui/list_item_cards/calls_card/calls_card.dart';
+import 'package:project_smm/shared/ui/status_choice_chip/status_choice_chip.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -27,16 +30,21 @@ class _MainPageState extends State<MainPage> {
 
   final ScrollController scrollController = ScrollController();
 
+  List<int> statusFiltersCalls = [];
+  List<int> statusFiltersBrigades = [];
+
   @override
   void initState() {
     super.initState();
     scrollController.addListener(
-          () {
+      () {
         if (scrollController.position.pixels >=
             scrollController.position.maxScrollExtent) {
-          context.read<MainPageBloc>().add(
-            MainPageStartLoadingEvent(offsetCalls: isCall ? offsetCalls : 0, offsetBrigades: isCall ? 0 :offsetBrigades)
-          );
+          context.read<MainPageBloc>().add(MainPageStartLoadingEvent(
+              shouldLoadMore: true,
+              callsStatus: statusFiltersCalls.map((i) => i.toString()).toList(),
+              brigadesStatus:
+                  statusFiltersBrigades.map((i) => i.toString()).toList()));
         }
       },
     );
@@ -110,27 +118,106 @@ class _MainPageState extends State<MainPage> {
                     },
                   ),
                 ),
+                SliverToBoxAdapter(
+                  child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 13, vertical: 9),
+                      child: Wrap(
+                        children: List.generate(
+                            isCall
+                                ? state.callsStatusesList.length
+                                : state.brigadesStatusesList.length, (index) {
+                          Color? colorCardSelected;
+                          Color? colorCardUnSelected;
+                          if (!isCall) {
+                            if (state.brigadesStatusesList[index].statusId ==
+                                667) {
+                              colorCardSelected = ThemeApp.primaryColor;
+                              colorCardUnSelected = ThemeApp.secondaryColor;
+                            }
+                            if (state.brigadesStatusesList[index].statusId ==
+                                BrigadesStatuses().brigadeIsFree) {
+                              colorCardSelected = ThemeApp.brigadeFreeColor;
+                              colorCardUnSelected =
+                                  ThemeApp.brigadeFreeLightColor;
+                            }
+                            if (state.brigadesStatusesList[index].statusId ==
+                                BrigadesStatuses().service) {
+                              colorCardSelected = ThemeApp.onServiceColor;
+                              colorCardUnSelected =
+                                  ThemeApp.onServiceLightColor;
+                            }
+                            if (state.brigadesStatusesList[index].statusId ==
+                                BrigadesStatuses().lunch) {
+                              colorCardSelected = ThemeApp.breakColor;
+                              colorCardUnSelected = ThemeApp.breakLightColor;
+                            }
+                          }
+                          if (state.callsStatusesList[index].statusId == 666) {
+                            colorCardSelected = ThemeApp.primaryColor;
+                            colorCardUnSelected = ThemeApp.secondaryColor;
+                          }
+                          if (state.callsStatusesList[index].statusId ==
+                              CallStatuses().inQueue) {
+                            colorCardSelected = ThemeApp.alarmColor;
+                            colorCardUnSelected = ThemeApp.onAlertColorTwo;
+                          }
+                          if (state.callsStatusesList[index].statusId ==
+                              CallStatuses().service) {
+                            colorCardSelected = ThemeApp.onServiceColor;
+                            colorCardUnSelected = ThemeApp.onServiceLightColor;
+                          }
+                          if (state.callsStatusesList[index].statusId ==
+                              CallStatuses().onHospitalization) {
+                            colorCardSelected = ThemeApp.transportationColor;
+                            colorCardUnSelected =
+                                ThemeApp.transportationLightColor;
+                          }
+                          if (state.callsStatusesList[index].statusId ==
+                              CallStatuses().arrivalAtHospital) {
+                            colorCardSelected = ThemeApp.inHospitalColor;
+                            colorCardUnSelected = ThemeApp.inHospitalLightColor;
+                          }
+                          if (state.callsStatusesList[index].statusId ==
+                              CallStatuses().onResult) {
+                            colorCardSelected = ThemeApp.onResultColor;
+                            colorCardUnSelected = ThemeApp.onResultLightColor;
+                          }
+                          return StatusChoiceChip(
+                            isCall: isCall,
+                            statusesList: isCall
+                                ? state.callsStatusesList[index]
+                                : state.brigadesStatusesList[index],
+                            colorCardSelected: colorCardSelected,
+                            colorCardUnSelected: colorCardUnSelected,
+                            statusFilters: isCall
+                                ? statusFiltersCalls
+                                : statusFiltersBrigades,
+                          );
+                        }).toList(),
+                      )),
+                ),
                 isCall
-                    ? state.brigades == []
+                    ? state.calls == []
                         ? const SliverToBoxAdapter(
-                          child: Center(
+                            child: Center(
                               child: Text('вызовы не найдены'),
                             ),
-                        )
+                          )
                         : SliverList(
                             delegate: SliverChildBuilderDelegate(
                                 (BuildContext context, int index) {
                               return CallsCard(
-                                callsInfo: state.calls[index],
+                                callsInfo: state.calls?[index],
                               );
-                            }, childCount: state.calls.length),
+                            }, childCount: state.calls?.length),
                           )
                     : state.brigades == []
                         ? const SliverToBoxAdapter(
-                          child: Center(
+                            child: Center(
                               child: Text('бригады не найдены'),
                             ),
-                        )
+                          )
                         : SliverList(
                             delegate: SliverChildBuilderDelegate(
                                 (BuildContext context, int index) {

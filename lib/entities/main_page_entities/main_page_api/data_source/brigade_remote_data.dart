@@ -15,6 +15,7 @@ class BrigadesData {
 
   Future<BrigadesModel> fetch(ParamsModel params) async {
     try {
+      print(json.encode(params));
       var re = await client.post(
           Uri.http('smart103ala.kz', '/sd_mobile/api/brigades/operative'),
           headers: {
