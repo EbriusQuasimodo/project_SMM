@@ -96,7 +96,7 @@ class MyApp extends StatelessWidget {
                 child: const FilterChoiceChipPage()),
             AppRoutes.choiceRegion: (context) => const ChoiceRegionPage(),
             AppRoutes.regionList: (context) => const RegionListPage(),
-            AppRoutes.analytics: (context) => const AnalyticsPage(),
+            AppRoutes.analytics: (context) => AnalyticsPage(),
             AppRoutes.favorites: (context) => const FavouritesPage(),
             AppRoutes.reports: (context) => const ReportsPage(),
             AppRoutes.profile: (context) => const ProfilePage(),

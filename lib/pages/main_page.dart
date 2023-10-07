@@ -159,7 +159,7 @@ class _MainPageState extends State<MainPage> {
                           }
                           if (state.callsStatusesList[index].statusId ==
                               CallStatuses().inQueue) {
-                            colorCardSelected = ThemeApp.alarmColor;
+                            colorCardSelected = ThemeApp.queueColor;
                             colorCardUnSelected = ThemeApp.onAlertColorTwo;
                           }
                           if (state.callsStatusesList[index].statusId ==

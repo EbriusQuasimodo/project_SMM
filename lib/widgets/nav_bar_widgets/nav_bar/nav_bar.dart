@@ -33,12 +33,12 @@ class _NavBarState extends State<NavBar> {
     return Scaffold(
       body: IndexedStack(
         index: _selectedPage,
-        children: const [
-          MainPage(),
+        children: [
+          const MainPage(),
           AnalyticsPage(),
-          FavouritesPage(),
-          ReportsPage(),
-          ProfilePage(),
+          const FavouritesPage(),
+          const ReportsPage(),
+          const ProfilePage(),
         ],
       ),
       bottomNavigationBar: SizedBox(

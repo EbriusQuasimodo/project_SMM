@@ -13,7 +13,7 @@ class ThemeApp {
   static const Color secondaryHoverColor = Color(0xffa6c8c6);
 
   static const Color alarmHoverColor = Color(0xffa95550);
-  static const Color alarmColor = Color(0xfffc7e7e);
+  static const Color queueColor = Color(0xfffc7e7e);
   static const Color onTheWayWaitColor = Color(0xffd26aa8);
   static const Color onServiceColor = Color(0xffbf7fff);
   static const Color onServiceLightColor = Color(0xffd7b1fd);

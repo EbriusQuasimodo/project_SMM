@@ -5,13 +5,13 @@ part 'params_model.g.dart';
 @JsonSerializable(includeIfNull: false)
 class ParamsModel {
   List<Parameters>? parameters;
-  int limit = 10;
-  int offset = 0;
+  int? limit = 10;
+  int? offset = 0;
 
   ParamsModel({
     required this.parameters,
-    required this.limit,
-    required this.offset,
+    this.limit,
+    this.offset,
   });
 
   factory ParamsModel.fromJson(Map<String, dynamic> json) =>

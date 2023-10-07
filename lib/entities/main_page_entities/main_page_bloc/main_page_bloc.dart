@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:project_smm/entities/main_page_entities/main_page_api/data_source/types/params_model.dart';
+import 'package:project_smm/entities/types/parameters_model/params_model.dart';
 import 'package:project_smm/entities/main_page_entities/main_page_api/data_source/types/statuses_model.dart';
 import 'package:project_smm/entities/main_page_entities/main_page_api/repository/brigade_repository.dart';
 import 'package:project_smm/entities/main_page_entities/main_page_api/repository/calls_repository.dart';

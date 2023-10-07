@@ -10,8 +10,8 @@ ParamsModel _$ParamsModelFromJson(Map<String, dynamic> json) => ParamsModel(
       parameters: (json['parameters'] as List<dynamic>?)
           ?.map((e) => Parameters.fromJson(e as Map<String, dynamic>))
           .toList(),
-      limit: json['limit'] as int,
-      offset: json['offset'] as int,
+      limit: json['limit'] as int?,
+      offset: json['offset'] as int?,
     );
 
 Map<String, dynamic> _$ParamsModelToJson(ParamsModel instance) {
@@ -24,8 +24,8 @@ Map<String, dynamic> _$ParamsModelToJson(ParamsModel instance) {
   }
 
   writeNotNull('parameters', instance.parameters);
-  val['limit'] = instance.limit;
-  val['offset'] = instance.offset;
+  writeNotNull('limit', instance.limit);
+  writeNotNull('offset', instance.offset);
   return val;
 }
 

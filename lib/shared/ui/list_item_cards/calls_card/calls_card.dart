@@ -46,7 +46,7 @@ class _CallsCardState extends State<CallsCard> {
     }
     if (widget.callsInfo!.status == CallStatuses().inQueue) {
       statusName = 'В очереди';
-      statusColor = ThemeApp.alarmColor;
+      statusColor = ThemeApp.queueColor;
     }
     if (widget.callsInfo!.status == CallStatuses().waitingDeparture) {
       statusName = 'Ожидает выезда';

@@ -8,7 +8,7 @@ import 'package:project_smm/shared/constants/local_storage/local_storage_constan
 import 'package:project_smm/shared/lib/errors/exceptions/exceptions.dart';
 import 'package:project_smm/shared/lib/local_storage/local_storage.dart';
 
-import 'types/params_model.dart';
+import '../../../types/parameters_model/params_model.dart';
 
 class BrigadesData {
   http.Client client = http.Client();

@@ -1,5 +1,5 @@
 import 'package:project_smm/entities/main_page_entities/main_page_api/data_source/brigade_remote_data.dart';
-import 'package:project_smm/entities/main_page_entities/main_page_api/data_source/types/params_model.dart';
+import 'package:project_smm/entities/types/parameters_model/params_model.dart';
 import 'package:project_smm/entities/types/brigade_model/brigade_model.dart';
 import 'package:project_smm/shared/lib/errors/exceptions/exceptions.dart';
 import 'package:project_smm/shared/lib/errors/failure/failure.dart';
