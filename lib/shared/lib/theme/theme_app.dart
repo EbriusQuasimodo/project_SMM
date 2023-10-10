@@ -43,6 +43,7 @@ class ThemeApp {
 
   static const Color disableColor = Color(0xffd9d6de);
   static const Color dividerColor = Color(0xffe3e3e3);
+  static const Color dividerTwoColor = Color(0xffBBBEBE);
   static const Color secondaryColorTextAndIcons = Color(0xff605d62);
   static const Color tertiaryColorTextAndIcons = Color(0xffbcb5c0);
   static const Color bodyColorTextAndIcons = Color(0xff191c1c);

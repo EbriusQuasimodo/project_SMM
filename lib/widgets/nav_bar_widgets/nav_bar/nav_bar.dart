@@ -8,8 +8,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:project_smm/widgets/nav_bar_widgets/ui/bottom_navigation_item.dart';
 
 class NavBar extends StatefulWidget {
-  const NavBar({
-    Key? key,
+  int? selectedPage;
+   NavBar({
+    Key? key, required this.selectedPage,
   }) : super(key: key);
 
   @override
@@ -17,13 +18,13 @@ class NavBar extends StatefulWidget {
 }
 
 class _NavBarState extends State<NavBar> {
-  int _selectedPage = 0;
+
 
   void onSelectPage(int index) {
-    if (_selectedPage == index) return;
+    if (widget.selectedPage == index) return;
     setState(
       () {
-        _selectedPage = index;
+        widget.selectedPage = index;
       },
     );
   }
@@ -32,19 +33,19 @@ class _NavBarState extends State<NavBar> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: IndexedStack(
-        index: _selectedPage,
+        index: widget.selectedPage,
         children: [
           const MainPage(),
           AnalyticsPage(),
           const FavouritesPage(),
-          const ReportsPage(),
+          ReportsPage(),
           const ProfilePage(),
         ],
       ),
       bottomNavigationBar: SizedBox(
         height: 84,
         child: BottomNavigationBar(
-          currentIndex: _selectedPage,
+          currentIndex: widget.selectedPage!,
           type: BottomNavigationBarType.fixed,
           items: [
             bottomNavigationItem(

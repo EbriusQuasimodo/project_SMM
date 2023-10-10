@@ -7,8 +7,7 @@ import 'package:project_smm/shared/constants/errors_constants/errors_constants.d
 import 'package:project_smm/shared/constants/local_storage/local_storage_constants.dart';
 import 'package:project_smm/shared/lib/errors/exceptions/exceptions.dart';
 import 'package:project_smm/shared/lib/local_storage/local_storage.dart';
-
-import '../../../types/parameters_model/params_model.dart';
+import 'package:project_smm/entities/types/parameters_model/params_model.dart';
 
 class BrigadesChartData {
   http.Client client = http.Client();

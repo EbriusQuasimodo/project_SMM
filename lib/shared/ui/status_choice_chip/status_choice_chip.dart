@@ -75,11 +75,17 @@ class _StatusChoiceChipState extends State<StatusChoiceChip> {
                       return id ==
                           widget.statusesList.statusId;
                     });
+                    widget.statusFilters.add(widget.isCall ? 666 : 667);
                     context.read<MainPageBloc>().add(
                         MainPageStartLoadingEvent(
                             shouldLoadMore: false,
-                            callsStatus: [],
-                            brigadesStatus: []));
+                            callsStatus: widget.isCall ? widget.statusFilters
+                                .map((i) => i.toString())
+                                .toList() : [],
+                            brigadesStatus: widget.isCall ? [] :
+                            widget.statusFilters
+                                .map((i) => i.toString())
+                                .toList()));
                   }
                 });
               },

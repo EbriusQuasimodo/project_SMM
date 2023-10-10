@@ -1,16 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:project_smm/entities/charts_entities/charts_bloc/charts_bloc.dart';
+import 'package:project_smm/entities/filter_entities/filter_bloc/filters_bloc.dart';
+import 'package:project_smm/pages/filter_page/filter_choice_chip_page.dart';
 import 'package:project_smm/shared/lib/routes/app_routes.dart';
 import 'package:project_smm/shared/lib/theme/theme_app.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:project_smm/widgets/analytics_widgets/pie_chart_brigades.dart';
 import 'package:project_smm/widgets/analytics_widgets/pie_chart_calls.dart';
+import 'package:project_smm/widgets/nav_bar_widgets/nav_bar/nav_bar.dart';
 import 'package:provider/provider.dart';
 
-class AnalyticsPage extends StatelessWidget {
+class AnalyticsPage extends StatefulWidget {
   AnalyticsPage({super.key});
 
+  @override
+  State<AnalyticsPage> createState() => _AnalyticsPageState();
+}
+
+class _AnalyticsPageState extends State<AnalyticsPage> {
   late final ChartsBloc _bloc = ChartsBloc()..add(ChartsStartLoadingEvent());
 
   @override
@@ -23,7 +31,20 @@ class AnalyticsPage extends StatelessWidget {
           actions: [
             IconButton(
               onPressed: () {
-                Navigator.of(context).pushNamed(AppRoutes.filter);
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (BuildContext context) {
+                      return Provider(
+                        create: (context) =>
+                            FiltersBloc()..add(FiltersStartLoadingEvent()),
+                        child: FilterChoiceChipPage(
+                          fromWhereOpen: AppRoutes.analytics,
+                          isCall: true,
+                        ),
+                      );
+                    },
+                  ),
+                ).then((value) => setState((){}));
               },
               icon: SvgPicture.asset('assets/images/icons/shared/filter.svg'),
             )
@@ -57,7 +78,8 @@ class AnalyticsPage extends StatelessWidget {
                     fontSize: 22),
               ),
             ),
-            Provider(create: (context) => _bloc, child: const PieChartBrigades()),
+            Provider(
+                create: (context) => _bloc, child: const PieChartBrigades()),
           ],
         ),
       ),

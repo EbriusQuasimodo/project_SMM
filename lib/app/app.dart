@@ -88,17 +88,13 @@ class MyApp extends StatelessWidget {
             AppRoutes.homePage: (context) => Provider(
                 create: (context) =>
                     MainPageBloc()..add(MainPageStartLoadingEvent(shouldLoadMore: false, callsStatus: [], brigadesStatus: [])),
-                child: const HomePage()),
+                child: HomePage()),
             AppRoutes.mainPage: (context) => const MainPage(),
-            AppRoutes.filter: (context) => Provider(
-                create: (context) =>
-                    FiltersBloc()..add(FiltersStartLoadingEvent()),
-                child: const FilterChoiceChipPage()),
             AppRoutes.choiceRegion: (context) => const ChoiceRegionPage(),
             AppRoutes.regionList: (context) => const RegionListPage(),
             AppRoutes.analytics: (context) => AnalyticsPage(),
             AppRoutes.favorites: (context) => const FavouritesPage(),
-            AppRoutes.reports: (context) => const ReportsPage(),
+            AppRoutes.reports: (context) => ReportsPage(),
             AppRoutes.profile: (context) => const ProfilePage(),
             AppRoutes.changeLanguage: (context) => const ChangeLanguagePage(),
             AppRoutes.changePassword: (context) => ChangePasswordPage(),

@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:project_smm/entities/charts_entities/charts_bloc/charts_bloc.dart';
 import 'package:project_smm/entities/filter_entities/filter_bloc/filters_bloc.dart';
 import 'package:project_smm/entities/main_page_entities/main_page_bloc/main_page_bloc.dart';
+import 'package:project_smm/entities/reports_entities/reports_bloc/reports_bloc.dart';
 import 'package:project_smm/features/filters_change_button/change_filters_widget.dart';
 import 'package:project_smm/pages/filter_page/filter_checkbox_page.dart';
 import 'package:project_smm/pages/home_page.dart';
+import 'package:project_smm/pages/reports_page.dart';
 import 'package:project_smm/shared/constants/local_storage/local_storage_constants.dart';
 import 'package:project_smm/shared/lib/local_storage/local_storage.dart';
+import 'package:project_smm/shared/lib/routes/app_routes.dart';
 import 'package:project_smm/shared/lib/theme/theme_app.dart';
 import 'package:project_smm/shared/ui/buttons/primary_button/primary_button.dart';
 import 'package:project_smm/shared/ui/form_item/form_item_select_dictionary/ui/filter_choice_chip_item.dart';
@@ -15,14 +19,17 @@ import 'package:project_smm/widgets/filters_widgets/show_more_button.dart';
 import 'package:provider/provider.dart';
 
 class FilterChoiceChipPage extends StatefulWidget {
-  const FilterChoiceChipPage({super.key});
+  bool isCall;
+  final String fromWhereOpen;
+
+  FilterChoiceChipPage(
+      {super.key, required this.isCall, required this.fromWhereOpen});
 
   @override
   State<FilterChoiceChipPage> createState() => _FilterChoiceChipPageState();
 }
 
 class _FilterChoiceChipPageState extends State<FilterChoiceChipPage> {
-  bool isCall = true;
   final List<int> priorityList = [1, 2, 3, 4];
 
   List<int> cacheCityCalls = [];
@@ -156,15 +163,15 @@ class _FilterChoiceChipPageState extends State<FilterChoiceChipPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     ChoiceFilterType(
-                      isCall: isCall,
+                      isCall: widget.isCall,
                       onTapBrigadeButton: () {
                         setState(() {
-                          isCall = false;
+                          widget.isCall = false;
                         });
                       },
                       onTapCallButton: () {
                         setState(() {
-                          isCall = true;
+                          widget.isCall = true;
                         });
                       },
                     ),
@@ -190,7 +197,7 @@ class _FilterChoiceChipPageState extends State<FilterChoiceChipPage> {
                                               FilterCheckboxPage(
                                             appBarName: 'Город вызова',
                                             itemsList: state.cityStations,
-                                            filters: isCall
+                                            filters: widget.isCall
                                                 ? cacheCityCalls
                                                 : cacheCityBrigades,
                                           ),
@@ -214,13 +221,14 @@ class _FilterChoiceChipPageState extends State<FilterChoiceChipPage> {
                               child: FilterChipItem(
                                 itemName: state.cityStations[index].name,
                                 itemId: state.cityStations[index].id,
-                                filters:
-                                    isCall ? cacheCityCalls : cacheCityBrigades,
+                                filters: widget.isCall
+                                    ? cacheCityCalls
+                                    : cacheCityBrigades,
                               ));
                         }).toList(),
                       ),
                     ),
-                    isCall
+                    widget.isCall
                         ? Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -279,7 +287,7 @@ class _FilterChoiceChipPageState extends State<FilterChoiceChipPage> {
                                               FilterCheckboxPage(
                                             appBarName: 'Подстанция вызова',
                                             itemsList: state.substations,
-                                            filters: isCall
+                                            filters: widget.isCall
                                                 ? cacheSubstationCalls
                                                 : cacheSubstationBrigades,
                                           ),
@@ -303,7 +311,7 @@ class _FilterChoiceChipPageState extends State<FilterChoiceChipPage> {
                               child: FilterChipItem(
                                 itemName: state.substations[index].name,
                                 itemId: state.substations[index].id!,
-                                filters: isCall
+                                filters: widget.isCall
                                     ? cacheSubstationCalls
                                     : cacheSubstationBrigades,
                               ));
@@ -338,13 +346,37 @@ class _FilterChoiceChipPageState extends State<FilterChoiceChipPage> {
                               cacheSubstationBrigades
                                   .map((i) => i.toString())
                                   .toList());
+
                           Navigator.of(context).pushAndRemoveUntil(
                               MaterialPageRoute(builder: (context) {
-                            return Provider(
-                                create: (context) => MainPageBloc()
-                                  ..add(MainPageStartLoadingEvent(shouldLoadMore: false, callsStatus: [], brigadesStatus: [])),
-                                child: const HomePage());
-                          }), (route) => false);
+                                if (widget.fromWhereOpen == AppRoutes.reports){
+                                  return
+                                    //Provider(
+                                    //  create: (context) =>
+                                    //  ReportsBloc()
+                                    //    ..add(ReportsStartLoadingEvent()),
+                                    //  child:
+                                      HomePage(selectedPage: 3,);
+                                  //);
+                                }else if (widget.fromWhereOpen == AppRoutes.analytics){
+                                  return
+                                    //Provider(
+                                    //  create: (context) =>
+                                    //  ChartsBloc()
+                                    //    ..add(ChartsStartLoadingEvent()),
+                                    //  child:
+                                      HomePage(selectedPage: 1,);
+                                 // );
+                                }
+                                return Provider(
+                                    create: (context) =>
+                                    MainPageBloc()
+                                      ..add(MainPageStartLoadingEvent(
+                                          shouldLoadMore: false,
+                                          callsStatus: [],
+                                          brigadesStatus: [])),
+                                    child: HomePage(selectedPage: 0,));
+                              }), (route) => false);
                         },
                         buttonName: 'Подтвердить'),
                   ],
