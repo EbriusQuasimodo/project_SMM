@@ -14,7 +14,7 @@ import 'package:project_smm/shared/lib/local_storage/local_storage.dart';
 import 'package:project_smm/shared/lib/routes/app_routes.dart';
 import 'package:project_smm/shared/lib/theme/theme_app.dart';
 import 'package:project_smm/shared/ui/buttons/primary_button/primary_button.dart';
-import 'package:project_smm/shared/ui/form_item/form_item_select_dictionary/ui/filter_choice_chip_item.dart';
+import 'package:project_smm/shared/ui/form_item/form_item_select_dictionary/filter_choice_chip_item.dart';
 import 'package:project_smm/widgets/filters_widgets/show_more_button.dart';
 import 'package:provider/provider.dart';
 
@@ -368,14 +368,17 @@ class _FilterChoiceChipPageState extends State<FilterChoiceChipPage> {
                                       HomePage(selectedPage: 1,);
                                  // );
                                 }
-                                return Provider(
-                                    create: (context) =>
-                                    MainPageBloc()
-                                      ..add(MainPageStartLoadingEvent(
-                                          shouldLoadMore: false,
-                                          callsStatus: [],
-                                          brigadesStatus: [])),
-                                    child: HomePage(selectedPage: 0,));
+                                return
+                                  // Provider(
+                                  //   create: (context) =>
+                                  //   MainPageBloc()
+                                  //     ..add(MainPageStartLoadingEvent(
+                                  //         shouldLoadMore: false,
+                                  //         callsStatus: [],
+                                  //         brigadesStatus: [])),
+                                  //   //child:
+                                    HomePage(selectedPage: 0,);
+                               // );
                               }), (route) => false);
                         },
                         buttonName: 'Подтвердить'),

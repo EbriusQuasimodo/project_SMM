@@ -6,8 +6,8 @@ import 'package:project_smm/shared/constants/errors_constants/errors_constants.d
 import 'package:project_smm/shared/constants/local_storage/local_storage_constants.dart';
 import 'package:project_smm/shared/lib/errors/exceptions/exceptions.dart';
 import 'package:project_smm/shared/lib/local_storage/local_storage.dart';
-import 'package:project_smm/shared/ui/form_item/form_item_select_dictionary/lib/dictionary_enum.dart';
-import 'package:project_smm/shared/ui/form_item/form_item_select_dictionary/types/dictionary_model.dart';
+import 'package:project_smm/shared/lib/dictionary_names/dictionary_enum.dart';
+import 'package:project_smm/shared/types/dictionary/dictionary_model.dart';
 
 class InitializeDictionary {
   http.Client client = http.Client();

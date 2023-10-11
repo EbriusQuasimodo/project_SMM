@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:project_smm/shared/ui/form_item/form_item_select_dictionary/types/dictionary_model.dart';
-import 'package:project_smm/shared/ui/form_item/form_item_select_dictionary/ui/filter_checkbox_item.dart';
+import 'package:project_smm/shared/types/dictionary/dictionary_model.dart';
+import 'package:project_smm/shared/ui/form_item/form_item_select_dictionary/filter_checkbox_item.dart';
 
 class FilterCheckboxPage extends StatelessWidget {
   final String appBarName;
