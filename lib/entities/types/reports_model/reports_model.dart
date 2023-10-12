@@ -6,8 +6,8 @@ part 'reports_model.g.dart';
 class ReportsModel {
   final String error;
   final bool success;
-  final ReportDataModel today;
-  final ReportDataModel yesterday;
+  final ReportDataModel? today;
+  final ReportDataModel? yesterday;
 
   ReportsModel({
     required this.error,

@@ -9,18 +9,30 @@ part of 'reports_model.dart';
 ReportsModel _$ReportsModelFromJson(Map<String, dynamic> json) => ReportsModel(
       error: json['error'] as String,
       success: json['success'] as bool,
-      today: ReportDataModel.fromJson(json['today'] as Map<String, dynamic>),
-      yesterday:
-          ReportDataModel.fromJson(json['yesterday'] as Map<String, dynamic>),
+      today: json['today'] == null
+          ? null
+          : ReportDataModel.fromJson(json['today'] as Map<String, dynamic>),
+      yesterday: json['yesterday'] == null
+          ? null
+          : ReportDataModel.fromJson(json['yesterday'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$ReportsModelToJson(ReportsModel instance) =>
-    <String, dynamic>{
-      'error': instance.error,
-      'success': instance.success,
-      'today': instance.today,
-      'yesterday': instance.yesterday,
-    };
+Map<String, dynamic> _$ReportsModelToJson(ReportsModel instance) {
+  final val = <String, dynamic>{
+    'error': instance.error,
+    'success': instance.success,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('today', instance.today);
+  writeNotNull('yesterday', instance.yesterday);
+  return val;
+}
 
 ReportDataModel _$ReportDataModelFromJson(Map<String, dynamic> json) =>
     ReportDataModel(

@@ -29,37 +29,35 @@ class _ReportsPageState extends State<ReportsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(64),
-          child: AppBar(
-            title: Text(AppLocalizations.of(context)!.reportsPage),
-            actions: [
-              IconButton(
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (BuildContext context) {
-                        return Provider(
-                          create: (context) =>
-                          FiltersBloc()..add(FiltersStartLoadingEvent()),
-                          child: FilterChoiceChipPage(
-                            fromWhereOpen: AppRoutes.reports,
-                            isCall: true,
-                          ),
-                        );
-                      },
-                    ),
-                  ).then((value) => setState((){}));
-                },
-                icon: SvgPicture.asset('assets/images/icons/shared/filter.svg'),
-              )
-            ],
-          ),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(64),
+        child: AppBar(
+          title: Text(AppLocalizations.of(context)!.reportsPage),
+          actions: [
+            IconButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (BuildContext context) {
+                      return Provider(
+                        create: (context) =>
+                            FiltersBloc()..add(FiltersStartLoadingEvent()),
+                        child: FilterChoiceChipPage(
+                          fromWhereOpen: AppRoutes.reports,
+                          isCall: true,
+                        ),
+                      );
+                    },
+                  ),
+                ).then((value) => setState(() {}));
+              },
+              icon: SvgPicture.asset('assets/images/icons/shared/filter.svg'),
+            )
+          ],
         ),
-        body: //Provider(create: (context) => _bloc, child:
-            ReportDataTable()
-        // ),
-        );
+      ),
+      body: Provider(create: (context) => _bloc, child: ReportDataTable()),
+    );
   }
 }
 
@@ -75,240 +73,256 @@ class _ReportDataTableState extends State<ReportDataTable> {
 
   late ReportDataSource _reportDataSource;
 
-  List<Employee> employees = <Employee>[];
-
-  late EmployeeDataSource employeeDataSource;
-
   @override
   void initState() {
     super.initState();
-    employees = getEmployeeData();
-    employeeDataSource = EmployeeDataSource(employeeData: employees);
   }
 
   @override
   Widget build(BuildContext context) {
-    //return BlocBuilder<ReportsBloc, ReportsState>(
-    //   builder: (context, state) {
-    //   if (state is ReportsStartLoadingState) {
-    //     return const Center(
-    //       child: CircularProgressIndicator(),
-    //     );
-    //   } else if (state is ReportsLogoutState) {
-    //     SchedulerBinding.instance.addPostFrameCallback((_) {
-    //       Navigator.of(context).pushNamed(
-    //         AppRoutes.auth,
-    //       );
-    //       LocalStorage.setString(AppConstants.TOKEN, '');
-    //     });
-    //   } else if (state is ReportsFailedState) {
-    //     return Center(
-    //       child: Text(state.message),
-    //     );
-    //   } else if (state is ReportsDoneState) {
-    //     report = getReportData(state);
-    //     _reportDataSource = ReportDataSource(report: report!);
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      height: MediaQuery.of(context).size.height,
-      child: SfDataGridTheme(
-        data: SfDataGridThemeData(headerColor: ThemeApp.surfaceColorTwo, gridLineColor: ThemeApp.dividerTwoColor),
-        child: SfDataGrid(
-            gridLinesVisibility: GridLinesVisibility.both,
-            headerGridLinesVisibility: GridLinesVisibility.both,
-            headerRowHeight: 50,
-            source: employeeDataSource,
-            columns: [
-              GridColumn(
-                  columnName: 'Данные',
-                  label: Container(
-                      padding: EdgeInsets.zero,
-                      alignment: Alignment.center,
-                      child: Text(
-                        'Данные',
-                        overflow: TextOverflow.ellipsis,
-                      ))),
-              GridColumn(
-                  columnName: 'Вчера, \n  шт',
-                  label: Container(
+    return BlocBuilder<ReportsBloc, ReportsState>(
+      builder: (context, state) {
+        if (state is ReportsStartLoadingState) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (state is ReportsLogoutState) {
+          SchedulerBinding.instance.addPostFrameCallback((_) {
+            Navigator.of(context).pushNamed(
+              AppRoutes.auth,
+            );
+            LocalStorage.setString(AppConstants.TOKEN, '');
+          });
+        } else if (state is ReportsFailedState) {
+          return Center(
+            child: Text(state.message),
+          );
+        } else if (state is ReportsDoneState) {
+          report = getReportData(state);
+          _reportDataSource = ReportDataSource(report: report!);
+          // return Container(
+          //   margin: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          //   height: MediaQuery.of(context).size.height,
+          //   child: SfDataGridTheme(
+          //     data: SfDataGridThemeData(
+          //         headerColor: ThemeApp.surfaceColorTwo,
+          //         gridLineColor: ThemeApp.dividerTwoColor),
+          //     child: SfDataGrid(
+          //         gridLinesVisibility: GridLinesVisibility.both,
+          //         headerGridLinesVisibility: GridLinesVisibility.both,
+          //         headerRowHeight: 50,
+          //         source: _reportDataSource,
+          //         columns: [
+          //           GridColumn(
+          //             width: 135,
+          //               columnName: 'Данные',
+          //               label: Container(
+          //                   padding: EdgeInsets.zero,
+          //                   alignment: Alignment.center,
+          //                   child: Text(
+          //                     'Данные',
+          //                     overflow: TextOverflow.ellipsis,
+          //                   ))),
+          //           GridColumn(
+          //               width: 72,
+          //               columnName: 'Вчера, \n  шт',
+          //               label: Container(
+          //                   padding: EdgeInsets.zero,
+          //                   //padding: EdgeInsets.symmetric(horizontal: 16.0),
+          //                   alignment: Alignment.center,
+          //                   child: Text(
+          //                     'Вчера, \n  шт',
+          //                     overflow: TextOverflow.ellipsis,
+          //                   ))),
+          //           GridColumn(
+          //               width: 72,
+          //               columnName: 'шт',
+          //               label: Container(
+          //                   padding: EdgeInsets.zero,
+          //                   //padding: EdgeInsets.symmetric(horizontal: 16.0),
+          //                   alignment: Alignment.center,
+          //                   child: Text(
+          //                     'шт',
+          //                     overflow: TextOverflow.ellipsis,
+          //                   ))),
+          //           GridColumn(
+          //               width: 72,
+          //               columnName: '%',
+          //               label: Container(
+          //                   padding: EdgeInsets.zero,
+          //                   //padding: EdgeInsets.symmetric(horizontal: 16.0),
+          //                   alignment: Alignment.center,
+          //                   child: Text(
+          //                     '%',
+          //                     overflow: TextOverflow.ellipsis,
+          //                   ))),
+          //         ],
+          //         stackedHeaderRows: <StackedHeaderRow>[
+          //           StackedHeaderRow(cells: [
+          //             StackedHeaderCell(
+          //                 columnNames: ['шт', '%'],
+          //                 child: Container(
+          //                     padding: EdgeInsets.zero,
+          //                     child: Center(child: Text('Сегодня')))),
+          //           ])
+          //         ]),
+          //   ),
+          // );
 
-                      padding: EdgeInsets.zero,
-                      //padding: EdgeInsets.symmetric(horizontal: 16.0),
-                      alignment: Alignment.center,
-                      child: Text(
-                        'Вчера, \n  шт',
-                        overflow: TextOverflow.ellipsis,
-                      ))),
-              GridColumn(
-                  columnName: 'шт',
-                  label: Container(
+          return SingleChildScrollView(
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 12,
+                ),
+                Row(
 
-                      padding: EdgeInsets.zero,
-                      //padding: EdgeInsets.symmetric(horizontal: 16.0),
-                      alignment: Alignment.center,
-                      child: Text(
-                        'шт',
-                        overflow: TextOverflow.ellipsis,
-                      ))),
-              GridColumn(
-                  columnName: '%',
-                  label: Container(
-                      padding: EdgeInsets.zero,
-                      //padding: EdgeInsets.symmetric(horizontal: 16.0),
-                      alignment: Alignment.center,
-                      child: Text(
-                        '%',
-                        overflow: TextOverflow.ellipsis,
-                      ))),
-            ],
-            stackedHeaderRows: <StackedHeaderRow>[
-              StackedHeaderRow(cells: [
-                StackedHeaderCell(
-                    columnNames: ['шт', '%'],
-                    child: Container(
-                        padding: EdgeInsets.zero,
-                        child: Center(child: Text('Сегодня')))),
-              ])
-            ]),
-      ),
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const SizedBox(width: 16),
+                    Container(
+                      height: 50,
+                      width: MediaQuery.of(context).size.width - 248,
+                      decoration: BoxDecoration(
+                        color: ThemeApp.elevationColorOne,
+                        border: Border.all(
+                          color: ThemeApp.dividerTwoColor,
+                          width: 1,
+                        ),
+                        borderRadius:
+                            const BorderRadius.only(topLeft: Radius.circular(8)),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 12),
+                        child: Text('Данные',),
+                      ),
+                    ),
+                    Container(
+                      height: 50,
+                      width: 72,
+                      decoration: BoxDecoration(
+                          color: ThemeApp.elevationColorOne,
+                          border: Border.all(
+                        color: ThemeApp.dividerTwoColor,
+                        width: 1,
+                      )),
+                      child: Center(child: const Text('Вчера, \n   шт')),
+                    ),
+                    Column(
+                      children: [
+                        Container(
+                          width: 144,
+                          height: 30,
+                          decoration: BoxDecoration(
+                              color: ThemeApp.elevationColorOne,
+                              border: Border.all(
+                                color: ThemeApp.dividerTwoColor,
+                                width: 1,
+                              ),
+                              borderRadius: const BorderRadius.only(
+                                  topRight: Radius.circular(8))),
+                          child: Center(child: const Text('Сегодня')),
+                        ),
+                        Row(
+                          children: [
+                            Container(
+                              width: 72,
+                              height: 20,
+                              decoration: BoxDecoration(
+                                  color: ThemeApp.elevationColorOne,
+                                  border: Border.all(
+                                color: ThemeApp.dividerTwoColor,
+                                width: 1,
+                              )),
+                              child: Center(child: const Text('шт')),
+                            ),
+                            Container(
+                              width: 72,
+                              height: 20,
+                              decoration: BoxDecoration(
+                                color: ThemeApp.elevationColorOne,
+                                  border: Border.all(
+                                color: ThemeApp.dividerTwoColor,
+                                width: 1,
+                              )),
+                              child: Center(child: const Text('%')),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      width: 16,
+                    ),
+                  ],
+                ),
+                Wrap(
+                  children: List.generate(report!.length, (index) {
+                    return Row(
+                      mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        const SizedBox(width: 16),
+                        Container(
+                          height: 32,
+                          width: MediaQuery.of(context).size.width - 248,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: ThemeApp.dividerTwoColor,
+                              width: 1,
+                            ),
+                          ),
+                          child: Text(report![index].data),
+                        ),
+                        Container(
+                          height: 32,
+                          width: 72,
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                            color: ThemeApp.dividerTwoColor,
+                            width: 1,
+                          )),
+                          child: Text('${report![index].yesterdayValue}'),
+                        ),
+                        Row(
+                          children: [
+                            Container(
+                              width: 72,
+                              height: 32,
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                color: ThemeApp.dividerTwoColor,
+                                width: 1,
+                              )),
+                              child: Text('${report![index].todayValue}'),
+                            ),
+                            Container(
+                              width: 72,
+                              height: 32,
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                color: ThemeApp.dividerTwoColor,
+                                width: 1,
+                              )),
+                              child: Text('${report![index].todayPercent}'),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          width: 16,
+                        ),
+                      ],
+                    );
+                  }).toList(),
+                ),
+              ],
+            ),
+          );
+        }
+        return const SizedBox.shrink();
+      },
     );
-    //}
-    //  return const SizedBox.shrink();
-    //  },
-    //);
-    // return Container(
-    //   margin: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-    //   decoration: BoxDecoration(
-    //       color: ThemeApp.surfaceColorTwo,
-    //       borderRadius: BorderRadius.only(
-    //           topLeft: Radius.circular(8), topRight: Radius.circular(8)),
-    //       border: Border.all(color: ThemeApp.dividerTwoColor)),
-    //   child: Row(
-    //     crossAxisAlignment: CrossAxisAlignment.start,
-    //     mainAxisAlignment: MainAxisAlignment.start,
-    //     children: [
-    //       Container(
-    //         child: Text('Данные'),
-    //       ),
-    //       Spacer(),
-    //       Container(
-    //         color: ThemeApp.dividerTwoColor,
-    //         width: 2,
-    //       ),
-    //       Container(
-    //         child: Text('Вчера, \n   шт'),
-    //       ),
-    //
-    //       Container(
-    //         color: ThemeApp.dividerTwoColor,
-    //         width: 2,
-    //       ),
-    //
-    //       Spacer(),
-    //       Column(
-    //         children: [
-    //           Container(
-    //             child: Text('Сегодня'),
-    //           ),
-    //           Container(
-    //             color: ThemeApp.dividerTwoColor,
-    //             height: 1,
-    //             width: MediaQuery.of(context).size.width - 137,
-    //             padding: EdgeInsets.only(top: 4, bottom: 4,),
-    //           ),
-    //           Row(
-    //             children: [
-    //               Container(
-    //                 child: Text('шт'),
-    //               ),
-    //               Container(
-    //                 color: ThemeApp.dividerTwoColor,
-    //                 width: 1,
-    //                 padding: EdgeInsets.only(left: 4, right: 4),
-    //               ),
-    //               Container(
-    //                 child: Text('%'),
-    //               ),
-    //             ],
-    //           ),
-    //         ],
-    //       ),
-    //
-    //     ],
-    //   ),
-    // );
-  }
-}
-
-List<Employee> getEmployeeData() {
-  return [
-    Employee(10001, 'James', 'Project Lead', 20000),
-    Employee(10002, 'Kathryn', 'Manager', 30000),
-    Employee(10003, 'Lara', 'Developer', 15000),
-    Employee(10004, 'Michael', 'Designer', 15000),
-    Employee(10005, 'Martin', 'Developer', 15000),
-    Employee(10006, 'Newberry', 'Developer', 15000),
-    Employee(10007, 'Balnc', 'Developer', 15000),
-    Employee(10008, 'Perry', 'Developer', 15000),
-    Employee(10009, 'Gable', 'Developer', 15000),
-    Employee(10010, 'Grimes', 'Developer', 15000),
-    Employee(10010, 'Grimes', 'Developer', 15000),
-    Employee(10010, 'Grimes', 'Developer', 15000),
-    Employee(10010, 'Grimes', 'Developer', 15000),
-    Employee(10010, 'Grimes', 'Developer', 15000),
-  ];
-}
-
-/// Custom business object class which contains properties to hold the detailed
-/// information about the employee which will be rendered in datagrid.
-class Employee {
-  /// Creates the employee class with required details.
-  Employee(this.id, this.name, this.designation, this.salary);
-
-  /// Id of an employee.
-  final int id;
-
-  /// Name of an employee.
-  final String name;
-
-  /// Designation of an employee.
-  final String designation;
-
-  /// Salary of an employee.
-  final int salary;
-}
-
-/// An object to set the employee collection data source to the datagrid. This
-/// is used to map the employee data to the datagrid widget.
-class EmployeeDataSource extends DataGridSource {
-  /// Creates the employee data source class with required details.
-  EmployeeDataSource({required List<Employee> employeeData}) {
-    _employeeData = employeeData
-        .map<DataGridRow>((e) => DataGridRow(cells: [
-              DataGridCell<int>(columnName: 'id', value: e.id),
-              DataGridCell<String>(columnName: 'name', value: e.name),
-              DataGridCell<String>(
-                  columnName: 'designation', value: e.designation),
-              DataGridCell<int>(columnName: 'salary', value: e.salary),
-            ]))
-        .toList();
-  }
-
-  List<DataGridRow> _employeeData = [];
-
-  @override
-  List<DataGridRow> get rows => _employeeData;
-
-  @override
-  DataGridRowAdapter buildRow(DataGridRow row) {
-    return DataGridRowAdapter(
-        cells: row.getCells().map<Widget>((e) {
-      return Container(
-        alignment: Alignment.center,
-        padding: EdgeInsets.all(8.0),
-        child: Text(e.value.toString()),
-      );
-    }).toList());
   }
 }
 
@@ -518,7 +532,7 @@ class ReportDataSource extends DataGridSource {
         cells: row.getCells().map<Widget>((e) {
       return Container(
         alignment: Alignment.center,
-        padding: EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(8.0),
         child: Text(e.value.toString()),
       );
     }).toList());
