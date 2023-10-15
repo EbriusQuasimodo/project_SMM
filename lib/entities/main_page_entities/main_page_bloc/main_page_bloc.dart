@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
@@ -113,27 +112,26 @@ class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
             ]));
       } else if (event.brigadesStatus.isNotEmpty &&
           event.brigadesStatus.contains('10')) {
-        print('10');
         brigadesParametersList
             .removeWhere((element) => element.field == 'status');
         brigadesParametersList.add(Parameters(
             field: 'status', op: 'in', value: ['0', '4', '5', '10']));
       } else if (event.brigadesStatus.isNotEmpty &&
           event.brigadesStatus.contains('2')) {
-        print('2');
         brigadesParametersList
             .removeWhere((element) => element.field == 'status');
         brigadesParametersList.add(
             Parameters(field: 'status', op: 'in', value: event.brigadesStatus));
       } else if (event.brigadesStatus.isNotEmpty &&
           event.brigadesStatus.contains('6')) {
-        print('6');
         brigadesParametersList
             .removeWhere((element) => element.field == 'status');
         brigadesParametersList
             .add(Parameters(field: 'status', op: 'in', value: ['6', '7', '8']));
       }
-      print("asdasdasdas ${json.encode(brigadesParametersList)}");
+
+
+
       if (!event.shouldLoadMore) {
         emit(MainPageLoadingState());
         final reBrigades = await BrigadesRepository.brigades(ParamsModel(
@@ -161,7 +159,7 @@ class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
             emit(MainPageFailedState(message: l.error));
           }
         }, (r) {
-          emit(MainPageCallsDoneState(
+          emit(MainPageDoneState(
               brigadesStatusesList: brigadesStatusesList,
               callsStatusesList: callsStatusesList,
               calls: r.calls ?? [],
@@ -170,7 +168,7 @@ class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
               allCountBrigades: brigadesCount));
         });
       } else {
-        MainPageCallsDoneState newState = state as MainPageCallsDoneState;
+        MainPageDoneState newState = state as MainPageDoneState;
         final reBrigades = await BrigadesRepository.brigades(ParamsModel(
             parameters: brigadesParametersList,
             limit: 10,
@@ -198,7 +196,7 @@ class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
             emit(MainPageFailedState(message: l.error));
           }
         }, (r) {
-          emit(MainPageCallsDoneState(
+          emit(MainPageDoneState(
               brigadesStatusesList: brigadesStatusesList,
               callsStatusesList: callsStatusesList,
               calls: newState.calls! + (r.calls ?? []),

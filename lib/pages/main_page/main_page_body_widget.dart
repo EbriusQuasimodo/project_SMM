@@ -15,8 +15,10 @@ import 'package:project_smm/shared/ui/status_choice_chip/status_choice_chip.dart
 
 class MainPageBodyWidget extends StatefulWidget {
   bool isCall;
+  final VoidCallback onTapCallButton;
+  final VoidCallback onTapBrigadeButton;
 
-  MainPageBodyWidget({super.key, required this.isCall});
+  MainPageBodyWidget({super.key, required this.isCall, required this.onTapCallButton, required this.onTapBrigadeButton});
 
   @override
   State<MainPageBodyWidget> createState() => _MainPageBodyWidgetState();
@@ -73,8 +75,9 @@ class _MainPageBodyWidgetState extends State<MainPageBodyWidget> {
           return Center(
             child: Text(state.message),
           );
-        } else if (state is MainPageCallsDoneState) {
+        } else if (state is MainPageDoneState) {
           return CustomScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
             controller: scrollController,
             slivers: [
               SliverToBoxAdapter(
@@ -83,14 +86,12 @@ class _MainPageBodyWidgetState extends State<MainPageBodyWidget> {
                   allCountsBrigades: state.allCountBrigades,
                   isCall: widget.isCall,
                   onTapCallButton: () {
-                    setState(() {
-                      widget.isCall = true;
-                    });
+                    widget.onTapCallButton();
+
                   },
                   onTapBrigadeButton: () {
-                    setState(() {
-                      widget.isCall = false;
-                    });
+                    widget.onTapBrigadeButton();
+
                   },
                 ),
               ),

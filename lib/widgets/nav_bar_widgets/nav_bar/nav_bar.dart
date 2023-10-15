@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project_smm/pages/analytics_page.dart';
 import 'package:project_smm/pages/favourites_page.dart';
-import 'package:project_smm/pages/main_page.dart';
+import 'package:project_smm/pages/main_page/main_page.dart';
 import 'package:project_smm/pages/profile_page.dart';
 import 'package:project_smm/pages/reports_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';

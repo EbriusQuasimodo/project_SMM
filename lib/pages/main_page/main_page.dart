@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart' hide Badge;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -61,7 +62,28 @@ class _MainPageState extends State<MainPage> {
         ),
       ),
       body: Provider(
-          create: (context) => _bloc, child: MainPageBodyWidget(isCall: isCall,)),
+          create: (context) => _bloc,
+          child: RefreshIndicator(
+              onRefresh: () async {
+                _bloc.add(MainPageStartLoadingEvent(
+                  shouldLoadMore: false,
+                  callsStatus: [],
+                  brigadesStatus: [],
+                ));
+              },
+              child: MainPageBodyWidget(
+                onTapCallButton: () {
+                  setState(() {
+                    isCall = true;
+                  });
+                },
+                onTapBrigadeButton: () {
+                  setState(() {
+                    isCall = false;
+                  });
+                },
+                isCall: isCall,
+              ))),
     );
   }
 }

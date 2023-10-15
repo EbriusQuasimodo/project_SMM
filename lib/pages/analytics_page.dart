@@ -8,7 +8,6 @@ import 'package:project_smm/shared/lib/theme/theme_app.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:project_smm/widgets/analytics_widgets/pie_chart_brigades.dart';
 import 'package:project_smm/widgets/analytics_widgets/pie_chart_calls.dart';
-import 'package:project_smm/widgets/nav_bar_widgets/nav_bar/nav_bar.dart';
 import 'package:provider/provider.dart';
 
 class AnalyticsPage extends StatefulWidget {
@@ -51,36 +50,41 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
           ],
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Padding(
-              padding:
-                  EdgeInsets.only(top: 16, bottom: 12, left: 16, right: 16),
-              child: Text(
-                'Вызовы',
-                style: TextStyle(
-                    color: ThemeApp.bodyColorTextAndIcons,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 22),
+      body: RefreshIndicator(
+        onRefresh: () async {
+          _bloc.add(ChartsStartLoadingEvent());
+        },
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Padding(
+                padding:
+                    EdgeInsets.only(top: 16, bottom: 12, left: 16, right: 16),
+                child: Text(
+                  'Вызовы',
+                  style: TextStyle(
+                      color: ThemeApp.bodyColorTextAndIcons,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 22),
+                ),
               ),
-            ),
-            Provider(create: (context) => _bloc, child: const PieChartCalls()),
-            const Padding(
-              padding:
-                  EdgeInsets.only(top: 16, bottom: 12, left: 16, right: 16),
-              child: Text(
-                'Бригады',
-                style: TextStyle(
-                    color: ThemeApp.bodyColorTextAndIcons,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 22),
+              Provider(create: (context) => _bloc, child: const PieChartCalls()),
+              const Padding(
+                padding:
+                    EdgeInsets.only(top: 16, bottom: 12, left: 16, right: 16),
+                child: Text(
+                  'Бригады',
+                  style: TextStyle(
+                      color: ThemeApp.bodyColorTextAndIcons,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 22),
+                ),
               ),
-            ),
-            Provider(
-                create: (context) => _bloc, child: const PieChartBrigades()),
-          ],
+              Provider(
+                  create: (context) => _bloc, child: const PieChartBrigades()),
+            ],
+          ),
         ),
       ),
     );

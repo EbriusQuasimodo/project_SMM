@@ -9,9 +9,9 @@ class ReportsUninitialisedState extends ReportsState {}
 class ReportsStartLoadingState extends ReportsState{}
 
 class ReportsDoneState extends ReportsState{
-  final ReportsModel reportsModel;
+  final List<StructureReportTable> report;
 
-  ReportsDoneState({required this.reportsModel,});
+  ReportsDoneState({required this.report,});
 }
 
 class ReportsFailedState extends ReportsState {

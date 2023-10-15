@@ -1,10 +1,10 @@
-import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:project_smm/entities/reports_entities/lib/get_report_list.dart';
 import 'package:project_smm/entities/reports_entities/reports_api/repository/reports_repository.dart';
+import 'package:project_smm/entities/reports_entities/types/structure_report_table.dart';
 import 'package:project_smm/entities/types/parameters_model/params_model.dart';
-import 'package:project_smm/entities/types/reports_model/reports_model.dart';
 import 'package:project_smm/shared/constants/local_storage/local_storage_constants.dart';
 import 'package:project_smm/shared/lib/errors/failure/failure.dart';
 import 'package:project_smm/shared/lib/local_storage/local_storage.dart';
@@ -33,8 +33,9 @@ class ReportsBloc extends Bloc<ReportsEvent, ReportsState> {
           op: 'in',
           value: LocalStorage.getList(AppConstants.SUBSTATIONLISTCALLS)));
     }
-
+    
     on<ReportsStartLoadingEvent>((event, emit) async{
+      emit(ReportsStartLoadingState());
       final re = await ReportsRepository.reports(parametersList);
       re.fold((l) {
         if (l is LogOutFailure) {
@@ -43,8 +44,9 @@ class ReportsBloc extends Bloc<ReportsEvent, ReportsState> {
           emit(ReportsFailedState(message: l.error));
         }
       }, (r) {
+        List<StructureReportTable>? report = getReportList(r);
         emit(ReportsDoneState(
-          reportsModel: r
+          report: report,
         ));
       });
     });
