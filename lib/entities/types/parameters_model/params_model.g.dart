@@ -32,8 +32,7 @@ Map<String, dynamic> _$ParamsModelToJson(ParamsModel instance) {
 Parameters _$ParametersFromJson(Map<String, dynamic> json) => Parameters(
       field: json['field'] as String,
       op: json['op'] as String,
-      value:
-          (json['value'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      value: json['value'],
     );
 
 Map<String, dynamic> _$ParametersToJson(Parameters instance) {

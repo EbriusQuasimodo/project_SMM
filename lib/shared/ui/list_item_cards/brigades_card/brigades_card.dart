@@ -169,9 +169,9 @@ class _BrigadesCardState extends State<BrigadesCard> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const TextWithIcon(
+                    TextWithIcon(
                         iconPath: 'assets/images/icons/shared/call_grey.svg',
-                        text: '1234'),
+                        text: '${widget.brigadesInfo!.brigade!.number}'),
                     const SizedBox(
                       height: 6,
                     ),

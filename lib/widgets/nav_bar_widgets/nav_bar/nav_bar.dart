@@ -22,7 +22,7 @@ class _NavBarState extends State<NavBar> {
   List<Widget>? _pages;
   void onSelectPage(int index) {
     _pages = [
-      const MainPage(),
+      MainPage(),
       AnalyticsPage(),
       const FavouritesPage(),
       const ReportsPage(),
@@ -39,7 +39,7 @@ class _NavBarState extends State<NavBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: widget.selectedPage == 0 ? const MainPage() : _pages?[widget.selectedPage!],
+      body: widget.selectedPage == 0 ? MainPage() : _pages?[widget.selectedPage!],
       bottomNavigationBar: SizedBox(
         height: 84,
         child: BottomNavigationBar(

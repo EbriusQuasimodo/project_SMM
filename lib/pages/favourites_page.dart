@@ -4,6 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:project_smm/entities/favourites_entities/favourites_bloc/favourites_bloc.dart';
 import 'package:project_smm/entities/filter_entities/filter_bloc/filters_bloc.dart';
+import 'package:project_smm/entities/types/search_model/search_model.dart';
 import 'package:project_smm/pages/filter_page/filter_choice_chip_page.dart';
 import 'package:project_smm/shared/lib/routes/app_routes.dart';
 import 'package:project_smm/shared/lib/theme/theme_app.dart';
@@ -25,14 +26,7 @@ class _FavouritesPageState extends State<FavouritesPage> {
     ..add(FavouritesPageStartLoadingEvent(
       shouldLoadMore: false,
     ));
-
-  @override
-  void initState() {
-    _bloc.add(FavouritesPageStartLoadingEvent(
-      shouldLoadMore: false,
-    ));
-    super.initState();
-  }
+  SearchModel? searchModel;
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +46,13 @@ class _FavouritesPageState extends State<FavouritesPage> {
                       );
                     },
                   ),
-                ).then((value) => setState(() {}));
+                ).then((value) {
+                  searchModel = value;
+                  _bloc
+                      .add(FavouritesPageStartLoadingEvent(
+                      shouldLoadMore: false,
+                      searchModel: searchModel));
+                });
               },
               icon: const Icon(
                 Icons.search,
@@ -87,6 +87,7 @@ class _FavouritesPageState extends State<FavouritesPage> {
               onRefresh: () async {
                 _bloc.add(FavouritesPageStartLoadingEvent(
                   shouldLoadMore: false,
+                  searchModel: null,
                 ));
               },
               child: FavouritesPageBodyWidget(

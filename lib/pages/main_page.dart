@@ -1,10 +1,10 @@
-
 import 'package:flutter/material.dart' hide Badge;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:project_smm/entities/filter_entities/filter_bloc/filters_bloc.dart';
 import 'package:project_smm/entities/main_page_entities/main_page_bloc/main_page_bloc.dart';
+import 'package:project_smm/entities/types/search_model/search_model.dart';
 import 'package:project_smm/pages/filter_page/filter_choice_chip_page.dart';
 import 'package:project_smm/pages/search_page.dart';
 import 'package:project_smm/widgets/main_page_widgets/main_page_body.dart';
@@ -13,7 +13,9 @@ import 'package:project_smm/shared/lib/theme/theme_app.dart';
 import 'package:provider/provider.dart';
 
 class MainPage extends StatefulWidget {
-  const MainPage({super.key});
+  const MainPage({
+    super.key,
+  });
 
   @override
   State<MainPage> createState() => _MainPageState();
@@ -21,19 +23,15 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   bool isCall = true;
+  SearchModel? searchModel;
 
   late final MainPageBloc _bloc = MainPageBloc()
     ..add(MainPageStartLoadingEvent(
-        shouldLoadMore: false, callsStatus: [], brigadesStatus: []));
-
-  @override
-  void initState() {
-    _bloc.add(MainPageStartLoadingEvent(
         shouldLoadMore: false,
         callsStatus: [],
-        brigadesStatus:[]));
-    super.initState();
-  }
+        brigadesStatus: [],
+        searchModel: searchModel));
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,14 +43,24 @@ class _MainPageState extends State<MainPage> {
             IconButton(
               onPressed: () {
                 Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (BuildContext context) {
-                    return SearchPage(
-                      isCall: isCall,
-                    );
-                  },
-                ),
-              ).then((value) => setState(() {}));},
+                  MaterialPageRoute(
+                    builder: (BuildContext context) {
+                      return SearchPage(
+                        isCall: isCall,
+                      );
+                    },
+                  ),
+                ).then((value) {
+                  print(value);
+                  searchModel = value;
+                  _bloc
+                    .add(MainPageStartLoadingEvent(
+                        shouldLoadMore: false,
+                        callsStatus: [],
+                        brigadesStatus: [],
+                        searchModel: searchModel));
+                });
+              },
               icon: const Icon(
                 Icons.search,
                 color: ThemeApp.secondaryColorTextAndIcons,
@@ -88,6 +96,7 @@ class _MainPageState extends State<MainPage> {
                   shouldLoadMore: false,
                   callsStatus: [],
                   brigadesStatus: [],
+                  searchModel: null
                 ));
               },
               child: MainPageBodyWidget(

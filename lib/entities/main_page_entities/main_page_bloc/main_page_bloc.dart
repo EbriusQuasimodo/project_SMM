@@ -1,17 +1,19 @@
-
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:project_smm/entities/favourites_entities/favourites_api/repository/favourites_add_repository.dart';
 import 'package:project_smm/entities/favourites_entities/favourites_api/repository/favourites_delete_repository.dart';
+import 'package:project_smm/entities/main_page_entities/add_brigades_parameters.dart';
+import 'package:project_smm/entities/main_page_entities/add_brigades_statuses.dart';
+import 'package:project_smm/entities/main_page_entities/add_calls_parameters.dart';
+import 'package:project_smm/entities/main_page_entities/add_calls_statuses.dart';
 import 'package:project_smm/entities/types/parameters_model/params_model.dart';
 import 'package:project_smm/entities/main_page_entities/main_page_api/data_source/types/statuses_model.dart';
 import 'package:project_smm/entities/main_page_entities/main_page_api/repository/brigade_repository.dart';
 import 'package:project_smm/entities/main_page_entities/main_page_api/repository/calls_repository.dart';
 import 'package:project_smm/entities/types/brigade_model/brigade_model.dart';
 import 'package:project_smm/entities/types/calls_model/calls_model.dart';
-import 'package:project_smm/shared/constants/local_storage/local_storage_constants.dart';
+import 'package:project_smm/entities/types/search_model/search_model.dart';
 import 'package:project_smm/shared/lib/errors/failure/failure.dart';
-import 'package:project_smm/shared/lib/local_storage/local_storage.dart';
 
 part 'main_page_event.dart';
 
@@ -27,110 +29,23 @@ class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
     List<StatusesList> callsStatusesList = [];
     List<StatusesList> brigadesStatusesList = [];
 
-    callsStatusesList
-        .add(StatusesList(statusId: 666, statusName: 'Вcе вызовы'));
-    callsStatusesList.add(StatusesList(statusId: 1, statusName: 'В очереди'));
-    callsStatusesList
-        .add(StatusesList(statusId: 3, statusName: 'Обслуживание'));
-    callsStatusesList
-        .add(StatusesList(statusId: 4, statusName: 'Транспортировка'));
-    callsStatusesList.add(StatusesList(statusId: 6, statusName: 'Стационар'));
-    callsStatusesList.add(StatusesList(statusId: 5, statusName: 'Завершено'));
+    createCallsStatuses(callsStatusesList);
 
-    brigadesStatusesList
-        .add(StatusesList(statusId: 667, statusName: 'Вcе бригады'));
-    brigadesStatusesList.add(StatusesList(
-        statusId: 10, statusName: 'Свободен')); // 0 4 5 10 status number
-    brigadesStatusesList
-        .add(StatusesList(statusId: 2, statusName: 'Обслуживание'));
-    brigadesStatusesList.add(StatusesList(
-        statusId: 6, statusName: 'Перерыв')); // 6 7 8 status number
+    createBrigadesStatuses(brigadesStatusesList);
 
-    if (LocalStorage.getList(AppConstants.CITYSTATIONLISTCALLS).isNotEmpty) {
-      callsParametersList.add(Parameters(
-          field: 'city_station',
-          op: 'in',
-          value: LocalStorage.getList(AppConstants.CITYSTATIONLISTCALLS)));
-    }
-    if (LocalStorage.getList(AppConstants.PRIORITYLISTCALLS).isNotEmpty) {
-      callsParametersList.add(Parameters(
-          field: 'priority',
-          op: 'in',
-          value: LocalStorage.getList(AppConstants.PRIORITYLISTCALLS)));
-    }
-    if (LocalStorage.getList(AppConstants.SUBSTATIONLISTCALLS).isNotEmpty) {
-      callsParametersList.add(Parameters(
-          field: 'substation',
-          op: 'in',
-          value: LocalStorage.getList(AppConstants.SUBSTATIONLISTCALLS)));
-    }
+    addCallsParameters(callsParametersList);
 
-    if (LocalStorage.getList(AppConstants.CITYSTATIONLISTBRIGADES).isNotEmpty) {
-      brigadesParametersList.add(Parameters(
-          field: 'city_station',
-          op: 'in',
-          value: LocalStorage.getList(AppConstants.CITYSTATIONLISTBRIGADES)));
-    }
-
-    if (LocalStorage.getList(AppConstants.SUBSTATIONLISTBRIGADES).isNotEmpty) {
-      brigadesParametersList.add(Parameters(
-          field: 'substation',
-          op: 'in',
-          value: LocalStorage.getList(AppConstants.SUBSTATIONLISTBRIGADES)));
-    }
+    addBrigadesParameters(brigadesParametersList);
 
     on<MainPageStartLoadingEvent>((event, emit) async {
-      if (event.callsStatus.isNotEmpty && event.callsStatus.contains('666')) {
-        callsParametersList.removeWhere((element) => element.field == 'status');
-        callsParametersList.add(Parameters(
-            field: 'status', op: 'in', value: ['1', '2', '3', '4', '5', '6']));
-      } else if (event.callsStatus.isNotEmpty) {
-        callsParametersList.removeWhere((element) => element.field == 'status');
-        callsParametersList.add(
-            Parameters(field: 'status', op: 'in', value: event.callsStatus));
-      }
+      addSearchBrigadesParameters(brigadesParametersList, event.searchModel);
 
-      if (event.brigadesStatus.isNotEmpty &&
-          event.brigadesStatus.contains('667')) {
-        brigadesParametersList
-            .removeWhere((element) => element.field == 'status');
-        brigadesParametersList.add(Parameters(
-            field: 'status',
-            op: 'in',
-            value: [
-              '0',
-              '1',
-              '2',
-              '3',
-              '4',
-              '5',
-              '6',
-              '7',
-              '8',
-              '9',
-              '10',
-              '11',
-              '12'
-            ]));
-      } else if (event.brigadesStatus.isNotEmpty &&
-          event.brigadesStatus.contains('10')) {
-        brigadesParametersList
-            .removeWhere((element) => element.field == 'status');
-        brigadesParametersList.add(Parameters(
-            field: 'status', op: 'in', value: ['0', '4', '5', '10']));
-      } else if (event.brigadesStatus.isNotEmpty &&
-          event.brigadesStatus.contains('2')) {
-        brigadesParametersList
-            .removeWhere((element) => element.field == 'status');
-        brigadesParametersList.add(
-            Parameters(field: 'status', op: 'in', value: event.brigadesStatus));
-      } else if (event.brigadesStatus.isNotEmpty &&
-          event.brigadesStatus.contains('6')) {
-        brigadesParametersList
-            .removeWhere((element) => element.field == 'status');
-        brigadesParametersList
-            .add(Parameters(field: 'status', op: 'in', value: ['6', '7', '8']));
-      }
+      addSearchCallsParameters(callsParametersList, event.searchModel);
+
+      addCallsStatusesInParametersList(callsParametersList, event.callsStatus);
+
+      addBrigadesStatusesInParametersList(
+          brigadesParametersList, event.brigadesStatus);
 
       if (!event.shouldLoadMore) {
         emit(MainPageLoadingState());
@@ -206,8 +121,9 @@ class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
         });
       }
     });
-    on<MainPageAddFavouritesEvent> ((event, emit)async {
-      final re = await FavouritesAddRepository.favouritesAdd(event.id!, event.whatAdd!);
+    on<MainPageAddFavouritesEvent>((event, emit) async {
+      final re = await FavouritesAddRepository.favouritesAdd(
+          event.id!, event.whatAdd!);
       re.fold((l) {
         if (l is LogOutFailure) {
           emit(MainPageLogoutState());
@@ -216,8 +132,9 @@ class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
         }
       }, (r) {});
     });
-    on<MainPageDeleteFavouritesEvent> ((event, emit)async {
-      final re = await FavouritesDeleteRepository.favouritesDelete(event.id!, event.whatDelete!);
+    on<MainPageDeleteFavouritesEvent>((event, emit) async {
+      final re = await FavouritesDeleteRepository.favouritesDelete(
+          event.id!, event.whatDelete!);
       re.fold((l) {
         if (l is LogOutFailure) {
           emit(MainPageLogoutState());

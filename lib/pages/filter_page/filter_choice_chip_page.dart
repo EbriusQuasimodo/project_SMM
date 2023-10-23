@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:project_smm/entities/charts_entities/charts_bloc/charts_bloc.dart';
 import 'package:project_smm/entities/filter_entities/filter_bloc/filters_bloc.dart';
-import 'package:project_smm/entities/main_page_entities/main_page_bloc/main_page_bloc.dart';
-import 'package:project_smm/entities/reports_entities/reports_bloc/reports_bloc.dart';
 import 'package:project_smm/features/filters_change_button/change_filters_widget.dart';
 import 'package:project_smm/pages/filter_page/filter_checkbox_page.dart';
 import 'package:project_smm/pages/home_page.dart';
-import 'package:project_smm/pages/reports_page.dart';
 import 'package:project_smm/shared/constants/local_storage/local_storage_constants.dart';
 import 'package:project_smm/shared/lib/local_storage/local_storage.dart';
 import 'package:project_smm/shared/lib/routes/app_routes.dart';
@@ -16,7 +12,6 @@ import 'package:project_smm/shared/lib/theme/theme_app.dart';
 import 'package:project_smm/shared/ui/buttons/primary_button/primary_button.dart';
 import 'package:project_smm/shared/ui/form_item/form_item_select_dictionary/filter_choice_chip_item.dart';
 import 'package:project_smm/widgets/filters_widgets/show_more_button.dart';
-import 'package:provider/provider.dart';
 
 class FilterChoiceChipPage extends StatefulWidget {
   bool isCall;
@@ -351,34 +346,16 @@ class _FilterChoiceChipPageState extends State<FilterChoiceChipPage> {
                               MaterialPageRoute(builder: (context) {
                                 if (widget.fromWhereOpen == AppRoutes.reports){
                                   return
-                                    //Provider(
-                                    //  create: (context) =>
-                                    //  ReportsBloc()
-                                    //    ..add(ReportsStartLoadingEvent()),
-                                    //  child:
                                       HomePage(selectedPage: 3,);
-                                  //);
                                 }else if (widget.fromWhereOpen == AppRoutes.analytics){
                                   return
-                                    //Provider(
-                                    //  create: (context) =>
-                                    //  ChartsBloc()
-                                    //    ..add(ChartsStartLoadingEvent()),
-                                    //  child:
                                       HomePage(selectedPage: 1,);
-                                 // );
+                                }else if (widget.fromWhereOpen == AppRoutes.favorites){
+                                  return
+                                    HomePage(selectedPage: 2,);
                                 }
                                 return
-                                  // Provider(
-                                  //   create: (context) =>
-                                  //   MainPageBloc()
-                                  //     ..add(MainPageStartLoadingEvent(
-                                  //         shouldLoadMore: false,
-                                  //         callsStatus: [],
-                                  //         brigadesStatus: [])),
-                                  //   //child:
                                     HomePage(selectedPage: 0,);
-                               // );
                               }), (route) => false);
                         },
                         buttonName: 'Подтвердить'),

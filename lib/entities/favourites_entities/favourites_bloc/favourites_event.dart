@@ -4,7 +4,8 @@ part of 'favourites_bloc.dart';
 abstract class FavouritesEvent {}
 class FavouritesPageStartLoadingEvent extends FavouritesEvent{
   final bool shouldLoadMore;
-  FavouritesPageStartLoadingEvent({required this.shouldLoadMore,});
+  final SearchModel? searchModel;
+  FavouritesPageStartLoadingEvent({required this.shouldLoadMore,this.searchModel});
 }
 
 class FavouritesPageDeleteEvent extends FavouritesEvent{

@@ -25,9 +25,9 @@ class ParamsModel {
 class Parameters{
   String field = '';
   String op = '';
-  List<String>? value;
+  dynamic value;
 
-  Parameters({required this.field, required this.op, required this.value});
+  Parameters({required this.field, required this.op, this.value,});
 
   factory Parameters.fromJson(Map<String, dynamic> json) =>
       _$ParametersFromJson(json);

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:project_smm/shared/constants/errors_constants/errors_constants.dart';
 import 'package:project_smm/shared/lib/theme/theme_app.dart';
 
 class SearchFormField extends StatefulWidget {
@@ -27,7 +26,7 @@ class _SearchFormFieldState extends State<SearchFormField> {
         controller: widget.controller,
         validator: (val) {
           if (val!.isEmpty) {
-            return Errors.emptyString;
+            return '';
           }
           return null;
         },

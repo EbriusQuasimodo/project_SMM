@@ -185,9 +185,9 @@ class _CallsCardState extends State<CallsCard> {
                     bottomRight: Radius.circular(12))),
             child: Row(
               children: [
-                const TextWithIcon(
+                TextWithIcon(
                   iconPath: 'assets/images/icons/shared/car_grey.svg',
-                  text: '123 У',
+                  text: '${widget.callsInfo!.dayNumber}',
                 ),
                 const Spacer(),
                 MaterialButton(

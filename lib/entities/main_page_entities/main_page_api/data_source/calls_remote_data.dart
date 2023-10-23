@@ -22,6 +22,7 @@ class CallsData {
           body: json.encode(params));
       print(LocalStorage.getString(AppConstants.TOKEN));
       print(re.statusCode);
+      print("asdasdasd asd ${json.encode(params)} ");
       if (re.statusCode == 200) {
         final CallsModel body =
             CallsModel.fromJson(jsonDecode(utf8.decode(re.bodyBytes)));
