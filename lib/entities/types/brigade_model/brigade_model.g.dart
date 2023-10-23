@@ -74,6 +74,7 @@ BrigadesListModel _$BrigadesListModelFromJson(Map<String, dynamic> json) =>
           ?.map(
               (e) => BrigadeCallsListModel.fromJson(e as Map<String, dynamic>))
           .toList(),
+      isFavorite: json['is_favorite'] as bool?,
     );
 
 Map<String, dynamic> _$BrigadesListModelToJson(BrigadesListModel instance) {
@@ -103,6 +104,7 @@ Map<String, dynamic> _$BrigadesListModelToJson(BrigadesListModel instance) {
   writeNotNull('car_driver', instance.carDriver);
   writeNotNull('brigade', instance.brigade);
   writeNotNull('calls', instance.calls);
+  writeNotNull('is_favorite', instance.isFavorite);
   return val;
 }
 

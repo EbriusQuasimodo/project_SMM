@@ -44,6 +44,8 @@ class CallsListModel {
   final SubstationsCallsModel? substation;
   @JsonKey(name: 'duty_outfit')
   final DutyOutfitModel? dutyOutfit;
+  @JsonKey(name: 'is_favorite')
+  final bool? isFavorite;
 
   CallsListModel({
     required this.id,
@@ -60,6 +62,7 @@ class CallsListModel {
     required this.reason,
     required this.substation,
     required this.dutyOutfit,
+    this.isFavorite,
   });
 
   factory CallsListModel.fromJson(Map<String, dynamic> json) =>

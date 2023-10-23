@@ -11,10 +11,13 @@ import 'package:project_smm/shared/ui/list_item_cards/title_text.dart';
 
 class CallsCard extends StatefulWidget {
   final CallsListModel? callsInfo;
-
+  final VoidCallback onTapFavouriteButton;
+  final bool isFavouritePage;
   const CallsCard({
     super.key,
     required this.callsInfo,
+    required this.onTapFavouriteButton,
+    required this.isFavouritePage
   });
 
   @override
@@ -187,7 +190,15 @@ class _CallsCardState extends State<CallsCard> {
                   text: '123 У',
                 ),
                 const Spacer(),
-                SvgPicture.asset('assets/images/icons/shared/favourite.svg')
+                MaterialButton(
+                    onPressed: () {
+                      widget.onTapFavouriteButton();
+                    },
+                    child: SvgPicture.asset(widget.isFavouritePage
+                        ? 'assets/images/icons/shared/favourite.svg'
+                        : widget.callsInfo!.isFavorite!
+                            ? 'assets/images/icons/shared/favourite.svg'
+                            : 'assets/images/icons/shared/unfavourite.svg'))
               ],
             ),
           ),

@@ -49,6 +49,8 @@ class BrigadesListModel {
   final ProfileModel? carDriver;
   final BrigadeModel? brigade;
   final List<BrigadeCallsListModel>? calls;
+  @JsonKey(name: 'is_favorite')
+  final bool? isFavorite;
 
   BrigadesListModel({
     required this.id,
@@ -68,6 +70,7 @@ class BrigadesListModel {
     required this.carDriver,
     required this.brigade,
     required this.calls,
+    this.isFavorite
   });
 
   factory BrigadesListModel.fromJson(Map<String, dynamic> json) =>

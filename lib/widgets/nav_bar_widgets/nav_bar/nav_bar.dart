@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project_smm/pages/analytics_page.dart';
 import 'package:project_smm/pages/favourites_page.dart';
-import 'package:project_smm/pages/main_page/main_page.dart';
+import 'package:project_smm/pages/main_page.dart';
 import 'package:project_smm/pages/profile_page.dart';
 import 'package:project_smm/pages/reports_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -19,8 +19,15 @@ class NavBar extends StatefulWidget {
 
 class _NavBarState extends State<NavBar> {
 
-
+  List<Widget>? _pages;
   void onSelectPage(int index) {
+    _pages = [
+      const MainPage(),
+      AnalyticsPage(),
+      const FavouritesPage(),
+      const ReportsPage(),
+      const ProfilePage(),
+    ];
     if (widget.selectedPage == index) return;
     setState(
       () {
@@ -32,16 +39,7 @@ class _NavBarState extends State<NavBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(
-        index: widget.selectedPage,
-        children: [
-          const MainPage(),
-          AnalyticsPage(),
-          const FavouritesPage(),
-          ReportsPage(),
-          const ProfilePage(),
-        ],
-      ),
+      body: widget.selectedPage == 0 ? const MainPage() : _pages?[widget.selectedPage!],
       bottomNavigationBar: SizedBox(
         height: 84,
         child: BottomNavigationBar(

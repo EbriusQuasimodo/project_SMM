@@ -8,7 +8,7 @@ import 'package:project_smm/pages/choice_region_page.dart';
 import 'package:project_smm/pages/favourites_page.dart';
 import 'package:project_smm/pages/home_page.dart';
 import 'package:project_smm/pages/login_page.dart';
-import 'package:project_smm/pages/main_page/main_page.dart';
+import 'package:project_smm/pages/main_page.dart';
 import 'package:project_smm/pages/profile_page.dart';
 import 'package:project_smm/pages/region_list_page.dart';
 import 'package:project_smm/pages/reports_page.dart';
@@ -88,7 +88,7 @@ class MyApp extends StatelessWidget {
             AppRoutes.regionList: (context) => const RegionListPage(),
             AppRoutes.analytics: (context) => AnalyticsPage(),
             AppRoutes.favorites: (context) => const FavouritesPage(),
-            AppRoutes.reports: (context) => ReportsPage(),
+            AppRoutes.reports: (context) => const ReportsPage(),
             AppRoutes.profile: (context) => const ProfilePage(),
             AppRoutes.changeLanguage: (context) => const ChangeLanguagePage(),
             AppRoutes.changePassword: (context) => ChangePasswordPage(),

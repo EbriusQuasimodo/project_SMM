@@ -58,6 +58,7 @@ CallsListModel _$CallsListModelFromJson(Map<String, dynamic> json) =>
           ? null
           : DutyOutfitModel.fromJson(
               json['duty_outfit'] as Map<String, dynamic>),
+      isFavorite: json['is_favorite'] as bool?,
     );
 
 Map<String, dynamic> _$CallsListModelToJson(CallsListModel instance) {
@@ -84,6 +85,7 @@ Map<String, dynamic> _$CallsListModelToJson(CallsListModel instance) {
   writeNotNull('reason', instance.reason);
   writeNotNull('substation', instance.substation);
   writeNotNull('duty_outfit', instance.dutyOutfit);
+  writeNotNull('is_favorite', instance.isFavorite);
   return val;
 }
 

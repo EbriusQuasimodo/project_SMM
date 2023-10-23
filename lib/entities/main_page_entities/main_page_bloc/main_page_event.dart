@@ -9,4 +9,13 @@ class MainPageStartLoadingEvent extends MainPageEvent{
   final List<String> brigadesStatus;
   MainPageStartLoadingEvent({required this.shouldLoadMore, required this.brigadesStatus, required this.callsStatus});
 }
-class MainPageBrigadesStartLoadingEvent extends MainPageEvent{}
+class MainPageAddFavouritesEvent extends MainPageEvent{
+  final int? id;
+  final String? whatAdd;
+  MainPageAddFavouritesEvent({ this.id, this.whatAdd});
+}
+class MainPageDeleteFavouritesEvent extends MainPageEvent{
+  final int? id;
+  final String? whatDelete;
+  MainPageDeleteFavouritesEvent({ this.id, this.whatDelete});
+}

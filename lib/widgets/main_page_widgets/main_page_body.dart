@@ -18,7 +18,11 @@ class MainPageBodyWidget extends StatefulWidget {
   final VoidCallback onTapCallButton;
   final VoidCallback onTapBrigadeButton;
 
-  MainPageBodyWidget({super.key, required this.isCall, required this.onTapCallButton, required this.onTapBrigadeButton});
+  MainPageBodyWidget(
+      {super.key,
+      required this.isCall,
+      required this.onTapCallButton,
+      required this.onTapBrigadeButton});
 
   @override
   State<MainPageBodyWidget> createState() => _MainPageBodyWidgetState();
@@ -87,11 +91,9 @@ class _MainPageBodyWidgetState extends State<MainPageBodyWidget> {
                   isCall: widget.isCall,
                   onTapCallButton: () {
                     widget.onTapCallButton();
-
                   },
                   onTapBrigadeButton: () {
                     widget.onTapBrigadeButton();
-
                   },
                 ),
               ),
@@ -184,6 +186,31 @@ class _MainPageBodyWidgetState extends State<MainPageBodyWidget> {
                           delegate: SliverChildBuilderDelegate(
                               (BuildContext context, int index) {
                             return CallsCard(
+                              isFavouritePage: false,
+                              onTapFavouriteButton: () {
+                                state.calls![index].isFavorite!
+                                    ? context.read<MainPageBloc>().add(
+                                          MainPageDeleteFavouritesEvent(
+                                            whatDelete: 'calls',
+                                            id: state.calls?[index].id,
+                                          ),
+                                        )
+                                    : context.read<MainPageBloc>().add(
+                                          MainPageAddFavouritesEvent(
+                                            whatAdd: 'calls',
+                                            id: state.calls?[index].id,
+                                          ),
+                                        );
+                                context.read<MainPageBloc>().add(
+                                    MainPageStartLoadingEvent(
+                                        shouldLoadMore: false,
+                                        callsStatus: statusFiltersCalls
+                                            .map((i) => i.toString())
+                                            .toList(),
+                                        brigadesStatus: statusFiltersBrigades
+                                            .map((i) => i.toString())
+                                            .toList()));
+                              },
                               callsInfo: state.calls?[index],
                             );
                           }, childCount: state.calls?.length),
@@ -198,6 +225,31 @@ class _MainPageBodyWidgetState extends State<MainPageBodyWidget> {
                           delegate: SliverChildBuilderDelegate(
                               (BuildContext context, int index) {
                             return BrigadesCard(
+                              isFavouritePage: false,
+                              onTapFavouriteButton: () {
+                                state.brigades![index].isFavorite!
+                                    ? context.read<MainPageBloc>().add(
+                                  MainPageDeleteFavouritesEvent(
+                                    whatDelete: 'brigades',
+                                    id: state.brigades?[index].id,
+                                  ),
+                                )
+                                    : context.read<MainPageBloc>().add(
+                                  MainPageAddFavouritesEvent(
+                                    whatAdd: 'brigades',
+                                    id: state.brigades?[index].id,
+                                  ),
+                                );
+                                context.read<MainPageBloc>().add(
+                                    MainPageStartLoadingEvent(
+                                        shouldLoadMore: false,
+                                        callsStatus: statusFiltersCalls
+                                            .map((i) => i.toString())
+                                            .toList(),
+                                        brigadesStatus: statusFiltersBrigades
+                                            .map((i) => i.toString())
+                                            .toList()));
+                              },
                               brigadesInfo: state.brigades?[index],
                             );
                           }, childCount: state.brigades?.length),

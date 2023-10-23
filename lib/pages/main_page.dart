@@ -1,11 +1,13 @@
 
 import 'package:flutter/material.dart' hide Badge;
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:project_smm/entities/filter_entities/filter_bloc/filters_bloc.dart';
 import 'package:project_smm/entities/main_page_entities/main_page_bloc/main_page_bloc.dart';
 import 'package:project_smm/pages/filter_page/filter_choice_chip_page.dart';
-import 'package:project_smm/pages/main_page/main_page_body_widget.dart';
+import 'package:project_smm/pages/search_page.dart';
+import 'package:project_smm/widgets/main_page_widgets/main_page_body.dart';
 import 'package:project_smm/shared/lib/routes/app_routes.dart';
 import 'package:project_smm/shared/lib/theme/theme_app.dart';
 import 'package:provider/provider.dart';
@@ -25,6 +27,14 @@ class _MainPageState extends State<MainPage> {
         shouldLoadMore: false, callsStatus: [], brigadesStatus: []));
 
   @override
+  void initState() {
+    _bloc.add(MainPageStartLoadingEvent(
+        shouldLoadMore: false,
+        callsStatus: [],
+        brigadesStatus:[]));
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
@@ -33,7 +43,16 @@ class _MainPageState extends State<MainPage> {
           title: Text(AppLocalizations.of(context)!.mainPage),
           actions: [
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return SearchPage(
+                      isCall: isCall,
+                    );
+                  },
+                ),
+              ).then((value) => setState(() {}));},
               icon: const Icon(
                 Icons.search,
                 color: ThemeApp.secondaryColorTextAndIcons,
@@ -61,7 +80,7 @@ class _MainPageState extends State<MainPage> {
           ],
         ),
       ),
-      body: Provider(
+      body: BlocProvider(
           create: (context) => _bloc,
           child: RefreshIndicator(
               onRefresh: () async {

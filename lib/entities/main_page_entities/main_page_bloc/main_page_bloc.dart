@@ -1,6 +1,8 @@
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:project_smm/entities/favourites_entities/favourites_api/repository/favourites_add_repository.dart';
+import 'package:project_smm/entities/favourites_entities/favourites_api/repository/favourites_delete_repository.dart';
 import 'package:project_smm/entities/types/parameters_model/params_model.dart';
 import 'package:project_smm/entities/main_page_entities/main_page_api/data_source/types/statuses_model.dart';
 import 'package:project_smm/entities/main_page_entities/main_page_api/repository/brigade_repository.dart';
@@ -130,8 +132,6 @@ class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
             .add(Parameters(field: 'status', op: 'in', value: ['6', '7', '8']));
       }
 
-
-
       if (!event.shouldLoadMore) {
         emit(MainPageLoadingState());
         final reBrigades = await BrigadesRepository.brigades(ParamsModel(
@@ -205,6 +205,26 @@ class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
               allCountBrigades: brigadesCount));
         });
       }
+    });
+    on<MainPageAddFavouritesEvent> ((event, emit)async {
+      final re = await FavouritesAddRepository.favouritesAdd(event.id!, event.whatAdd!);
+      re.fold((l) {
+        if (l is LogOutFailure) {
+          emit(MainPageLogoutState());
+        } else if (l is ServerFailure) {
+          emit(MainPageFailedState(message: l.error));
+        }
+      }, (r) {});
+    });
+    on<MainPageDeleteFavouritesEvent> ((event, emit)async {
+      final re = await FavouritesDeleteRepository.favouritesDelete(event.id!, event.whatDelete!);
+      re.fold((l) {
+        if (l is LogOutFailure) {
+          emit(MainPageLogoutState());
+        } else if (l is ServerFailure) {
+          emit(MainPageFailedState(message: l.error));
+        }
+      }, (r) {});
     });
   }
 }

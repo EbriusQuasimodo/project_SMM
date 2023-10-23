@@ -11,10 +11,14 @@ import 'package:project_smm/shared/ui/list_item_cards/title_text.dart';
 
 class BrigadesCard extends StatefulWidget {
   final BrigadesListModel? brigadesInfo;
+  final VoidCallback onTapFavouriteButton;
+  final bool isFavouritePage;
 
   const BrigadesCard({
     super.key,
     required this.brigadesInfo,
+    required this.onTapFavouriteButton,
+    required this.isFavouritePage,
   });
 
   @override
@@ -31,12 +35,14 @@ class _BrigadesCardState extends State<BrigadesCard> {
   DateFormat timeFormat = DateFormat.Hm('ru');
   String statusName = '';
   late Color statusColor;
+
   @override
   void initState() {
     super.initState();
     parseDate();
     checkBrigadesStatus();
   }
+
   void checkBrigadesStatus() {
     if (widget.brigadesInfo!.status == BrigadesStatuses().waitingDeparture) {
       statusName = 'Ожидает выезда';
@@ -91,6 +97,7 @@ class _BrigadesCardState extends State<BrigadesCard> {
       statusColor = ThemeApp.preparationColor;
     }
   }
+
   void parseDate() {
     DateTime parsedDate = DateTime.parse(
         widget.brigadesInfo!.statusStartTime.replaceAll('T', ' ').toString());
@@ -122,10 +129,12 @@ class _BrigadesCardState extends State<BrigadesCard> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  TitleText(text: 'Бригада ${widget.brigadesInfo!.id}'), const SizedBox(
+                  TitleText(text: 'Бригада ${widget.brigadesInfo!.id}'),
+                  const SizedBox(
                     height: 6,
                   ),
-                  DateText(dateText: statusStartDate, timeText: statusStartTime),
+                  DateText(
+                      dateText: statusStartDate, timeText: statusStartTime),
                   const SizedBox(
                     height: 6,
                   ),
@@ -135,7 +144,6 @@ class _BrigadesCardState extends State<BrigadesCard> {
               StatusCard(statusName: statusName, statusColor: statusColor),
             ],
           ),
-
           Container(
             color: ThemeApp.dividerColor,
             height: 2,
@@ -150,8 +158,7 @@ class _BrigadesCardState extends State<BrigadesCard> {
             height: 6,
           ),
           Container(
-            padding:
-                const EdgeInsets.only(right: 12, bottom: 12, top: 6),
+            padding: const EdgeInsets.only(right: 12, bottom: 12, top: 6),
             decoration: const BoxDecoration(
                 color: ThemeApp.elevationColorOne,
                 borderRadius: BorderRadius.only(
@@ -174,7 +181,16 @@ class _BrigadesCardState extends State<BrigadesCard> {
                   ],
                 ),
                 const Spacer(),
-                SvgPicture.asset('assets/images/icons/shared/favourite.svg')
+                MaterialButton(
+                    onPressed: () {
+                      widget.onTapFavouriteButton();
+                    },
+                    child:
+                        SvgPicture.asset(widget.isFavouritePage
+                            ? 'assets/images/icons/shared/favourite.svg'
+                            : widget.brigadesInfo!.isFavorite!
+                                ? 'assets/images/icons/shared/favourite.svg'
+                                : 'assets/images/icons/shared/unfavourite.svg'))
               ],
             ),
           ),
