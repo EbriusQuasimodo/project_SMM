@@ -2,7 +2,8 @@ class SearchModel {
   int? numberCalls;
   String? fio;
   String? street;
-  int? house;
+  String? house;
+  String? apartment;
   String? numberBrigades;
   List<String>? profile;
 
@@ -13,5 +14,6 @@ class SearchModel {
     this.house,
     this.numberBrigades,
     this.profile,
+    this.apartment,
   });
 }

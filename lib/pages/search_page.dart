@@ -21,7 +21,7 @@ class _SearchPageState extends State<SearchPage> {
   final TextEditingController _controllerNumberCall = TextEditingController();
 
   final TextEditingController _controllerFioCall = TextEditingController();
-  final TextEditingController _controllerCityCall = TextEditingController();
+  final TextEditingController _controllerApartmentCall = TextEditingController();
 
   final TextEditingController _controllerStreetCall = TextEditingController();
   final TextEditingController _controllerHouseCall = TextEditingController();
@@ -87,6 +87,8 @@ class _SearchPageState extends State<SearchPage> {
                               formName: 'Улица'),
                           SearchFormField(
                               controller: _controllerHouseCall, formName: 'Дом'),
+                          SearchFormField(
+                              controller: _controllerApartmentCall, formName: 'Квартира'),
                         ],
                       ),
                     )
@@ -125,9 +127,8 @@ class _SearchPageState extends State<SearchPage> {
                 numberBrigades: _controllerNumberBrigade.text,
                 fio: _controllerFioCall.text,
                 street: _controllerStreetCall.text,
-                house: _controllerHouseCall.text != ''
-                    ? int.parse(_controllerHouseCall.text)
-                    : null,
+                house: _controllerHouseCall.text,
+                apartment: _controllerApartmentCall.text,
                 profile: profileList,
               );
               Navigator.of(context).pop(searchModel);

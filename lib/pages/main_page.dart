@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:project_smm/entities/filter_entities/filter_bloc/filters_bloc.dart';
+import 'package:project_smm/entities/main_page_entities/add_brigades_parameters.dart';
+import 'package:project_smm/entities/main_page_entities/add_calls_parameters.dart';
 import 'package:project_smm/entities/main_page_entities/main_page_bloc/main_page_bloc.dart';
 import 'package:project_smm/entities/types/search_model/search_model.dart';
 import 'package:project_smm/pages/filter_page/filter_choice_chip_page.dart';
@@ -51,7 +53,6 @@ class _MainPageState extends State<MainPage> {
                     },
                   ),
                 ).then((value) {
-                  print(value);
                   searchModel = value;
                   _bloc
                     .add(MainPageStartLoadingEvent(

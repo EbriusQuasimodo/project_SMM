@@ -26,11 +26,12 @@ return callsParametersList;
 }
 
 List<Parameters> addSearchCallsParameters(List<Parameters> callsParametersList, SearchModel? searchModel){
-  callsParametersList.removeWhere((element) =>
-  element.field == 'house' ||
-      element.field == 'street' ||
-      element.field == 'patient_fio' ||
-      element.field == 'day_number');
+  // callsParametersList.removeWhere((element) =>
+  // element.field == 'apartment' ||
+  // element.field == 'house' ||
+  //     element.field == 'street' ||
+  //     element.field == 'patient_fio' ||
+  //     element.field == 'day_number');
   if (searchModel != null) {
     if (searchModel.numberCalls != null) {
       callsParametersList.add(Parameters(
@@ -48,9 +49,13 @@ List<Parameters> addSearchCallsParameters(List<Parameters> callsParametersList, 
       callsParametersList.add(Parameters(
           field: 'street', op: 'regexI', value: searchModel.street));
     }
-    if (searchModel.house != null) {
+    if (searchModel.house != '') {
       callsParametersList.add(Parameters(
           field: 'house', op: 'eq', value: searchModel.house));
+    }
+    if (searchModel.apartment != '') {
+      callsParametersList.add(Parameters(
+          field: 'apartment', op: 'eq', value: searchModel.apartment));
     }
   } else {
     callsParametersList.removeWhere((element) =>
