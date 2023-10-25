@@ -12,6 +12,7 @@ import 'package:project_smm/shared/lib/theme/theme_app.dart';
 import 'package:project_smm/shared/ui/buttons/primary_button/primary_button.dart';
 import 'package:project_smm/shared/ui/form_item/form_item_select_dictionary/filter_choice_chip_item.dart';
 import 'package:project_smm/widgets/filters_widgets/show_more_button.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class FilterChoiceChipPage extends StatefulWidget {
   bool isCall;
@@ -105,7 +106,7 @@ class _FilterChoiceChipPageState extends State<FilterChoiceChipPage> {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(64),
         child: AppBar(
-          title: const Text('Фильтр'),
+          title: Text(AppLocalizations.of(context)!.filterPage),
           leading: MaterialButton(
             onPressed: () {
               Navigator.of(context).pop();
@@ -118,16 +119,29 @@ class _FilterChoiceChipPageState extends State<FilterChoiceChipPage> {
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: MaterialButton(
                 onPressed: () {
-                  setState(() {
-                    LocalStorage.setList(AppConstants.CITYSTATIONLISTCALLS, []);
+                  widget.isCall
+                      ? setState(() {
+                          LocalStorage.setList(
+                              AppConstants.CITYSTATIONLISTCALLS, []);
 
-                    LocalStorage.setList(AppConstants.PRIORITYLISTCALLS, []);
+                          LocalStorage.setList(
+                              AppConstants.PRIORITYLISTCALLS, []);
 
-                    LocalStorage.setList(AppConstants.SUBSTATIONLISTCALLS, []);
-                    cacheCityCalls = [];
-                    cachePriorityCalls = [];
-                    cacheSubstationCalls = [];
-                  });
+                          LocalStorage.setList(
+                              AppConstants.SUBSTATIONLISTCALLS, []);
+                          cacheCityCalls = [];
+                          cachePriorityCalls = [];
+                          cacheSubstationCalls = [];
+                        })
+                      : setState(() {
+                          LocalStorage.setList(
+                              AppConstants.CITYSTATIONLISTBRIGADES, []);
+
+                          LocalStorage.setList(
+                              AppConstants.SUBSTATIONLISTBRIGADES, []);
+                          cacheCityBrigades = [];
+                          cacheSubstationBrigades = [];
+                        });
                 },
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
@@ -175,9 +189,9 @@ class _FilterChoiceChipPageState extends State<FilterChoiceChipPage> {
                           top: 16, bottom: 12, left: 16, right: 16),
                       child: Row(
                         children: [
-                          const Text(
-                            'Город',
-                            style: TextStyle(
+                          Text(
+                            AppLocalizations.of(context)!.city,
+                            style: const TextStyle(
                                 color: ThemeApp.secondaryColorTextAndIcons,
                                 fontWeight: FontWeight.w400,
                                 fontSize: 22),
@@ -190,7 +204,9 @@ class _FilterChoiceChipPageState extends State<FilterChoiceChipPage> {
                                         MaterialPageRoute(
                                           builder: (context) =>
                                               FilterCheckboxPage(
-                                            appBarName: 'Город вызова',
+                                            appBarName:
+                                                AppLocalizations.of(context)!
+                                                    .city,
                                             itemsList: state.cityStations,
                                             filters: widget.isCall
                                                 ? cacheCityCalls
@@ -214,7 +230,14 @@ class _FilterChoiceChipPageState extends State<FilterChoiceChipPage> {
                           return Padding(
                               padding: const EdgeInsets.only(left: 3, right: 3),
                               child: FilterChipItem(
-                                itemName: state.cityStations[index].name,
+                                itemName: LocalStorage.getString(
+                                                AppConstants.LOCALE) ==
+                                            'ru' ||
+                                        LocalStorage.getString(
+                                                AppConstants.LOCALE) ==
+                                            ''
+                                    ? state.cityStations[index].name
+                                    : state.cityStations[index].nameAdd,
                                 itemId: state.cityStations[index].id,
                                 filters: widget.isCall
                                     ? cacheCityCalls
@@ -227,12 +250,12 @@ class _FilterChoiceChipPageState extends State<FilterChoiceChipPage> {
                         ? Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Padding(
-                                padding: EdgeInsets.only(
+                              Padding(
+                                padding: const EdgeInsets.only(
                                     top: 16, bottom: 12, left: 16, right: 16),
                                 child: Text(
-                                  'Срочность',
-                                  style: TextStyle(
+                                  AppLocalizations.of(context)!.priority,
+                                  style: const TextStyle(
                                       color:
                                           ThemeApp.secondaryColorTextAndIcons,
                                       fontWeight: FontWeight.w400,
@@ -265,9 +288,9 @@ class _FilterChoiceChipPageState extends State<FilterChoiceChipPage> {
                           top: 16, bottom: 12, left: 16, right: 16),
                       child: Row(
                         children: [
-                          const Text(
-                            'Подстанция',
-                            style: TextStyle(
+                          Text(
+                            AppLocalizations.of(context)!.substation,
+                            style: const TextStyle(
                                 color: ThemeApp.secondaryColorTextAndIcons,
                                 fontWeight: FontWeight.w400,
                                 fontSize: 22),
@@ -280,7 +303,9 @@ class _FilterChoiceChipPageState extends State<FilterChoiceChipPage> {
                                         MaterialPageRoute(
                                           builder: (context) =>
                                               FilterCheckboxPage(
-                                            appBarName: 'Подстанция вызова',
+                                            appBarName:
+                                                AppLocalizations.of(context)!
+                                                    .substation,
                                             itemsList: state.substations,
                                             filters: widget.isCall
                                                 ? cacheSubstationCalls
@@ -304,7 +329,14 @@ class _FilterChoiceChipPageState extends State<FilterChoiceChipPage> {
                           return Padding(
                               padding: const EdgeInsets.only(left: 3, right: 3),
                               child: FilterChipItem(
-                                itemName: state.substations[index].name,
+                                itemName: LocalStorage.getString(
+                                                AppConstants.LOCALE) ==
+                                            'ru' ||
+                                        LocalStorage.getString(
+                                                AppConstants.LOCALE) ==
+                                            ''
+                                    ? state.substations[index].name
+                                    : state.substations[index].nameAdd,
                                 itemId: state.substations[index].id!,
                                 filters: widget.isCall
                                     ? cacheSubstationCalls
@@ -344,21 +376,27 @@ class _FilterChoiceChipPageState extends State<FilterChoiceChipPage> {
 
                           Navigator.of(context).pushAndRemoveUntil(
                               MaterialPageRoute(builder: (context) {
-                                if (widget.fromWhereOpen == AppRoutes.reports){
-                                  return
-                                      HomePage(selectedPage: 3,);
-                                }else if (widget.fromWhereOpen == AppRoutes.analytics){
-                                  return
-                                      HomePage(selectedPage: 1,);
-                                }else if (widget.fromWhereOpen == AppRoutes.favorites){
-                                  return
-                                    HomePage(selectedPage: 2,);
-                                }
-                                return
-                                    HomePage(selectedPage: 0,);
-                              }), (route) => false);
+                            if (widget.fromWhereOpen == AppRoutes.reports) {
+                              return HomePage(
+                                selectedPage: 3,
+                              );
+                            } else if (widget.fromWhereOpen ==
+                                AppRoutes.analytics) {
+                              return HomePage(
+                                selectedPage: 1,
+                              );
+                            } else if (widget.fromWhereOpen ==
+                                AppRoutes.favorites) {
+                              return HomePage(
+                                selectedPage: 2,
+                              );
+                            }
+                            return HomePage(
+                              selectedPage: 0,
+                            );
+                          }), (route) => false);
                         },
-                        buttonName: 'Подтвердить'),
+                        buttonName: AppLocalizations.of(context)!.submit),
                   ],
                 ),
               ),

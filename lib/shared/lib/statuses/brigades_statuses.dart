@@ -4,7 +4,7 @@ class BrigadesStatuses {
   final int service = 2;
   final int hospitalization = 3;
   final int returnToPS = 4;
-  final int mandatoryReturnToPS = 5;
+  final int obligatedReturn = 5;
   final int lunch = 6;
   final int refueling = 7;
   final int repair = 8;

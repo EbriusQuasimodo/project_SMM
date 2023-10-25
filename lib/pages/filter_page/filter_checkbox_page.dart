@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:project_smm/shared/constants/local_storage/local_storage_constants.dart';
+import 'package:project_smm/shared/lib/local_storage/local_storage.dart';
 import 'package:project_smm/shared/types/dictionary/dictionary_model.dart';
 import 'package:project_smm/shared/ui/form_item/form_item_select_dictionary/filter_checkbox_item.dart';
 
@@ -38,7 +40,14 @@ class FilterCheckboxPage extends StatelessWidget {
             return FilterCheckboxItem(
               filters: filters,
               itemId: itemsList[index].id!,
-              itemName: itemsList[index].name!,
+              itemName: LocalStorage.getString(
+                  AppConstants.LOCALE) ==
+                  'ru' ||
+                  LocalStorage.getString(
+                      AppConstants.LOCALE) ==
+                      ''
+                  ? itemsList[index].name!
+                  : itemsList[index].nameAdd,
             );
           }),
     );

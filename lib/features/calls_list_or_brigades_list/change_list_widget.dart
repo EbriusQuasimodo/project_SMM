@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart' hide Badge;
 import 'package:project_smm/shared/lib/theme/theme_app.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'ui/button.dart';
 
@@ -20,21 +21,23 @@ class SwitchCallsOrBrigadeItem extends StatelessWidget {
       child: Row(
         children: [
           Button(
+            textColor: isCall ? ThemeApp.blackColor : ThemeApp.secondaryColorTextAndIcons,
             buttonBorderColor: isCall ? ThemeApp.primaryColor : ThemeApp.elevationColorOne,
             onTap: (){
              onTapCallButton();
               },
             itemsLength: allCountsCalls,
-            buttonName: 'Вызовы',
+            buttonName: AppLocalizations.of(context)!.calls,
             buttonIcon: 'assets/images/icons/shared/phone.svg',
           ),
           Button(
+            textColor:isCall ? ThemeApp.secondaryColorTextAndIcons : ThemeApp.blackColor,
             buttonBorderColor: isCall ? ThemeApp.elevationColorOne : ThemeApp.primaryColor,
             onTap: (){
               onTapBrigadeButton();
               },
             itemsLength: allCountsBrigades,
-            buttonName: 'Бригады',
+            buttonName: AppLocalizations.of(context)!.brigades,
             buttonIcon: 'assets/images/icons/shared/car.svg',
           ),
         ],

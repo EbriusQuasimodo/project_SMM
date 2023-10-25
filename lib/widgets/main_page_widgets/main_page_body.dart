@@ -9,9 +9,11 @@ import 'package:project_smm/shared/lib/routes/app_routes.dart';
 import 'package:project_smm/shared/lib/statuses/brigades_statuses.dart';
 import 'package:project_smm/shared/lib/statuses/calls_statuses.dart';
 import 'package:project_smm/shared/lib/theme/theme_app.dart';
+import 'package:project_smm/shared/ui/custom_dialogs/custom_dialog_with_two_buttons/custom_dialog_with_two_buttons.dart';
 import 'package:project_smm/shared/ui/list_item_cards/brigades_card/brigades_card.dart';
 import 'package:project_smm/shared/ui/list_item_cards/calls_card/calls_card.dart';
 import 'package:project_smm/shared/ui/status_choice_chip/status_choice_chip.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MainPageBodyWidget extends StatefulWidget {
   bool isCall;
@@ -147,9 +149,9 @@ class _MainPageBodyWidgetState extends State<MainPageBodyWidget> {
                         }
                         if (state.callsStatusesList[index].statusId ==
                             CallStatuses().onHospitalization) {
-                          colorCardSelected = ThemeApp.transportationColor;
+                          colorCardSelected = ThemeApp.hospitalizationColor;
                           colorCardUnSelected =
-                              ThemeApp.transportationLightColor;
+                              ThemeApp.hospitalizationLightColor;
                         }
                         if (state.callsStatusesList[index].statusId ==
                             CallStatuses().arrivalAtHospital) {
@@ -189,27 +191,34 @@ class _MainPageBodyWidgetState extends State<MainPageBodyWidget> {
                               isFavouritePage: false,
                               onTapFavouriteButton: () {
                                 state.calls![index].isFavorite!
-                                    ? context.read<MainPageBloc>().add(
-                                          MainPageDeleteFavouritesEvent(
-                                            whatDelete: 'calls',
-                                            id: state.calls?[index].id,
-                                          ),
-                                        )
-                                    : context.read<MainPageBloc>().add(
-                                          MainPageAddFavouritesEvent(
-                                            whatAdd: 'calls',
-                                            id: state.calls?[index].id,
-                                          ),
-                                        );
-                                context.read<MainPageBloc>().add(
-                                    MainPageStartLoadingEvent(
-                                        shouldLoadMore: false,
-                                        callsStatus: statusFiltersCalls
-                                            .map((i) => i.toString())
-                                            .toList(),
-                                        brigadesStatus: statusFiltersBrigades
-                                            .map((i) => i.toString())
-                                            .toList()));
+                                    ? showDialog(
+                                  context: context,
+                                  builder: (builder) => CustomDialogWithTwoButtons(
+                                    title: AppLocalizations.of(context)!.deleteItemFromFavorite(AppLocalizations.of(context)!.call, "${state.calls?[index].id}"),
+                                    onTapFirstButton: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    onTapSecondButton: () {
+                                      context.read<MainPageBloc>().add(
+                                        MainPageDeleteFavouritesEvent(
+                                          whatDelete: 'calls',
+                                          id: state.calls?[index].id,
+                                        ),
+                                      );
+                                      Navigator.of(context).pop();
+                                      context.read<MainPageBloc>().add(
+                                          MainPageStartLoadingEvent(
+                                              shouldLoadMore: false,
+                                              callsStatus: statusFiltersCalls
+                                                  .map((i) => i.toString())
+                                                  .toList(),
+                                              brigadesStatus: statusFiltersBrigades
+                                                  .map((i) => i.toString())
+                                                  .toList()));
+                                    },
+                                  ),
+                                )
+                                    : addToFavorite(state.calls![index].id);
                               },
                               callsInfo: state.calls?[index],
                             );
@@ -260,5 +269,22 @@ class _MainPageBodyWidgetState extends State<MainPageBodyWidget> {
         return const SizedBox.shrink();
       },
     );
+  }
+  void addToFavorite(int id){
+    context.read<MainPageBloc>().add(
+      MainPageAddFavouritesEvent(
+        whatAdd: 'calls',
+        id: id,
+      ),
+    );
+    context.read<MainPageBloc>().add(
+        MainPageStartLoadingEvent(
+            shouldLoadMore: false,
+            callsStatus: statusFiltersCalls
+                .map((i) => i.toString())
+                .toList(),
+            brigadesStatus: statusFiltersBrigades
+                .map((i) => i.toString())
+                .toList()));
   }
 }

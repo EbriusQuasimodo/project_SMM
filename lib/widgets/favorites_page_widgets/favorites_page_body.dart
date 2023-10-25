@@ -6,8 +6,10 @@ import 'package:project_smm/features/calls_list_or_brigades_list/change_list_wid
 import 'package:project_smm/shared/constants/local_storage/local_storage_constants.dart';
 import 'package:project_smm/shared/lib/local_storage/local_storage.dart';
 import 'package:project_smm/shared/lib/routes/app_routes.dart';
+import 'package:project_smm/shared/ui/custom_dialogs/custom_dialog_with_two_buttons/custom_dialog_with_two_buttons.dart';
 import 'package:project_smm/shared/ui/list_item_cards/brigades_card/brigades_card.dart';
 import 'package:project_smm/shared/ui/list_item_cards/calls_card/calls_card.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class FavouritesPageBodyWidget extends StatefulWidget {
   bool isCall;
@@ -106,15 +108,33 @@ class _FavouritesPageBodyWidgetState extends State<FavouritesPageBodyWidget> {
                             return CallsCard(
                               isFavouritePage: true,
                               onTapFavouriteButton: () {
-                                context.read<FavouritesBloc>().add(
-                                      FavouritesPageDeleteEvent(
-                                        whatDelete: 'calls',
-                                        id: state.calls?[index].id,
-                                      ),
-                                    );
-                                context.read<FavouritesBloc>().add(FavouritesPageStartLoadingEvent(
-                                  shouldLoadMore: false,
-                                ));
+                                showDialog(
+                                  context: context,
+                                  builder: (builder) =>
+                                      CustomDialogWithTwoButtons(
+                                    title: AppLocalizations.of(context)!
+                                        .deleteItemFromFavorite(
+                                            AppLocalizations.of(context)!.call,
+                                            "${state.calls?[index].id}"),
+                                    onTapFirstButton: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    onTapSecondButton: () {
+                                      context.read<FavouritesBloc>().add(
+                                            FavouritesPageDeleteEvent(
+                                              whatDelete: 'calls',
+                                              id: state.calls?[index].id,
+                                            ),
+                                          );
+                                      Navigator.of(context).pop();
+                                      context
+                                          .read<FavouritesBloc>()
+                                          .add(FavouritesPageStartLoadingEvent(
+                                            shouldLoadMore: false,
+                                          ));
+                                    },
+                                  ),
+                                );
                               },
                               callsInfo: state.calls?[index],
                             );
@@ -133,14 +153,16 @@ class _FavouritesPageBodyWidgetState extends State<FavouritesPageBodyWidget> {
                               isFavouritePage: true,
                               onTapFavouriteButton: () {
                                 context.read<FavouritesBloc>().add(
-                                  FavouritesPageDeleteEvent(
-                                    whatDelete: 'brigades',
-                                    id: state.brigades?[index].id,
-                                  ),
-                                );
-                                context.read<FavouritesBloc>().add(FavouritesPageStartLoadingEvent(
-                                  shouldLoadMore: false,
-                                ));
+                                      FavouritesPageDeleteEvent(
+                                        whatDelete: 'brigades',
+                                        id: state.brigades?[index].id,
+                                      ),
+                                    );
+                                context
+                                    .read<FavouritesBloc>()
+                                    .add(FavouritesPageStartLoadingEvent(
+                                      shouldLoadMore: false,
+                                    ));
                               },
                               brigadesInfo: state.brigades?[index],
                             );

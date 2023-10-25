@@ -10,6 +10,7 @@ import 'package:project_smm/widgets/analytics_widgets/pie_chart_brigades.dart';
 import 'package:project_smm/widgets/analytics_widgets/pie_chart_calls.dart';
 import 'package:provider/provider.dart';
 
+
 class AnalyticsPage extends StatefulWidget {
   AnalyticsPage({super.key});
 
@@ -58,24 +59,24 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Padding(
+              Padding(
                 padding:
-                    EdgeInsets.only(top: 16, bottom: 12, left: 16, right: 16),
+                    const EdgeInsets.only(top: 16, bottom: 12, left: 16, right: 16),
                 child: Text(
-                  'Вызовы',
-                  style: TextStyle(
+                  AppLocalizations.of(context)!.calls,
+                  style: const TextStyle(
                       color: ThemeApp.bodyColorTextAndIcons,
                       fontWeight: FontWeight.w400,
                       fontSize: 22),
                 ),
               ),
               Provider(create: (context) => _bloc, child: const PieChartCalls()),
-              const Padding(
+               Padding(
                 padding:
-                    EdgeInsets.only(top: 16, bottom: 12, left: 16, right: 16),
+                    const EdgeInsets.only(top: 16, bottom: 12, left: 16, right: 16),
                 child: Text(
-                  'Бригады',
-                  style: TextStyle(
+                  AppLocalizations.of(context)!.brigades,
+                  style: const TextStyle(
                       color: ThemeApp.bodyColorTextAndIcons,
                       fontWeight: FontWeight.w400,
                       fontSize: 22),

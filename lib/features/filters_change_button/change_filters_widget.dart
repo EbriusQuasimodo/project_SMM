@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_smm/shared/lib/theme/theme_app.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class ChoiceFilterType extends StatefulWidget {
   bool isCall;
   final VoidCallback onTapCallButton;
@@ -39,7 +39,7 @@ class _ChoiceFilterTypeState extends State<ChoiceFilterType> {
                 widget.onTapCallButton();
               },
               child: Text(
-                'Вызов',
+                AppLocalizations.of(context)!.call,
                 style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
@@ -64,7 +64,7 @@ class _ChoiceFilterTypeState extends State<ChoiceFilterType> {
                 widget.onTapBrigadeButton();
               },
               child: Text(
-                'Бригада',
+                AppLocalizations.of(context)!.brigade,
                 style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,

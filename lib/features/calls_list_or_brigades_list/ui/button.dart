@@ -9,13 +9,14 @@ class Button extends StatelessWidget {
   final String buttonIcon;
   final VoidCallback onTap;
   final Color buttonBorderColor;
+  final Color textColor;
 
   const Button(
       {super.key,
       required this.itemsLength,
       required this.buttonName,
       required this.buttonIcon,
-      required this.onTap,  required this.buttonBorderColor});
+      required this.onTap,  required this.buttonBorderColor, required this.textColor});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +35,8 @@ class Button extends StatelessWidget {
               const SizedBox(
                 width: 8,
               ),
-              Text(buttonName),
+              Expanded(child: Text(buttonName, maxLines: 1,
+                overflow: TextOverflow.ellipsis,style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: textColor),)),
               const SizedBox(
                 width: 8,
               ),

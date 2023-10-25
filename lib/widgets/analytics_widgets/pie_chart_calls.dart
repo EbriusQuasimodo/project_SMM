@@ -8,6 +8,7 @@ import 'package:project_smm/shared/constants/local_storage/local_storage_constan
 import 'package:project_smm/shared/lib/local_storage/local_storage.dart';
 import 'package:project_smm/shared/lib/routes/app_routes.dart';
 import 'package:project_smm/shared/lib/theme/theme_app.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'legend_item_widget.dart';
 
@@ -34,19 +35,19 @@ class PieChartCalls extends StatelessWidget {
         );
       } else if (state is ChartsDoneState) {
         final dataMap = <String, double>{
-          'очередь': state.callsChartsModel.queue.toDouble(),
-          'в пути': state.callsChartsModel.transit.toDouble(),
-          'обслуживание': state.callsChartsModel.service.toDouble(),
-          'транспортировка': state.callsChartsModel.hospitalization.toDouble(),
-          'стационар': state.callsChartsModel.inHospital.toDouble(),
-          'на результате': state.callsChartsModel.result.toDouble(),
-          'закрыт': state.callsChartsModel.archive.toDouble(),
+          AppLocalizations.of(context)!.queue: state.callsChartsModel.queue.toDouble(),
+          AppLocalizations.of(context)!.transit: state.callsChartsModel.transit.toDouble(),
+          AppLocalizations.of(context)!.service: state.callsChartsModel.service.toDouble(),
+          AppLocalizations.of(context)!.hospitalization: state.callsChartsModel.hospitalization.toDouble(),
+          AppLocalizations.of(context)!.inHospital: state.callsChartsModel.inHospital.toDouble(),
+          AppLocalizations.of(context)!.onResult: state.callsChartsModel.result.toDouble(),
+          AppLocalizations.of(context)!.archive: state.callsChartsModel.archive.toDouble(),
         };
         final colorList = <Color>[
           ThemeApp.queueColor,
           ThemeApp.arrivalColor,
           ThemeApp.onServiceColor,
-          ThemeApp.transportationColor,
+          ThemeApp.hospitalizationColor,
           ThemeApp.inHospitalColor,
           ThemeApp.onResultColor,
           ThemeApp.inArchiveColor,
@@ -71,8 +72,8 @@ class PieChartCalls extends StatelessWidget {
                 ringStrokeWidth: 36,
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 25),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 25),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -82,53 +83,53 @@ class PieChartCalls extends StatelessWidget {
                     children: [
                       LegendItemWidget(
                         color: ThemeApp.queueColor,
-                        text: "очередь",
+                        text: AppLocalizations.of(context)!.queue,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 12,
                       ),
                       LegendItemWidget(
                         color: ThemeApp.arrivalColor,
-                        text: "в пути",
+                        text: AppLocalizations.of(context)!.transit,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 12,
                       ),
                       LegendItemWidget(
                         color: ThemeApp.onServiceColor,
-                        text: "обслуживание",
+                        text: AppLocalizations.of(context)!.service,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 12,
                       ),
                       LegendItemWidget(
-                        color: ThemeApp.transportationColor,
-                        text: "транспортировка",
+                        color: ThemeApp.hospitalizationColor,
+                        text: AppLocalizations.of(context)!.hospitalization,
                       ),
                     ],
                   ),
-                  SizedBox(width: 32,),
+                  const SizedBox(width: 32,),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       LegendItemWidget(
                         color: ThemeApp.inHospitalColor,
-                        text: "стационар",
+                        text: AppLocalizations.of(context)!.inHospital,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 12,
                       ),
                       LegendItemWidget(
                         color: ThemeApp.onResultColor,
-                        text: "на результате",
+                        text: AppLocalizations.of(context)!.onResult,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 12,
                       ),
                       LegendItemWidget(
                         color: ThemeApp.inArchiveColor,
-                        text: "закрыт",
+                        text: AppLocalizations.of(context)!.archive,
                       ),
                     ],
                   ),

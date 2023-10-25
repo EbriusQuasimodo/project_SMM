@@ -6,7 +6,6 @@ class ThemeApp {
   static const Color elevationColorOne = Color(0xffdae5e3);
   static const Color surfaceColorTwo = Color(0xfff3f8f5);
   static const Color secondaryColor = Color(0xffc7dad9);
-  static const Color hospitalizationColor = Color(0xff74c2c2);
   static const Color primaryColor = Color(0xff4f8b89);
   static const Color tertiaryColor = Color(0xff7b93b0);
   static const Color primaryHoverColor = Color(0xff497473);
@@ -18,8 +17,8 @@ class ThemeApp {
   static const Color onServiceColor = Color(0xffbf7fff);
   static const Color onServiceLightColor = Color(0xffd7b1fd);
   static const Color arrivalColor = Color(0xffff83cd);
-  static const Color transportationColor = Color(0xff557ebe);
-  static const Color transportationLightColor = Color(0xffa7bedd);
+  static const Color hospitalizationColor = Color(0xff557ebe);
+  static const Color hospitalizationLightColor = Color(0xffa7bedd);
   static const Color inHospitalColor = Color(0xff00afca);
   static const Color inHospitalLightColor = Color(0xff7dd6e3);
   static const Color onResultColor = Color(0xff605d62);

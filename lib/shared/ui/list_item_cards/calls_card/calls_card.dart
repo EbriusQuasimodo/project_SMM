@@ -2,23 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:project_smm/entities/types/calls_model/calls_model.dart';
+import 'package:project_smm/shared/constants/local_storage/local_storage_constants.dart';
+import 'package:project_smm/shared/lib/local_storage/local_storage.dart';
 import 'package:project_smm/shared/lib/statuses/calls_statuses.dart';
 import 'package:project_smm/shared/lib/theme/theme_app.dart';
 import 'package:project_smm/shared/ui/list_item_cards/date_text.dart';
 import 'package:project_smm/shared/ui/list_item_cards/status_card.dart';
 import 'package:project_smm/shared/ui/list_item_cards/text_with_icon.dart';
 import 'package:project_smm/shared/ui/list_item_cards/title_text.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CallsCard extends StatefulWidget {
   final CallsListModel? callsInfo;
   final VoidCallback onTapFavouriteButton;
   final bool isFavouritePage;
-  const CallsCard({
-    super.key,
-    required this.callsInfo,
-    required this.onTapFavouriteButton,
-    required this.isFavouritePage
-  });
+
+  const CallsCard(
+      {super.key,
+      required this.callsInfo,
+      required this.onTapFavouriteButton,
+      required this.isFavouritePage});
 
   @override
   State<CallsCard> createState() => _CallsCardState();
@@ -39,48 +42,55 @@ class _CallsCardState extends State<CallsCard> {
   void initState() {
     super.initState();
     parseDate();
+  }
+
+  @override
+  void didChangeDependencies() async {
+    super.didChangeDependencies();
     checkCallStatus();
   }
 
   void checkCallStatus() {
     if (widget.callsInfo!.status == CallStatuses().created) {
-      statusName = 'Создан';
+      statusName = AppLocalizations.of(context)!.created; //создан
       statusColor = ThemeApp.primaryColor;
     }
     if (widget.callsInfo!.status == CallStatuses().inQueue) {
-      statusName = 'В очереди';
+      statusName = AppLocalizations.of(context)!.inQueue; // в очереди
       statusColor = ThemeApp.queueColor;
     }
     if (widget.callsInfo!.status == CallStatuses().waitingDeparture) {
-      statusName = 'Ожидает выезда';
+      statusName =
+          AppLocalizations.of(context)!.waitingDeparture; //ожидание выезда
       statusColor = ThemeApp.onTheWayWaitColor;
     }
     if (widget.callsInfo!.status == CallStatuses().arrival) {
-      statusName = 'В пути'; //доезд
+      statusName = AppLocalizations.of(context)!.arrival; //доезд (в пути?)
       statusColor = ThemeApp.arrivalColor;
     }
     if (widget.callsInfo!.status == CallStatuses().service) {
-      statusName = 'Обслуживание';
+      statusName = AppLocalizations.of(context)!.service; // обслуживание
       statusColor = ThemeApp.onServiceColor;
     }
     if (widget.callsInfo!.status == CallStatuses().onHospitalization) {
-      statusName = 'Транспортировка';
-      statusColor = ThemeApp.transportationColor;
+      statusName =
+          AppLocalizations.of(context)!.hospitalization; // транспортировка
+      statusColor = ThemeApp.hospitalizationColor;
     }
     if (widget.callsInfo!.status == CallStatuses().arrivalAtHospital) {
-      statusName = 'В стационаре';
+      statusName = AppLocalizations.of(context)!.inHospital; // стационар
       statusColor = ThemeApp.inHospitalColor;
     }
     if (widget.callsInfo!.status == CallStatuses().onResult) {
-      statusName = 'На результате';
+      statusName = AppLocalizations.of(context)!.onResult; // завершено
       statusColor = ThemeApp.onResultColor;
     }
     if (widget.callsInfo!.status == CallStatuses().inArchive) {
-      statusName = 'Архив';
+      statusName = AppLocalizations.of(context)!.archive; // закрыт
       statusColor = ThemeApp.inArchiveColor;
     }
     if (widget.callsInfo!.status == CallStatuses().postponed) {
-      statusName = 'Отложен';
+      statusName = AppLocalizations.of(context)!.postponed; //отложен
       statusColor = ThemeApp.primaryColor;
     }
   }
@@ -116,7 +126,9 @@ class _CallsCardState extends State<CallsCard> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  TitleText(text: 'Вызов ${widget.callsInfo!.id}'),
+                  TitleText(
+                      text:
+                          '${AppLocalizations.of(context)!.call} ${widget.callsInfo!.id}'),
                   const SizedBox(
                     height: 6,
                   ),
@@ -154,7 +166,9 @@ class _CallsCardState extends State<CallsCard> {
                 ),
                 Expanded(
                   child: Text(
-                    widget.callsInfo!.reason!.name,
+                    LocalStorage.getString(AppConstants.LOCALE) == 'ru' || LocalStorage.getString(AppConstants.LOCALE) == ''
+                        ? widget.callsInfo!.reason!.name
+                        : widget.callsInfo!.reason!.nameAdd,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
@@ -179,10 +193,12 @@ class _CallsCardState extends State<CallsCard> {
           Container(
             padding: const EdgeInsets.only(right: 12, bottom: 12, top: 6),
             decoration: const BoxDecoration(
-                color: ThemeApp.elevationColorOne,
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(12),
-                    bottomRight: Radius.circular(12))),
+              color: ThemeApp.elevationColorOne,
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(12),
+                bottomRight: Radius.circular(12),
+              ),
+            ),
             child: Row(
               children: [
                 TextWithIcon(
@@ -191,14 +207,15 @@ class _CallsCardState extends State<CallsCard> {
                 ),
                 const Spacer(),
                 MaterialButton(
-                    onPressed: () {
-                      widget.onTapFavouriteButton();
-                    },
-                    child: SvgPicture.asset(widget.isFavouritePage
-                        ? 'assets/images/icons/shared/favourite.svg'
-                        : widget.callsInfo!.isFavorite!
-                            ? 'assets/images/icons/shared/favourite.svg'
-                            : 'assets/images/icons/shared/unfavourite.svg'))
+                  onPressed: () {
+                    widget.onTapFavouriteButton();
+                  },
+                  child: SvgPicture.asset(widget.isFavouritePage
+                      ? 'assets/images/icons/shared/favourite.svg'
+                      : widget.callsInfo!.isFavorite!
+                          ? 'assets/images/icons/shared/favourite.svg'
+                          : 'assets/images/icons/shared/unfavourite.svg'),
+                ),
               ],
             ),
           ),

@@ -8,7 +8,7 @@ import 'package:project_smm/shared/lib/local_storage/local_storage.dart';
 import 'package:project_smm/shared/lib/routes/app_routes.dart';
 import 'package:project_smm/shared/lib/theme/theme_app.dart';
 import 'package:project_smm/widgets/analytics_widgets/legend_item_widget.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class PieChartBrigades extends StatelessWidget {
   const PieChartBrigades({super.key});
 
@@ -32,18 +32,18 @@ class PieChartBrigades extends StatelessWidget {
         );
       } else if (state is ChartsDoneState) {
         final dataMap = <String, double>{
-          'в пути': state.brigadesChartsModel.transit.toDouble(),
-          'обслуживание': state.brigadesChartsModel.service.toDouble(),
-          'транспортировка': state.brigadesChartsModel.hospitalization.toDouble(),
-          'стационар': state.brigadesChartsModel.inHospital.toDouble(),
-          'свободна': state.brigadesChartsModel.free.toDouble(),
-          'обяз. возвращение': state.brigadesChartsModel.obligatedReturn.toDouble(),
-          'другое': state.brigadesChartsModel.other.toDouble(),
+          AppLocalizations.of(context)!.transit: state.brigadesChartsModel.transit.toDouble(),
+          AppLocalizations.of(context)!.service: state.brigadesChartsModel.service.toDouble(),
+          AppLocalizations.of(context)!.hospitalization: state.brigadesChartsModel.hospitalization.toDouble(),
+          AppLocalizations.of(context)!.inHospital: state.brigadesChartsModel.inHospital.toDouble(),
+          AppLocalizations.of(context)!.free: state.brigadesChartsModel.free.toDouble(),
+          AppLocalizations.of(context)!.obligatedReturn: state.brigadesChartsModel.obligatedReturn.toDouble(),
+          AppLocalizations.of(context)!.other: state.brigadesChartsModel.other.toDouble(),
         };
         final colorList = <Color>[
           ThemeApp.arrivalColor,
           ThemeApp.onServiceColor,
-          ThemeApp.transportationColor,
+          ThemeApp.hospitalizationColor,
           ThemeApp.inHospitalColor,
           ThemeApp.brigadeFreeColor,
           ThemeApp.mandatoryReturnToPSColor,
@@ -69,8 +69,8 @@ class PieChartBrigades extends StatelessWidget {
                 ringStrokeWidth: 36,
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 25),
+           Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 25),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -79,52 +79,52 @@ class PieChartBrigades extends StatelessWidget {
                     children: [
                       LegendItemWidget(
                         color: ThemeApp.arrivalColor,
-                        text: "в пути",
+                        text: AppLocalizations.of(context)!.transit,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 12,
                       ),
                       LegendItemWidget(
                         color: ThemeApp.onServiceColor,
-                        text: "обслуживание",
+                        text: AppLocalizations.of(context)!.service,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 12,
                       ),
                       LegendItemWidget(
-                        color: ThemeApp.transportationColor,
-                        text: "транспортировка",
+                        color: ThemeApp.hospitalizationColor,
+                        text: AppLocalizations.of(context)!.hospitalization,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 12,
                       ),
                       LegendItemWidget(
                         color: ThemeApp.inHospitalColor,
-                        text: "стационар",
+                        text: AppLocalizations.of(context)!.inHospital,
                       ),
                     ],
                   ),
-                  SizedBox(width: 32,),
+                  const SizedBox(width: 32,),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       LegendItemWidget(
                         color: ThemeApp.brigadeFreeColor,
-                        text: "свободна",
+                        text: AppLocalizations.of(context)!.free,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 12,
                       ),
                       LegendItemWidget(
                         color: ThemeApp.mandatoryReturnToPSColor,
-                        text: "обяз. возвращение",
+                        text: AppLocalizations.of(context)!.obligatedReturn,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 12,
                       ),
                       LegendItemWidget(
                         color: ThemeApp.breakColor,
-                        text: "другое",
+                        text: AppLocalizations.of(context)!.other,
                       ),
                     ],
                   ),

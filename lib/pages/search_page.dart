@@ -5,7 +5,7 @@ import 'package:project_smm/entities/types/search_model/search_model.dart';
 import 'package:project_smm/features/filters_change_button/change_filters_widget.dart';
 import 'package:project_smm/shared/ui/buttons/primary_button/primary_button.dart';
 import 'package:project_smm/widgets/search_widgets/search_form_field.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SearchPage extends StatefulWidget {
   bool isCall;
@@ -39,7 +39,7 @@ class _SearchPageState extends State<SearchPage> {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(64),
         child: AppBar(
-          title: const Text('Поиск'),
+          title: Text(AppLocalizations.of(context)!.searchPage),
           leading: MaterialButton(
             onPressed: () {
               Navigator.of(context).pop();
@@ -79,16 +79,16 @@ class _SearchPageState extends State<SearchPage> {
                         children: [
                           SearchFormField(
                               controller: _controllerNumberCall,
-                              formName: 'Номер'),
+                              formName: AppLocalizations.of(context)!.number),
                           SearchFormField(
                               controller: _controllerFioCall, formName: 'ФИО'),
                           SearchFormField(
                               controller: _controllerStreetCall,
-                              formName: 'Улица'),
+                              formName: AppLocalizations.of(context)!.street),
                           SearchFormField(
-                              controller: _controllerHouseCall, formName: 'Дом'),
+                              controller: _controllerHouseCall, formName: AppLocalizations.of(context)!.house),
                           SearchFormField(
-                              controller: _controllerApartmentCall, formName: 'Квартира'),
+                              controller: _controllerApartmentCall, formName: AppLocalizations.of(context)!.apartment),
                         ],
                       ),
                     )
@@ -98,10 +98,10 @@ class _SearchPageState extends State<SearchPage> {
                         children: [
                           SearchFormField(
                               controller: _controllerNumberBrigade,
-                              formName: 'Номер'),
+                              formName: AppLocalizations.of(context)!.number),
                           SearchFormField(
                               controller: _controllerProfileBrigade,
-                              formName: 'Профиль (ввод через запятую)'),
+                              formName: AppLocalizations.of(context)!.profile),
                         ],
                       ),
                     ),
@@ -133,7 +133,7 @@ class _SearchPageState extends State<SearchPage> {
               );
               Navigator.of(context).pop(searchModel);
             },
-            buttonName: 'Найти'),
+            buttonName: AppLocalizations.of(context)!.search),
       ),
     );
   }
