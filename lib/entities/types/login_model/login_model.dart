@@ -1,202 +1,90 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'login_model.g.dart';
+
+@JsonSerializable(includeIfNull: false)
 class LoginModel {
+  String error = '';
+  bool success = false;
+  UserModel? user;
+
   LoginModel({
-    required String error,
-    required bool success,
-    required UserModel? user,
-  }) {
-    _error = error;
-    _success = success;
-    _user = user;
-  }
+    required this.error,
+    required this.success,
+    required this.user,
+  });
 
-  LoginModel.fromJson(dynamic json) {
-    _error = json['error'] ?? '';
-    _success = json['success'] ?? false;
-    _user = json['user'] != null ?UserModel.fromJson(json['user']) :null;
-  }
+  factory LoginModel.fromJson(Map<String, dynamic> json) =>
+      _$LoginModelFromJson(json);
 
-  String _error = '';
-  bool _success = false;
-  UserModel? _user;
-
-  String get error => _error;
-
-  bool get success => _success;
-
-  UserModel? get user => _user;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['error'] = _error;
-    map['success'] = _success;
-    if(_user != null) {
-      map['user'] = _user?.toJson();
-    }
-    return map;
-  }
+  Map<String, dynamic> toJson() => _$LoginModelToJson(this);
 }
-
+@JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
 class UserModel {
+  int id = 0;
+  String login = '';
+  @JsonKey(name: 'person_id')
+  int personId = 0;
+  String token = '';
+  @JsonKey(name: 'token_create_at')
+  String tokenCreateAt = '';
+  PersonModel? person;
+  List<SubstationsListModel> substations = [];
+
   UserModel({
-    required int id,
-    required String login,
-    required int personId,
-    required String token,
-    required String tokenCreateAt,
-    required PersonModel? person,
-    required List<SubstationsListModel> substations,
-  }) {
-    _id = id;
-    _login = login;
-    _personId = personId;
-    _token = token;
-    _tokenCreateAt = tokenCreateAt;
-    _person = person;
-    _substations = substations;
-  }
+    required this.id,
+    required this.login,
+    required this.personId,
+    required this.token,
+    required this.tokenCreateAt,
+    required this.person,
+    required this.substations,
+  });
 
-  UserModel.fromJson(dynamic json) {
-    _id = json['id'] ?? '';
-    _login = json['login'] ?? '';
-    _personId = json['person_id'] ?? '';
-    _token = json['token'] ?? '';
-    _tokenCreateAt = json['token_create_at'] ?? '';
-    _person = json['person'] != null ? PersonModel.fromJson(json['person']) : null;
-    _substations = [];
-    if (json['substations'] != null) {
-      json['substations'].forEach((v) {
-        _substations.add(SubstationsListModel.fromJson(v));
-      });
-    }
-  }
+  factory UserModel.fromJson(Map<String, dynamic> json) =>
+      _$UserModelFromJson(json);
 
-  int _id = 0;
-  String _login = '';
-  int _personId = 0;
-  String _token = '';
-  String _tokenCreateAt = '';
-  PersonModel? _person;
-  List<SubstationsListModel> _substations = [];
-
-  int get id => _id;
-
-  String get login => _login;
-
-  int get personId => _personId;
-
-  String get token => _token;
-
-  String get tokenCreateAt => _tokenCreateAt;
-
-  PersonModel? get person => _person;
-
-  List<SubstationsListModel> get substations => _substations;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['id'] = _id;
-    map['login'] = _login;
-    map['person_id'] = _personId;
-    map['token'] = _token;
-    map['token_create_at'] = _tokenCreateAt;
-    if (_person != null) {
-      map['person'] = _person?.toJson();
-    }
-    map['substations'] = _substations.map((v) => v.toJson()).toList();
-    return map;
-  }
+  Map<String, dynamic> toJson() => _$UserModelToJson(this);
 }
-
-
+@JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
 class PersonModel {
+  int id = 0;
+  String fio = '';
+  String code = '';
+  @JsonKey(name: 'is_fired')
+  bool isFired = false;
+  String iin = '';
+
   PersonModel({
-    required int id,
-    required String fio,
-    required String code,
-    required bool isFired,
-    required String iin,
-  }) {
-    _id = id;
-    _fio = fio;
-    _code = code;
-    _isFired = isFired;
-    _iin = iin;
-  }
+    required this.id,
+    required this.fio,
+    required this.code,
+    required this.isFired,
+    required this.iin,
+  });
 
-  PersonModel.fromJson(dynamic json) {
-    _id = json['id'] ?? '';
-    _fio = json['fio'] ?? '';
-    _code = json['code'] ?? '';
-    _isFired = json['is_fired'] ?? '';
-    _iin = json['iin'] ?? '';
-  }
+  factory PersonModel.fromJson(Map<String, dynamic> json) =>
+      _$PersonModelFromJson(json);
 
-  int _id = 0;
-  String _fio = '';
-  String _code = '';
-  bool _isFired = false;
-  String _iin = '';
-
-  int get id => _id;
-
-  String get fio => _fio;
-
-  String get code => _code;
-
-  bool get isFired => _isFired;
-
-  String get iin => _iin;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['id'] = _id;
-    map['fio'] = _fio;
-    map['code'] = _code;
-    map['is_fired'] = _isFired;
-    map['iin'] = _iin;
-    return map;
-  }
+  Map<String, dynamic> toJson() => _$PersonModelToJson(this);
 }
-
+@JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
 class SubstationsListModel {
+  int id = 0;
+  String code = '';
+  String name = '';
+  @JsonKey(name: 'name_add')
+  String nameAdd = '';
+
   SubstationsListModel({
-    required int id,
-    required String code,
-    required String name,
-    required String nameAdd,
-  }) {
-    _id = id;
-    _code = code;
-    _name = name;
-    _nameAdd = nameAdd;
-  }
+    required this.id,
+    required this.code,
+    required this.name,
+    required this.nameAdd,
+  });
 
-  SubstationsListModel.fromJson(dynamic json) {
-    _id = json['id'] ?? '';
-    _code = json['code'] ?? '';
-    _name = json['name'] ?? '';
-    _nameAdd = json['name_add'] ?? '';
-  }
+  factory SubstationsListModel.fromJson(Map<String, dynamic> json) =>
+      _$SubstationsListModelFromJson(json);
 
-  int _id = 0;
-  String _code = '';
-  String _name = '';
-  String _nameAdd = '';
-
-  int get id => _id;
-
-  String get code => _code;
-
-  String get name => _name;
-
-  String get nameAdd => _nameAdd;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['id'] = _id;
-    map['code'] = _code;
-    map['name'] = _name;
-    map['name_add'] = _nameAdd;
-    return map;
-  }
+  Map<String, dynamic> toJson() => _$SubstationsListModelToJson(this);
 }

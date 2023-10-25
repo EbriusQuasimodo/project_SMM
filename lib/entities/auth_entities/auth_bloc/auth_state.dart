@@ -8,10 +8,11 @@ class AuthInitial extends AuthState {}
 class AuthLoadingState extends AuthState {}
 
 class AuthDoneState extends AuthState {
-  final String token;
+  final UserModel? user;
+
 
   AuthDoneState({
-    required this.token,
+    required this.user,
   });
 }
 

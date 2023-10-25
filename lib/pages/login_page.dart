@@ -28,7 +28,8 @@ class LoginPage extends StatelessWidget {
             ),
           );
         }else if (state is AuthDoneState) {
-          LocalStorage.setString(AppConstants.TOKEN, state.token);
+          LocalStorage.setString(AppConstants.TOKEN, state.user!.token);
+          LocalStorage.setString(AppConstants.FIO, state.user!.person!.fio);
           Navigator.of(context).pushNamedAndRemoveUntil(AppRoutes.homePage, (route) => false);
         }
       },

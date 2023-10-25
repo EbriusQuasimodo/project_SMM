@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:project_smm/entities/auth_entities/auth_api/data_source/login_remote_data.dart';
 import 'package:project_smm/entities/auth_entities/auth_api/repository/login_repository.dart';
+import 'package:project_smm/entities/types/login_model/login_model.dart';
 import 'package:project_smm/shared/lib/errors/failure/failure.dart';
 
 part 'auth_event.dart';
@@ -20,7 +21,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         } else if (l is ServerFailure) {
           emit(AuthFailedState(message: l.error));
         }
-      }, (r) => emit(AuthDoneState(token: r.user!.token)));
+      }, (r) => emit(AuthDoneState(user: r.user)));
     });
   }
 }
