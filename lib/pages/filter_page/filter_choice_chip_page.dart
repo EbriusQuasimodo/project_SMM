@@ -296,7 +296,7 @@ class _FilterChoiceChipPageState extends State<FilterChoiceChipPage> {
                                 fontSize: 22),
                           ),
                           const Spacer(),
-                          state.substations.length > 6
+                          state.substations.length > 6 /// .where
                               ? ShowMoreButton(onTap: () {
                                   Navigator.of(context)
                                       .push(
@@ -306,7 +306,7 @@ class _FilterChoiceChipPageState extends State<FilterChoiceChipPage> {
                                             appBarName:
                                                 AppLocalizations.of(context)!
                                                     .substation,
-                                            itemsList: state.substations,
+                                            itemsList: state.substations, // (.where)
                                             filters: widget.isCall
                                                 ? cacheSubstationCalls
                                                 : cacheSubstationBrigades,
@@ -323,7 +323,7 @@ class _FilterChoiceChipPageState extends State<FilterChoiceChipPage> {
                       padding: const EdgeInsets.only(left: 13, right: 13),
                       child: Wrap(
                         children: List.generate(
-                            state.substations.length > 6
+                            state.substations.where((element) => element.cityStation?.id == cacheCityCalls).length > 6 /// .where
                                 ? 6
                                 : state.substations.length, (index) {
                           return Padding(
