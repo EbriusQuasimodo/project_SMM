@@ -47,7 +47,9 @@ class _FavouritesPageState extends State<FavouritesPage> {
                     },
                   ),
                 ).then((value) {
+
                   searchModel = value;
+                  print (searchModel!.numberCalls);
                   _bloc
                       .add(FavouritesPageStartLoadingEvent(
                       shouldLoadMore: false,

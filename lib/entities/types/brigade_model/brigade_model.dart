@@ -34,7 +34,7 @@ class BrigadesListModel {
   @JsonKey(name: 'is_active')
   final bool isActive;
   @JsonKey(name: 'status_start_time')
-  final String statusStartTime;
+  final String? statusStartTime;
   final double latitude;
   final double longitude;
   final SubstationBrigadeModel? substation;

@@ -33,7 +33,6 @@ List<Parameters> addSearchBrigadesParameters(List<Parameters> brigadesParameters
     }
 
     if (searchModel.profile!.isNotEmpty) {
-      print('asdasdasdagh745');
       brigadesParametersList.add(Parameters(
           field: 'profile', op: 'in', value: searchModel.profile));
     }

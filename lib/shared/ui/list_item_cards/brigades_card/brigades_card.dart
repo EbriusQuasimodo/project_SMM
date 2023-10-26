@@ -107,8 +107,10 @@ class _BrigadesCardState extends State<BrigadesCard> {
   }
 
   void parseDate() {
-    DateTime parsedDate = DateTime.parse(
-        widget.brigadesInfo!.statusStartTime.replaceAll('T', ' ').toString());
+    DateTime parsedDate = DateTime.parse(widget.brigadesInfo!.statusStartTime !=
+            null
+        ? widget.brigadesInfo!.statusStartTime!.replaceAll('T', ' ').toString()
+        : widget.brigadesInfo!.shiftStart.replaceAll('T', ' ').toString());
     var utcDate = dateFormat.format(parsedDate); // pass the UTC time here
     var localDate = dateFormat.parse(utcDate, true).toLocal().toString();
     var utcTime = timeFormat.format(parsedDate); // pass the UTC time here
@@ -137,7 +139,9 @@ class _BrigadesCardState extends State<BrigadesCard> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  TitleText(text: '${AppLocalizations.of(context)!.brigade} ${widget.brigadesInfo!.id}'),
+                  TitleText(
+                      text:
+                          '${AppLocalizations.of(context)!.brigade} ${widget.brigadesInfo!.id}'),
                   const SizedBox(
                     height: 6,
                   ),
@@ -172,7 +176,8 @@ class _BrigadesCardState extends State<BrigadesCard> {
                   width: 6,
                 ),
                 Expanded(
-                  child: Text(widget.brigadesInfo!.leader!.fio!,
+                  child: Text(
+                    widget.brigadesInfo!.leader!.fio!,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
@@ -207,8 +212,8 @@ class _BrigadesCardState extends State<BrigadesCard> {
                     ),
                     TextWithIcon(
                         iconPath: 'assets/images/icons/shared/location.svg',
-                        text: '${LocalStorage.getString(AppConstants.LOCALE) == 'ru' || LocalStorage.getString(AppConstants.LOCALE) == ''
-                            ? widget.brigadesInfo!.substation!.name : widget.brigadesInfo!.substation!.nameAdd}'),
+                        text:
+                            '${LocalStorage.getString(AppConstants.LOCALE) == 'ru' || LocalStorage.getString(AppConstants.LOCALE) == '' ? widget.brigadesInfo!.substation!.name : widget.brigadesInfo!.substation!.nameAdd}'),
                   ],
                 ),
                 const Spacer(),
@@ -216,12 +221,11 @@ class _BrigadesCardState extends State<BrigadesCard> {
                     onPressed: () {
                       widget.onTapFavouriteButton();
                     },
-                    child:
-                        SvgPicture.asset(widget.isFavouritePage
+                    child: SvgPicture.asset(widget.isFavouritePage
+                        ? 'assets/images/icons/shared/favourite.svg'
+                        : widget.brigadesInfo!.isFavorite!
                             ? 'assets/images/icons/shared/favourite.svg'
-                            : widget.brigadesInfo!.isFavorite!
-                                ? 'assets/images/icons/shared/favourite.svg'
-                                : 'assets/images/icons/shared/unfavourite.svg'))
+                            : 'assets/images/icons/shared/unfavourite.svg'))
               ],
             ),
           ),

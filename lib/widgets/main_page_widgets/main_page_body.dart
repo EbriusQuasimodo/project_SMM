@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project_smm/entities/main_page_entities/main_page_bloc/main_page_bloc.dart';
+import 'package:project_smm/entities/types/search_model/search_model.dart';
 import 'package:project_smm/features/calls_list_or_brigades_list/change_list_widget.dart';
 import 'package:project_smm/shared/constants/local_storage/local_storage_constants.dart';
 import 'package:project_smm/shared/lib/local_storage/local_storage.dart';
@@ -19,9 +20,10 @@ class MainPageBodyWidget extends StatefulWidget {
   bool isCall;
   final VoidCallback onTapCallButton;
   final VoidCallback onTapBrigadeButton;
-
+  SearchModel? searchModel;
   MainPageBodyWidget(
       {super.key,
+        this.searchModel,
       required this.isCall,
       required this.onTapCallButton,
       required this.onTapBrigadeButton});
@@ -164,6 +166,7 @@ class _MainPageBodyWidgetState extends State<MainPageBodyWidget> {
                           colorCardUnSelected = ThemeApp.onResultLightColor;
                         }
                         return StatusChoiceChip(
+                          searchModel: widget.searchModel,
                           isCall: widget.isCall,
                           statusesList: widget.isCall
                               ? state.callsStatusesList[index]

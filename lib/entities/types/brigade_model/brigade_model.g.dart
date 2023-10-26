@@ -40,7 +40,7 @@ BrigadesListModel _$BrigadesListModelFromJson(Map<String, dynamic> json) =>
       shiftEnd: json['shift_end'] as String,
       status: json['status'] as int,
       isActive: json['is_active'] as bool,
-      statusStartTime: json['status_start_time'] as String,
+      statusStartTime: json['status_start_time'] as String?,
       latitude: (json['latitude'] as num).toDouble(),
       longitude: (json['longitude'] as num).toDouble(),
       substation: json['substation'] == null
@@ -84,9 +84,6 @@ Map<String, dynamic> _$BrigadesListModelToJson(BrigadesListModel instance) {
     'shift_end': instance.shiftEnd,
     'status': instance.status,
     'is_active': instance.isActive,
-    'status_start_time': instance.statusStartTime,
-    'latitude': instance.latitude,
-    'longitude': instance.longitude,
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -95,6 +92,9 @@ Map<String, dynamic> _$BrigadesListModelToJson(BrigadesListModel instance) {
     }
   }
 
+  writeNotNull('status_start_time', instance.statusStartTime);
+  val['latitude'] = instance.latitude;
+  val['longitude'] = instance.longitude;
   writeNotNull('substation', instance.substation);
   writeNotNull('car', instance.car);
   writeNotNull('profile', instance.profile);

@@ -46,7 +46,10 @@ class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
 
       addBrigadesStatusesInParametersList(
           brigadesParametersList, event.brigadesStatus);
-
+callsParametersList.toSet();
+callsParametersList.toList();
+     brigadesParametersList.toSet();
+      brigadesParametersList.toList();
       if (!event.shouldLoadMore) {
         emit(MainPageLoadingState());
         final reBrigades = await BrigadesRepository.brigades(ParamsModel(

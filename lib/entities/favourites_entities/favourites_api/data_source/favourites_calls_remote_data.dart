@@ -20,6 +20,7 @@ class FavouritesCallsData {
             'Content-Type': "application/json",
           },
           body: json.encode(params));
+      print("favorites calls ${json.encode(params)}");
       print("favorites calls ${re.statusCode}");
       if (re.statusCode == 200) {
         final CallsModel body =

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:project_smm/entities/main_page_entities/main_page_api/data_source/types/statuses_model.dart';
 import 'package:project_smm/entities/main_page_entities/main_page_bloc/main_page_bloc.dart';
+import 'package:project_smm/entities/types/search_model/search_model.dart';
 import 'package:project_smm/shared/lib/theme/theme_app.dart';
 
 class StatusChoiceChip extends StatefulWidget {
@@ -11,7 +12,8 @@ class StatusChoiceChip extends StatefulWidget {
   Color? colorCardUnSelected;
   List<int> statusFilters;
   final bool isCall;
-  StatusChoiceChip({super.key, required this.statusesList, required this.colorCardSelected, required this.colorCardUnSelected ,required this.statusFilters, required this.isCall});
+  SearchModel? searchModel;
+  StatusChoiceChip({super.key,this.searchModel, required this.statusesList, required this.colorCardSelected, required this.colorCardUnSelected ,required this.statusFilters, required this.isCall});
 
   @override
   State<StatusChoiceChip> createState() => _StatusChoiceChipState();
@@ -61,6 +63,7 @@ class _StatusChoiceChipState extends State<StatusChoiceChip> {
                       widget.statusFilters.add(widget.statusesList.statusId!);
                       context.read<MainPageBloc>().add(
                           MainPageStartLoadingEvent(
+                            searchModel: widget.searchModel,
                               shouldLoadMore: false,
                               callsStatus: widget.isCall ? widget.statusFilters
                                   .map((i) => i.toString())

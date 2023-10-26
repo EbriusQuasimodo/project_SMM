@@ -27,11 +27,13 @@ class FavouritesBloc extends Bloc<FavouritesEvent, FavouritesState> {
 
     addBrigadesParameters(brigadesParametersList);
     on<FavouritesPageStartLoadingEvent>((event, emit) async{
-      print("object${event.searchModel?.numberCalls}");
       addSearchBrigadesParameters(brigadesParametersList, event.searchModel);
 
       addSearchCallsParameters(callsParametersList, event.searchModel);
-
+      callsParametersList.toSet();
+      callsParametersList.toList();
+      brigadesParametersList.toSet();
+      brigadesParametersList.toList();
       if (!event.shouldLoadMore) {
         emit(FavouritesPageLoadingState());
         final reBrigades = await FavouritesBrigadesRepository.favouritesBrigades(ParamsModel(
