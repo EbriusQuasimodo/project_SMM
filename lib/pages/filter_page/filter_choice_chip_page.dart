@@ -9,6 +9,7 @@ import 'package:project_smm/shared/constants/local_storage/local_storage_constan
 import 'package:project_smm/shared/lib/local_storage/local_storage.dart';
 import 'package:project_smm/shared/lib/routes/app_routes.dart';
 import 'package:project_smm/shared/lib/theme/theme_app.dart';
+import 'package:project_smm/shared/types/dictionary/dictionary_model.dart';
 import 'package:project_smm/shared/ui/buttons/primary_button/primary_button.dart';
 import 'package:project_smm/shared/ui/form_item/form_item_select_dictionary/filter_choice_chip_item.dart';
 import 'package:project_smm/widgets/filters_widgets/show_more_button.dart';
@@ -40,20 +41,20 @@ class _FilterChoiceChipPageState extends State<FilterChoiceChipPage> {
     super.initState();
     if (LocalStorage.getList(AppConstants.CITYSTATIONLISTCALLS).isNotEmpty) {
       for (int i = 0;
-          i < LocalStorage.getList(AppConstants.CITYSTATIONLISTCALLS).length;
-          i++) {
+      i < LocalStorage.getList(AppConstants.CITYSTATIONLISTCALLS).length;
+      i++) {
         List<int> filters =
-            LocalStorage.getList(AppConstants.CITYSTATIONLISTCALLS)
-                .map((e) => int.parse(e))
-                .toList();
+        LocalStorage.getList(AppConstants.CITYSTATIONLISTCALLS)
+            .map((e) => int.parse(e))
+            .toList();
 
         cacheCityCalls.add(filters[i]);
       }
     }
     if (LocalStorage.getList(AppConstants.PRIORITYLISTCALLS).isNotEmpty) {
       for (int i = 0;
-          i < LocalStorage.getList(AppConstants.PRIORITYLISTCALLS).length;
-          i++) {
+      i < LocalStorage.getList(AppConstants.PRIORITYLISTCALLS).length;
+      i++) {
         List<int> filters = LocalStorage.getList(AppConstants.PRIORITYLISTCALLS)
             .map((e) => int.parse(e))
             .toList();
@@ -63,24 +64,24 @@ class _FilterChoiceChipPageState extends State<FilterChoiceChipPage> {
     }
     if (LocalStorage.getList(AppConstants.SUBSTATIONLISTCALLS).isNotEmpty) {
       for (int i = 0;
-          i < LocalStorage.getList(AppConstants.SUBSTATIONLISTCALLS).length;
-          i++) {
+      i < LocalStorage.getList(AppConstants.SUBSTATIONLISTCALLS).length;
+      i++) {
         List<int> filters =
-            LocalStorage.getList(AppConstants.SUBSTATIONLISTCALLS)
-                .map((e) => int.parse(e))
-                .toList();
+        LocalStorage.getList(AppConstants.SUBSTATIONLISTCALLS)
+            .map((e) => int.parse(e))
+            .toList();
 
         cacheSubstationCalls.add(filters[i]);
       }
     }
     if (LocalStorage.getList(AppConstants.CITYSTATIONLISTBRIGADES).isNotEmpty) {
       for (int i = 0;
-          i < LocalStorage.getList(AppConstants.CITYSTATIONLISTBRIGADES).length;
-          i++) {
+      i < LocalStorage.getList(AppConstants.CITYSTATIONLISTBRIGADES).length;
+      i++) {
         List<int> filters =
-            LocalStorage.getList(AppConstants.CITYSTATIONLISTBRIGADES)
-                .map((e) => int.parse(e))
-                .toList();
+        LocalStorage.getList(AppConstants.CITYSTATIONLISTBRIGADES)
+            .map((e) => int.parse(e))
+            .toList();
 
         cacheCityBrigades.add(filters[i]);
       }
@@ -88,12 +89,12 @@ class _FilterChoiceChipPageState extends State<FilterChoiceChipPage> {
 
     if (LocalStorage.getList(AppConstants.SUBSTATIONLISTBRIGADES).isNotEmpty) {
       for (int i = 0;
-          i < LocalStorage.getList(AppConstants.SUBSTATIONLISTBRIGADES).length;
-          i++) {
+      i < LocalStorage.getList(AppConstants.SUBSTATIONLISTBRIGADES).length;
+      i++) {
         List<int> filters =
-            LocalStorage.getList(AppConstants.SUBSTATIONLISTBRIGADES)
-                .map((e) => int.parse(e))
-                .toList();
+        LocalStorage.getList(AppConstants.SUBSTATIONLISTBRIGADES)
+            .map((e) => int.parse(e))
+            .toList();
 
         cacheSubstationBrigades.add(filters[i]);
       }
@@ -102,6 +103,7 @@ class _FilterChoiceChipPageState extends State<FilterChoiceChipPage> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(64),
@@ -112,7 +114,7 @@ class _FilterChoiceChipPageState extends State<FilterChoiceChipPage> {
               Navigator.of(context).pop();
             },
             child:
-                SvgPicture.asset('assets/images/icons/shared/arrow_back.svg'),
+            SvgPicture.asset('assets/images/icons/shared/arrow_back.svg'),
           ),
           actions: [
             Container(
@@ -121,32 +123,32 @@ class _FilterChoiceChipPageState extends State<FilterChoiceChipPage> {
                 onPressed: () {
                   widget.isCall
                       ? setState(() {
-                          LocalStorage.setList(
-                              AppConstants.CITYSTATIONLISTCALLS, []);
+                    LocalStorage.setList(
+                        AppConstants.CITYSTATIONLISTCALLS, []);
 
-                          LocalStorage.setList(
-                              AppConstants.PRIORITYLISTCALLS, []);
+                    LocalStorage.setList(
+                        AppConstants.PRIORITYLISTCALLS, []);
 
-                          LocalStorage.setList(
-                              AppConstants.SUBSTATIONLISTCALLS, []);
-                          cacheCityCalls = [];
-                          cachePriorityCalls = [];
-                          cacheSubstationCalls = [];
-                        })
+                    LocalStorage.setList(
+                        AppConstants.SUBSTATIONLISTCALLS, []);
+                    cacheCityCalls = [];
+                    cachePriorityCalls = [];
+                    cacheSubstationCalls = [];
+                  })
                       : setState(() {
-                          LocalStorage.setList(
-                              AppConstants.CITYSTATIONLISTBRIGADES, []);
+                    LocalStorage.setList(
+                        AppConstants.CITYSTATIONLISTBRIGADES, []);
 
-                          LocalStorage.setList(
-                              AppConstants.SUBSTATIONLISTBRIGADES, []);
-                          cacheCityBrigades = [];
-                          cacheSubstationBrigades = [];
-                        });
+                    LocalStorage.setList(
+                        AppConstants.SUBSTATIONLISTBRIGADES, []);
+                    cacheCityBrigades = [];
+                    cacheSubstationBrigades = [];
+                  });
                 },
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
                   side:
-                      const BorderSide(color: ThemeApp.primaryColor, width: 2),
+                  const BorderSide(color: ThemeApp.primaryColor, width: 2),
                 ),
                 child: const Padding(
                   padding: EdgeInsets.only(top: 10, bottom: 10),
@@ -164,7 +166,6 @@ class _FilterChoiceChipPageState extends State<FilterChoiceChipPage> {
       body: BlocBuilder<FiltersBloc, FiltersState>(
         builder: (context, state) {
           if (state is FiltersDoneState) {
-            print(state.cityStations);
             return SingleChildScrollView(
               child: Container(
                 padding: const EdgeInsets.only(top: 12, bottom: 16),
@@ -199,23 +200,23 @@ class _FilterChoiceChipPageState extends State<FilterChoiceChipPage> {
                           const Spacer(),
                           state.cityStations.length > 6
                               ? ShowMoreButton(onTap: () {
-                                  Navigator.of(context)
-                                      .push(
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              FilterCheckboxPage(
-                                            appBarName:
-                                                AppLocalizations.of(context)!
-                                                    .city,
-                                            itemsList: state.cityStations,
-                                            filters: widget.isCall
-                                                ? cacheCityCalls
-                                                : cacheCityBrigades,
-                                          ),
-                                        ),
-                                      )
-                                      .then((value) => setState(() {}));
-                                })
+                            Navigator.of(context)
+                                .push(
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    FilterCheckboxPage(
+                                      appBarName:
+                                      AppLocalizations.of(context)!
+                                          .city,
+                                      itemsList: state.cityStations,
+                                      filters: widget.isCall
+                                          ? cacheCityCalls
+                                          : cacheCityBrigades,
+                                    ),
+                              ),
+                            )
+                                .then((value) => setState(() {}));
+                          })
                               : const SizedBox.shrink(),
                         ],
                       ),
@@ -231,11 +232,11 @@ class _FilterChoiceChipPageState extends State<FilterChoiceChipPage> {
                               padding: const EdgeInsets.only(left: 3, right: 3),
                               child: FilterChipItem(
                                 itemName: LocalStorage.getString(
-                                                AppConstants.LOCALE) ==
-                                            'ru' ||
-                                        LocalStorage.getString(
-                                                AppConstants.LOCALE) ==
-                                            ''
+                                    AppConstants.LOCALE) ==
+                                    'ru' ||
+                                    LocalStorage.getString(
+                                        AppConstants.LOCALE) ==
+                                        ''
                                     ? state.cityStations[index].name
                                     : state.cityStations[index].nameAdd,
                                 itemId: state.cityStations[index].id,
@@ -248,40 +249,40 @@ class _FilterChoiceChipPageState extends State<FilterChoiceChipPage> {
                     ),
                     widget.isCall
                         ? Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    top: 16, bottom: 12, left: 16, right: 16),
-                                child: Text(
-                                  AppLocalizations.of(context)!.priority,
-                                  style: const TextStyle(
-                                      color:
-                                          ThemeApp.secondaryColorTextAndIcons,
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 22),
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 13, right: 13),
-                                child: Wrap(
-                                  children: List.generate(priorityList.length,
-                                      (index) {
-                                    return Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 3, right: 3),
-                                        child: FilterChipItem(
-                                          itemName:
-                                              priorityList[index].toString(),
-                                          itemId: priorityList[index],
-                                          filters: cachePriorityCalls,
-                                        ));
-                                  }).toList(),
-                                ),
-                              ),
-                            ],
-                          )
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              top: 16, bottom: 12, left: 16, right: 16),
+                          child: Text(
+                            AppLocalizations.of(context)!.priority,
+                            style: const TextStyle(
+                                color:
+                                ThemeApp.secondaryColorTextAndIcons,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 22),
+                          ),
+                        ),
+                        Padding(
+                          padding:
+                          const EdgeInsets.only(left: 13, right: 13),
+                          child: Wrap(
+                            children: List.generate(priorityList.length,
+                                    (index) {
+                                  return Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 3, right: 3),
+                                      child: FilterChipItem(
+                                        itemName:
+                                        priorityList[index].toString(),
+                                        itemId: priorityList[index],
+                                        filters: cachePriorityCalls,
+                                      ));
+                                }).toList(),
+                          ),
+                        ),
+                      ],
+                    )
                         : const SizedBox.shrink(),
                     Padding(
                       padding: const EdgeInsets.only(
@@ -298,23 +299,23 @@ class _FilterChoiceChipPageState extends State<FilterChoiceChipPage> {
                           const Spacer(),
                           state.substations.length > 6 /// .where
                               ? ShowMoreButton(onTap: () {
-                                  Navigator.of(context)
-                                      .push(
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              FilterCheckboxPage(
-                                            appBarName:
-                                                AppLocalizations.of(context)!
-                                                    .substation,
-                                            itemsList: state.substations, // (.where)
-                                            filters: widget.isCall
-                                                ? cacheSubstationCalls
-                                                : cacheSubstationBrigades,
-                                          ),
-                                        ),
-                                      )
-                                      .then((value) => setState(() {}));
-                                })
+                            Navigator.of(context)
+                                .push(
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    FilterCheckboxPage(
+                                      appBarName:
+                                      AppLocalizations.of(context)!
+                                          .substation,
+                                      itemsList: state.substations, // (.where)
+                                      filters: widget.isCall
+                                          ? cacheSubstationCalls
+                                          : cacheSubstationBrigades,
+                                    ),
+                              ),
+                            )
+                                .then((value) => setState(() {}));
+                          })
                               : const SizedBox.shrink(),
                         ],
                       ),
@@ -323,18 +324,18 @@ class _FilterChoiceChipPageState extends State<FilterChoiceChipPage> {
                       padding: const EdgeInsets.only(left: 13, right: 13),
                       child: Wrap(
                         children: List.generate(
-                            state.substations.where((element) => element.cityStation?.id == cacheCityCalls).length > 6 /// .where
+                            state.substations.length > 6 /// .where
                                 ? 6
                                 : state.substations.length, (index) {
                           return Padding(
                               padding: const EdgeInsets.only(left: 3, right: 3),
                               child: FilterChipItem(
                                 itemName: LocalStorage.getString(
-                                                AppConstants.LOCALE) ==
-                                            'ru' ||
-                                        LocalStorage.getString(
-                                                AppConstants.LOCALE) ==
-                                            ''
+                                    AppConstants.LOCALE) ==
+                                    'ru' ||
+                                    LocalStorage.getString(
+                                        AppConstants.LOCALE) ==
+                                        ''
                                     ? state.substations[index].name
                                     : state.substations[index].nameAdd,
                                 itemId: state.substations[index].id!,
@@ -376,25 +377,25 @@ class _FilterChoiceChipPageState extends State<FilterChoiceChipPage> {
 
                           Navigator.of(context).pushAndRemoveUntil(
                               MaterialPageRoute(builder: (context) {
-                            if (widget.fromWhereOpen == AppRoutes.reports) {
-                              return HomePage(
-                                selectedPage: 3,
-                              );
-                            } else if (widget.fromWhereOpen ==
-                                AppRoutes.analytics) {
-                              return HomePage(
-                                selectedPage: 1,
-                              );
-                            } else if (widget.fromWhereOpen ==
-                                AppRoutes.favorites) {
-                              return HomePage(
-                                selectedPage: 2,
-                              );
-                            }
-                            return HomePage(
-                              selectedPage: 0,
-                            );
-                          }), (route) => false);
+                                if (widget.fromWhereOpen == AppRoutes.reports) {
+                                  return HomePage(
+                                    selectedPage: 3,
+                                  );
+                                } else if (widget.fromWhereOpen ==
+                                    AppRoutes.analytics) {
+                                  return HomePage(
+                                    selectedPage: 1,
+                                  );
+                                } else if (widget.fromWhereOpen ==
+                                    AppRoutes.favorites) {
+                                  return HomePage(
+                                    selectedPage: 2,
+                                  );
+                                }
+                                return HomePage(
+                                  selectedPage: 0,
+                                );
+                              }), (route) => false);
                         },
                         buttonName: AppLocalizations.of(context)!.submit),
                   ],

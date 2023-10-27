@@ -12,9 +12,9 @@ class FilterCheckboxPage extends StatelessWidget {
 
   const FilterCheckboxPage(
       {super.key,
-      required this.appBarName,
-      required this.itemsList,
-      required this.filters});
+        required this.appBarName,
+        required this.itemsList,
+        required this.filters});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class FilterCheckboxPage extends StatelessWidget {
               Navigator.of(context).pop();
             },
             child:
-                SvgPicture.asset('assets/images/icons/shared/arrow_back.svg'),
+            SvgPicture.asset('assets/images/icons/shared/arrow_back.svg'),
           ),
           titleSpacing: 0,
         ),
