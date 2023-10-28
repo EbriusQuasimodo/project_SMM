@@ -9,6 +9,7 @@ List<StatusesList> createCallsStatuses(List<StatusesList> callsStatusesList) {
       .add(StatusesList(statusId: 4, statusName: 'Транспортировка'));
   callsStatusesList.add(StatusesList(statusId: 6, statusName: 'Стационар'));
   callsStatusesList.add(StatusesList(statusId: 5, statusName: 'Завершено'));
+  callsStatusesList.add(StatusesList(statusId: 2, statusName: 'В пути'));
   return callsStatusesList;
 }
 
@@ -18,7 +19,15 @@ List<Parameters> addCallsStatusesInParametersList(
     callsParametersList.removeWhere((element) => element.field == 'status');
     callsParametersList.add(Parameters(
         field: 'status', op: 'in', value: ['1', '2', '3', '4', '5', '6']));
-  } else if (callsStatus.isNotEmpty) {
+  } else if(callsStatus.isNotEmpty && callsStatus.contains('2')){
+    callsParametersList.removeWhere((element) => element.field == 'status');
+    callsParametersList
+        .add(Parameters(field: 'status', op: 'in', value: ['2','7']));
+  }else if(callsStatus.isNotEmpty && callsStatus.contains('5')){
+    callsParametersList.removeWhere((element) => element.field == 'status');
+    callsParametersList
+        .add(Parameters(field: 'status', op: 'in', value: ['5','20']));
+  }else if (callsStatus.isNotEmpty) {
     callsParametersList.removeWhere((element) => element.field == 'status');
     callsParametersList
         .add(Parameters(field: 'status', op: 'in', value: callsStatus));

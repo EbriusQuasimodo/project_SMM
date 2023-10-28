@@ -9,6 +9,7 @@ class CallStatuses {
   final int onResult = 5;
   final int inArchive = 20;
   final int postponed = 30;
+  final int transit = 2;
 }
 
 // 1. Создан - **0**

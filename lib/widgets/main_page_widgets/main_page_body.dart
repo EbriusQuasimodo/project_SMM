@@ -135,6 +135,10 @@ class _MainPageBodyWidgetState extends State<MainPageBodyWidget> {
                             colorCardUnSelected = ThemeApp.breakLightColor;
                           }
                         }
+                        if(state.callsStatusesList[index].statusId == 2){
+                          colorCardSelected = ThemeApp.arrivalColor;
+                          colorCardUnSelected = ThemeApp.arrivalLightColor;
+                        }
                         if (state.callsStatusesList[index].statusId == 666) {
                           colorCardSelected = ThemeApp.primaryColor;
                           colorCardUnSelected = ThemeApp.secondaryColor;

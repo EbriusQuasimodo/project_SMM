@@ -77,7 +77,7 @@ class _BrigadesCardState extends State<BrigadesCard> {
       statusColor = ThemeApp.returnToPSColor;
     }
     if (widget.brigadesInfo!.status == BrigadesStatuses().onPS) {
-      statusName = AppLocalizations.of(context)!.onPS;
+      statusName = AppLocalizations.of(context)!.onPS; //на пс
       statusColor = ThemeApp.onPSColor;
     }
     if (widget.brigadesInfo!.status == BrigadesStatuses().brigadeIsFree) {

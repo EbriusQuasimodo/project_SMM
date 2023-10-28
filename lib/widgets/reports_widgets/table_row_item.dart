@@ -2,12 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:project_smm/entities/reports_entities/types/structure_report_table.dart';
 import 'package:project_smm/shared/lib/theme/theme_app.dart';
 
-class TableRowItem extends StatelessWidget {
+class TableRowItem extends StatefulWidget {
   final StructureReportTable rowReportData;
   final int index;
 
-  const TableRowItem(
+  TableRowItem(
       {super.key, required this.rowReportData, required this.index});
+
+  @override
+  State<TableRowItem> createState() => _TableRowItemState();
+}
+
+class _TableRowItemState extends State<TableRowItem> {
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +21,7 @@ class TableRowItem extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
           color:
-              index % 2 != 0 ? ThemeApp.dividerOneColor : ThemeApp.whiteColor),
+              widget.index % 2 != 0 ? ThemeApp.dividerOneColor : ThemeApp.whiteColor),
       child: Row(
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -24,7 +30,7 @@ class TableRowItem extends StatelessWidget {
           Container(
             alignment: Alignment.centerLeft,
             padding: EdgeInsets.symmetric(
-                horizontal: rowReportData.isSubparagraph ? 24 : 12),
+                horizontal: widget.rowReportData.isSubparagraph ? 24 : 12),
             width: MediaQuery.of(context).size.width - 248,
             height: 40,
             decoration: BoxDecoration(
@@ -33,9 +39,9 @@ class TableRowItem extends StatelessWidget {
                 width: 1,
               ),
             ),
-            child: Text(rowReportData.data,
+            child: Text(widget.rowReportData.data,
                 style: TextStyle(
-                    fontSize: rowReportData.isSubparagraph ? 12 : 14,
+                    fontSize: widget.rowReportData.isSubparagraph ? 12 : 14,
                     fontWeight: FontWeight.w400,
                     color: ThemeApp.bodyColorTextAndIcons)),
           ),
@@ -51,9 +57,9 @@ class TableRowItem extends StatelessWidget {
               color: ThemeApp.dividerTwoColor,
               width: 1,
             )),
-            child: Text('${rowReportData.yesterdayValue}',
+            child: Text('${widget.rowReportData.yesterdayValue}',
                 style: TextStyle(
-                    fontSize: rowReportData.isSubparagraph ? 12 : 14,
+                    fontSize: widget.rowReportData.isSubparagraph ? 12 : 14,
                     fontWeight: FontWeight.w400,
                     color: ThemeApp.bodyColorTextAndIcons)),
           ),
@@ -71,9 +77,9 @@ class TableRowItem extends StatelessWidget {
                   color: ThemeApp.dividerTwoColor,
                   width: 1,
                 )),
-                child: Text('${rowReportData.todayValue}',
+                child: Text('${widget.rowReportData.todayValue}',
                     style: TextStyle(
-                        fontSize: rowReportData.isSubparagraph ? 12 : 14,
+                        fontSize: widget.rowReportData.isSubparagraph ? 12 : 14,
                         fontWeight: FontWeight.w400,
                         color: ThemeApp.bodyColorTextAndIcons)),
               ),
@@ -90,9 +96,9 @@ class TableRowItem extends StatelessWidget {
                   width: 1,
                 )),
                 child: Text(
-                  '${rowReportData.todayPercent}',
+                  '${widget.rowReportData.todayPercent.toInt()}',
                   style: TextStyle(
-                      fontSize: rowReportData.isSubparagraph ? 12 : 14,
+                      fontSize: widget.rowReportData.isSubparagraph ? 12 : 14,
                       fontWeight: FontWeight.w400,
                       color: ThemeApp.bodyColorTextAndIcons),
                 ),

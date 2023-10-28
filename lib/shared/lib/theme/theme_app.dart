@@ -17,6 +17,7 @@ class ThemeApp {
   static const Color onServiceColor = Color(0xffbf7fff);
   static const Color onServiceLightColor = Color(0xffd7b1fd);
   static const Color arrivalColor = Color(0xffff83cd);
+  static const Color arrivalLightColor = Color(0xffffc2e7);
   static const Color hospitalizationColor = Color(0xff557ebe);
   static const Color hospitalizationLightColor = Color(0xffa7bedd);
   static const Color inHospitalColor = Color(0xff00afca);

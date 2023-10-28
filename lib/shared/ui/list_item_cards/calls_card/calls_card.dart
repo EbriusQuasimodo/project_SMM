@@ -65,7 +65,7 @@ class _CallsCardState extends State<CallsCard> {
       statusColor = ThemeApp.onTheWayWaitColor;
     }
     if (widget.callsInfo!.status == CallStatuses().arrival) {
-      statusName = AppLocalizations.of(context)!.arrival; //доезд (в пути?)
+      statusName = AppLocalizations.of(context)!.transit; //доезд (в пути?)
       statusColor = ThemeApp.arrivalColor;
     }
     if (widget.callsInfo!.status == CallStatuses().service) {
