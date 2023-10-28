@@ -6,22 +6,32 @@ class TableRowItem extends StatefulWidget {
   final StructureReportTable rowReportData;
   final int index;
 
-  TableRowItem(
-      {super.key, required this.rowReportData, required this.index});
+  const TableRowItem({super.key, required this.rowReportData, required this.index});
 
   @override
   State<TableRowItem> createState() => _TableRowItemState();
 }
 
 class _TableRowItemState extends State<TableRowItem> {
+  double percent = 0;
+
+  @override
+  void initState() {
+    percent = widget.rowReportData.todayValue *
+            100 /
+            widget.rowReportData.yesterdayValue +
+        widget.rowReportData.todayValue;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
-          color:
-              widget.index % 2 != 0 ? ThemeApp.dividerOneColor : ThemeApp.whiteColor),
+          color: widget.index % 2 != 0
+              ? ThemeApp.dividerOneColor
+              : ThemeApp.whiteColor),
       child: Row(
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -96,7 +106,7 @@ class _TableRowItemState extends State<TableRowItem> {
                   width: 1,
                 )),
                 child: Text(
-                  '${widget.rowReportData.todayPercent.toInt()}',
+                  '${percent.isNaN ? 0 : percent.isInfinite ? 0 : percent.toInt()}%',
                   style: TextStyle(
                       fontSize: widget.rowReportData.isSubparagraph ? 12 : 14,
                       fontWeight: FontWeight.w400,
