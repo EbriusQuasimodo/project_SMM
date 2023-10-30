@@ -79,5 +79,49 @@
   "profile": "Профиль (ввод через запятую)",
   "search": "Найти",
   "submit": "Подтвердить",
-  "showAll": "показать все"
+  "showAll": "показать все",
+  "requests" : "Обращений",
+  "repeated" : "Повторные",
+  "noDeparture" : "Без выезда",
+  "toNoAvail" : "Безрезультатных",
+  "totalDepartures" : "Всего выездов",
+  "urgency": "{urgencyNumber} срочность",
+  "@urgency": {
+    "description": "",
+    "placeholders": {
+      "urgencyNumber": {
+        "type": "String",
+        "example": "1234"
+      }
+    }
+  },
+  "otherInReport" : "Другое",
+  "efficiency" : "Оперативность",
+  "averageTimeToProvideAssistance" : "Среднее время оказания помощи",
+  "ossmp" : "ОССМП",
+  "smpAtPmsp" : "СМП при ПМСП",
+  "averageArrivalTime" : "Среднее время доезда",
+  "deliveredToMo " : "Доставлены в МО",
+  "forHospitalization" : "на госпитализацию",
+  "toProvideAssistance" : "для оказания помощи",
+  "others" : "Прочие",
+  "emergencyCall" : "Вызова по ЧС",
+  "mortality" : "Летальность",
+  "toSmp" : "до СМП",
+  "duringSmpOrInCarSmp" : "При СМП/В машине СМП",
+  "reanimation" : "Реанимация",
+  "success" : "успешная",
+  "notSuccess" : "Безуспешная",
+  "shoki" : "ШОКИ",
+  "withRiseSt" : "с подъёмом ST",
+  "withoutRiseSt" : "без подъёмома ST",
+  "onmk" : "ОНМК",
+  "within40minutes" : "в течении 40 минут",
+  "moreThan40minutes" : "более 40 минут",
+  "pregnant" : "Беременные",
+  "refusalOfHospitalization" : "отказ от госпитализации",
+  "preeclampsiaOrEclampsia" : "Преэклампсии или эклампсии",
+  "homeOrRoadBirth" : "домашние/дорожные роды",
+  "orviOrPneumonia" : "ОРВИ/пневмонии",
+  "infections" : "Инфекции"
 }

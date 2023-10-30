@@ -8,19 +8,19 @@ List<Parameters> addCallsParameters(List<Parameters> callsParametersList){
     callsParametersList.add(Parameters(
         field: 'city_station',
         op: 'in',
-        value: LocalStorage.getList(AppConstants.CITYSTATIONLISTCALLS)));
+        value: LocalStorage.getList(AppConstants.CITYSTATIONLISTCALLS).map(int.parse).toList()));
   }
   if (LocalStorage.getList(AppConstants.PRIORITYLISTCALLS).isNotEmpty) {
     callsParametersList.add(Parameters(
         field: 'priority',
         op: 'in',
-        value: LocalStorage.getList(AppConstants.PRIORITYLISTCALLS)));
+        value: LocalStorage.getList(AppConstants.PRIORITYLISTCALLS).map(int.parse).toList()));
   }
   if (LocalStorage.getList(AppConstants.SUBSTATIONLISTCALLS).isNotEmpty) {
     callsParametersList.add(Parameters(
         field: 'substation',
         op: 'in',
-        value: LocalStorage.getList(AppConstants.SUBSTATIONLISTCALLS)));
+        value: LocalStorage.getList(AppConstants.SUBSTATIONLISTCALLS).map(int.parse).toList()));
   }
 return callsParametersList;
 }

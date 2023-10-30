@@ -65,13 +65,9 @@ class _StatusChoiceChipState extends State<StatusChoiceChip> {
                           MainPageStartLoadingEvent(
                             searchModel: widget.searchModel,
                               shouldLoadMore: false,
-                              callsStatus: widget.isCall ? widget.statusFilters
-                                  .map((i) => i.toString())
-                                  .toList() : [],
+                              callsStatus: widget.isCall ? widget.statusFilters : [],
                               brigadesStatus: widget.isCall ? [] :
-                              widget.statusFilters
-                                  .map((i) => i.toString())
-                                  .toList()));
+                              widget.statusFilters));
                     }
                   } else {
                     widget.statusFilters.removeWhere((int id) {
@@ -83,12 +79,9 @@ class _StatusChoiceChipState extends State<StatusChoiceChip> {
                         MainPageStartLoadingEvent(
                             shouldLoadMore: false,
                             callsStatus: widget.isCall ? widget.statusFilters
-                                .map((i) => i.toString())
-                                .toList() : [],
+                                 : [],
                             brigadesStatus: widget.isCall ? [] :
-                            widget.statusFilters
-                                .map((i) => i.toString())
-                                .toList()));
+                            widget.statusFilters));
                   }
                 });
               },

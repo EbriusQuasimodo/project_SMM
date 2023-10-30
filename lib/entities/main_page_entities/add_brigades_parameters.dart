@@ -8,14 +8,14 @@ List<Parameters> addBrigadesParameters(List<Parameters> brigadesParametersList){
     brigadesParametersList.add(Parameters(
         field: 'city_station',
         op: 'in',
-        value: LocalStorage.getList(AppConstants.CITYSTATIONLISTBRIGADES)));
+        value: LocalStorage.getList(AppConstants.CITYSTATIONLISTBRIGADES).map(int.parse).toList()));
   }
 
   if (LocalStorage.getList(AppConstants.SUBSTATIONLISTBRIGADES).isNotEmpty) {
     brigadesParametersList.add(Parameters(
         field: 'substation',
         op: 'in',
-        value: LocalStorage.getList(AppConstants.SUBSTATIONLISTBRIGADES)));
+        value: LocalStorage.getList(AppConstants.SUBSTATIONLISTBRIGADES).map(int.parse).toList()));
   }
   return brigadesParametersList;
 }

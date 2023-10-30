@@ -83,28 +83,28 @@ class PieChartCalls extends StatelessWidget {
                     children: [
                       LegendItemWidget(
                         color: ThemeApp.queueColor,
-                        text: AppLocalizations.of(context)!.queue,
+                        text: "кол-во: ${state.callsChartsModel.queue}, ${AppLocalizations.of(context)!.queue}",
                       ),
                       const SizedBox(
                         height: 12,
                       ),
                       LegendItemWidget(
                         color: ThemeApp.arrivalColor,
-                        text: AppLocalizations.of(context)!.transit,
+                        text: "кол-во: ${state.callsChartsModel.transit}, ${AppLocalizations.of(context)!.transit}",
                       ),
                       const SizedBox(
                         height: 12,
                       ),
                       LegendItemWidget(
                         color: ThemeApp.onServiceColor,
-                        text: AppLocalizations.of(context)!.service,
+                        text: "кол-во: ${state.callsChartsModel.service}, ${AppLocalizations.of(context)!.service}",
                       ),
                       const SizedBox(
                         height: 12,
                       ),
                       LegendItemWidget(
                         color: ThemeApp.hospitalizationColor,
-                        text: AppLocalizations.of(context)!.hospitalization,
+                        text: "кол-во: ${state.callsChartsModel.hospitalization}, ${AppLocalizations.of(context)!.hospitalization}",
                       ),
                     ],
                   ),
@@ -115,21 +115,21 @@ class PieChartCalls extends StatelessWidget {
                     children: [
                       LegendItemWidget(
                         color: ThemeApp.inHospitalColor,
-                        text: AppLocalizations.of(context)!.inHospital,
+                        text: "кол-во: ${state.callsChartsModel.inHospital}, ${AppLocalizations.of(context)!.inHospital}",
                       ),
                       const SizedBox(
                         height: 12,
                       ),
                       LegendItemWidget(
                         color: ThemeApp.onResultColor,
-                        text: AppLocalizations.of(context)!.onResult,
+                        text: "кол-во: ${state.callsChartsModel.result}, ${AppLocalizations.of(context)!.onResult}",
                       ),
                       const SizedBox(
                         height: 12,
                       ),
                       LegendItemWidget(
                         color: ThemeApp.inArchiveColor,
-                        text: AppLocalizations.of(context)!.archive,
+                        text: "кол-во: ${state.callsChartsModel.archive}, ${AppLocalizations.of(context)!.archive}",
                       ),
                     ],
                   ),

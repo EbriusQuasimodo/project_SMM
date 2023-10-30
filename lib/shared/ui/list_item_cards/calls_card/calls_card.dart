@@ -126,9 +126,7 @@ class _CallsCardState extends State<CallsCard> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  TitleText(
-                      text:
-                          '${AppLocalizations.of(context)!.call} ${widget.callsInfo!.id}'),
+                  TitleText(text: '${AppLocalizations.of(context)!.call}'),
                   const SizedBox(
                     height: 6,
                   ),
@@ -166,9 +164,7 @@ class _CallsCardState extends State<CallsCard> {
                 ),
                 Expanded(
                   child: Text(
-                    LocalStorage.getString(AppConstants.LOCALE) == 'ru' || LocalStorage.getString(AppConstants.LOCALE) == ''
-                        ? widget.callsInfo!.reason!.name
-                        : widget.callsInfo!.reason!.nameAdd,
+                    "код: ${widget.callsInfo!.reason!.code}, ${LocalStorage.getString(AppConstants.LOCALE) == 'ru' || LocalStorage.getString(AppConstants.LOCALE) == '' ? widget.callsInfo!.reason!.name : widget.callsInfo!.reason!.nameAdd}",
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
