@@ -15,36 +15,36 @@ List<StatusesList> createBrigadesStatuses(
 }
 
 List<Parameters> addBrigadesStatusesInParametersList(
-    List<Parameters> brigadesParametersList, List<String> brigadesStatus) {
-  if (brigadesStatus.isNotEmpty && brigadesStatus.contains('667')) {
+    List<Parameters> brigadesParametersList, List<int> brigadesStatus) {
+  if (brigadesStatus.isNotEmpty && brigadesStatus.contains(667)) {
     brigadesParametersList.removeWhere((element) => element.field == 'status');
     brigadesParametersList.add(Parameters(field: 'status', op: 'in', value: [
-      '0',
-      '1',
-      '2',
-      '3',
-      '4',
-      '5',
-      '6',
-      '7',
-      '8',
-      '9',
-      '10',
-      '11',
-      '12'
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
     ]));
-  } else if (brigadesStatus.isNotEmpty && brigadesStatus.contains('10')) {
+  } else if (brigadesStatus.isNotEmpty && brigadesStatus.contains(10)) {
     brigadesParametersList.removeWhere((element) => element.field == 'status');
     brigadesParametersList.add(
-        Parameters(field: 'status', op: 'in', value: ['0', '10']));
-  } else if (brigadesStatus.isNotEmpty && brigadesStatus.contains('2')) {
+        Parameters(field: 'status', op: 'in', value: [0, 10]));
+  } else if (brigadesStatus.isNotEmpty && brigadesStatus.contains(2)) {
     brigadesParametersList.removeWhere((element) => element.field == 'status');
     brigadesParametersList
-        .add(Parameters(field: 'status', op: 'in', value: ['1', '2',' 3','4','5','11','12']));
-  } else if (brigadesStatus.isNotEmpty && brigadesStatus.contains('6')) {
+        .add(Parameters(field: 'status', op: 'in', value: [1, 2,3,4,5,11,12]));
+  } else if (brigadesStatus.isNotEmpty && brigadesStatus.contains(6)) {
     brigadesParametersList.removeWhere((element) => element.field == 'status');
     brigadesParametersList
-        .add(Parameters(field: 'status', op: 'in', value: ['6', '7', '8', '9']));
+        .add(Parameters(field: 'status', op: 'in', value: [6, 7, 8, 9]));
   }
   return brigadesParametersList;
 }

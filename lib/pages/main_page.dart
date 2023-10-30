@@ -47,6 +47,7 @@ class _MainPageState extends State<MainPage> {
                     builder: (BuildContext context) {
                       return SearchPage(
                         isCall: isCall,
+                        searchModel: searchModel ?? SearchModel(),
                       );
                     },
                   ),

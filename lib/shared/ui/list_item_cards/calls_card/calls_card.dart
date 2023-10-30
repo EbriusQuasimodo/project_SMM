@@ -128,7 +128,7 @@ class _CallsCardState extends State<CallsCard> {
                 children: [
                   TitleText(
                       text:
-                          '${AppLocalizations.of(context)!.call} ${widget.callsInfo!.id}'),
+                          '${AppLocalizations.of(context)!.call}'),
                   const SizedBox(
                     height: 6,
                   ),

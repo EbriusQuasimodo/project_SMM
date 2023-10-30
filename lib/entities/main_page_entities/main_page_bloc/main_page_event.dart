@@ -5,8 +5,8 @@ abstract class MainPageEvent {}
 
 class MainPageStartLoadingEvent extends MainPageEvent {
   final bool shouldLoadMore;
-  final List<String> callsStatus;
-  final List<String> brigadesStatus;
+  final List<int> callsStatus;
+  final List<int> brigadesStatus;
   final SearchModel? searchModel;
 
   MainPageStartLoadingEvent(

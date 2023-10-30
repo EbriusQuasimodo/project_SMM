@@ -141,7 +141,7 @@ class _BrigadesCardState extends State<BrigadesCard> {
                 children: [
                   TitleText(
                       text:
-                          '${AppLocalizations.of(context)!.brigade} ${widget.brigadesInfo!.id}'),
+                          '${AppLocalizations.of(context)!.brigade}'),
                   const SizedBox(
                     height: 6,
                   ),

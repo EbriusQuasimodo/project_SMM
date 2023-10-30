@@ -9,8 +9,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SearchPage extends StatefulWidget {
   bool isCall;
+  final SearchModel searchModel;
 
-  SearchPage({super.key, required this.isCall});
+  SearchPage({super.key, required this.isCall, required this.searchModel});
 
   @override
   State<SearchPage> createState() => _SearchPageState();
@@ -18,18 +19,18 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _controllerNumberCall = TextEditingController();
+  late final TextEditingController _controllerNumberCall = TextEditingController(text: "${widget.searchModel.numberCalls ?? ''}");
 
-  final TextEditingController _controllerFioCall = TextEditingController();
-  final TextEditingController _controllerApartmentCall = TextEditingController();
+  late final TextEditingController _controllerFioCall = TextEditingController(text: widget.searchModel.fio ?? '');
+  late final TextEditingController _controllerApartmentCall = TextEditingController( text: widget.searchModel.apartment ?? '');
 
-  final TextEditingController _controllerStreetCall = TextEditingController();
-  final TextEditingController _controllerHouseCall = TextEditingController();
+  late final TextEditingController _controllerStreetCall = TextEditingController( text: widget.searchModel.street ?? '');
+  late final TextEditingController _controllerHouseCall = TextEditingController( text: widget.searchModel.house ?? '');
 
-  final TextEditingController _controllerNumberBrigade =
-      TextEditingController();
-  final TextEditingController _controllerProfileBrigade =
-      TextEditingController();
+  late final TextEditingController _controllerNumberBrigade =
+      TextEditingController(text: widget.searchModel.numberBrigades ?? '');
+  late final TextEditingController _controllerProfileBrigade =
+      TextEditingController(text: String.fromCharCodes(widget.searchModel.profile ?? []) ?? '');
 
   late final SearchModel? searchModel;
 
@@ -42,7 +43,7 @@ class _SearchPageState extends State<SearchPage> {
           title: Text(AppLocalizations.of(context)!.searchPage),
           leading: MaterialButton(
             onPressed: () {
-              Navigator.of(context).pop();
+              Navigator.of(context).pop(widget.searchModel);
             },
             child:
                 SvgPicture.asset('assets/images/icons/shared/arrow_back.svg'),
@@ -129,7 +130,7 @@ class _SearchPageState extends State<SearchPage> {
                 street: _controllerStreetCall.text,
                 house: _controllerHouseCall.text,
                 apartment: _controllerApartmentCall.text,
-                profile: profileList,
+                profile: profileList.map(int.parse).toList(),
               );
               Navigator.of(context).pop(searchModel);
             },

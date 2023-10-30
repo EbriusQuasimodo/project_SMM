@@ -5,7 +5,7 @@ class SearchModel {
   String? house;
   String? apartment;
   String? numberBrigades;
-  List<String>? profile;
+  List<int>? profile;
 
   SearchModel({
     this.numberCalls,

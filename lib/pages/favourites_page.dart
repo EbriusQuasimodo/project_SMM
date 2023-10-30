@@ -43,6 +43,7 @@ class _FavouritesPageState extends State<FavouritesPage> {
                     builder: (BuildContext context) {
                       return SearchPage(
                         isCall: isCall,
+                        searchModel: searchModel ?? SearchModel(),
                       );
                     },
                   ),

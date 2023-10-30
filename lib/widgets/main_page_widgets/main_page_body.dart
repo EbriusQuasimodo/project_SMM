@@ -50,9 +50,9 @@ class _MainPageBodyWidgetState extends State<MainPageBodyWidget> {
             scrollController.position.maxScrollExtent) {
           context.read<MainPageBloc>().add(MainPageStartLoadingEvent(
               shouldLoadMore: true,
-              callsStatus: statusFiltersCalls.map((i) => i.toString()).toList(),
+              callsStatus: statusFiltersCalls,
               brigadesStatus:
-                  statusFiltersBrigades.map((i) => i.toString()).toList()));
+                  statusFiltersBrigades));
         }
       },
     );
@@ -216,12 +216,8 @@ class _MainPageBodyWidgetState extends State<MainPageBodyWidget> {
                                       context.read<MainPageBloc>().add(
                                           MainPageStartLoadingEvent(
                                               shouldLoadMore: false,
-                                              callsStatus: statusFiltersCalls
-                                                  .map((i) => i.toString())
-                                                  .toList(),
-                                              brigadesStatus: statusFiltersBrigades
-                                                  .map((i) => i.toString())
-                                                  .toList()));
+                                              callsStatus: statusFiltersCalls,
+                                              brigadesStatus: statusFiltersBrigades));
                                     },
                                   ),
                                 )
@@ -259,12 +255,8 @@ class _MainPageBodyWidgetState extends State<MainPageBodyWidget> {
                                 context.read<MainPageBloc>().add(
                                     MainPageStartLoadingEvent(
                                         shouldLoadMore: false,
-                                        callsStatus: statusFiltersCalls
-                                            .map((i) => i.toString())
-                                            .toList(),
-                                        brigadesStatus: statusFiltersBrigades
-                                            .map((i) => i.toString())
-                                            .toList()));
+                                        callsStatus: statusFiltersCalls,
+                                        brigadesStatus: statusFiltersBrigades));
                               },
                               brigadesInfo: state.brigades?[index],
                             );
@@ -287,11 +279,7 @@ class _MainPageBodyWidgetState extends State<MainPageBodyWidget> {
     context.read<MainPageBloc>().add(
         MainPageStartLoadingEvent(
             shouldLoadMore: false,
-            callsStatus: statusFiltersCalls
-                .map((i) => i.toString())
-                .toList(),
-            brigadesStatus: statusFiltersBrigades
-                .map((i) => i.toString())
-                .toList()));
+            callsStatus: statusFiltersCalls,
+            brigadesStatus: statusFiltersBrigades));
   }
 }
