@@ -150,6 +150,7 @@ class _FavouritesPageBodyWidgetState extends State<FavouritesPageBodyWidget> {
                           delegate: SliverChildBuilderDelegate(
                               (BuildContext context, int index) {
                             return BrigadesCard(
+                              index: index,
                               isFavouritePage: true,
                               onTapFavouriteButton: () {
                                 context.read<FavouritesBloc>().add(

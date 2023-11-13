@@ -26,14 +26,8 @@ return callsParametersList;
 }
 
 List<Parameters> addSearchCallsParameters(List<Parameters> callsParametersList, SearchModel? searchModel){
-  // callsParametersList.removeWhere((element) =>
-  // element.field == 'apartment' ||
-  // element.field == 'house' ||
-  //     element.field == 'street' ||
-  //     element.field == 'patient_fio' ||
-  //     element.field == 'day_number');
   if (searchModel != null) {
-    if (searchModel.numberCalls != null) {
+    if (searchModel.numberCalls != 0) {
       callsParametersList.add(Parameters(
           field: 'day_number',
           op: 'eq',

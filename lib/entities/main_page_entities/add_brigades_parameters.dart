@@ -21,9 +21,6 @@ List<Parameters> addBrigadesParameters(List<Parameters> brigadesParametersList){
 }
 
 List<Parameters> addSearchBrigadesParameters(List<Parameters> brigadesParametersList, SearchModel? searchModel){
-  // brigadesParametersList.removeWhere((element) =>
-  // element.field == 'profile' ||
-  //     element.field == 'number');
   if (searchModel != null) {
     if (searchModel.numberBrigades != '') {
       brigadesParametersList.add(Parameters(
@@ -32,7 +29,7 @@ List<Parameters> addSearchBrigadesParameters(List<Parameters> brigadesParameters
           value: searchModel.numberBrigades));
     }
 
-    if (searchModel.profile!.isNotEmpty) {
+    if (searchModel.profile.isNotEmpty) {
       brigadesParametersList.add(Parameters(
           field: 'profile', op: 'in', value: searchModel.profile));
     }

@@ -9,25 +9,24 @@ import 'package:project_smm/shared/constants/local_storage/local_storage_constan
 import 'package:project_smm/shared/lib/errors/exceptions/exceptions.dart';
 import 'package:project_smm/shared/lib/local_storage/local_storage.dart';
 
-
 class ReportsData {
   http.Client client = http.Client();
+
   Future<ReportsModel> fetch(List<Parameters> params) async {
-    //try {
+    try {
       var re = await client.post(
           Uri.http('smart103ala.kz', '/sd_mobile/api/reports/daily'),
           headers: {
             'Authorization': LocalStorage.getString(AppConstants.TOKEN),
             'Content-Type': "application/json",
           },
-          body: json.encode({"parameters" : params}));
-      print(LocalStorage.getString(AppConstants.TOKEN));
-      print(re.statusCode);
-     // if (re.statusCode == 200) {
+          body: json.encode({"parameters": params}));
+
+      if (re.statusCode == 200) {
         final ReportsModel body =
-        ReportsModel.fromJson(jsonDecode(utf8.decode(re.bodyBytes)));
+            ReportsModel.fromJson(jsonDecode(utf8.decode(re.bodyBytes)));
         return body;
-      /*} else if (re.statusCode == 400) {
+      } else if (re.statusCode == 400) {
         throw UnAuthException(message: Errors.wrongLoginOrPassword);
       } else if (re.statusCode == 401) {
         throw LogOutException(message: 'токен устарел');
@@ -38,7 +37,6 @@ class ReportsData {
       throw ConnectException(message: Errors.connectionFailed);
     } catch (_) {
       rethrow;
-    }*/
+    }
   }
 }
-

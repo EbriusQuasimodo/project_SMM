@@ -1,15 +1,11 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:project_smm/entities/favourites_entities/favourites_bloc/favourites_bloc.dart';
-import 'package:project_smm/entities/filter_entities/filter_bloc/filters_bloc.dart';
 import 'package:project_smm/entities/types/search_model/search_model.dart';
-import 'package:project_smm/pages/filter_page/filter_choice_chip_page.dart';
-import 'package:project_smm/shared/lib/routes/app_routes.dart';
 import 'package:project_smm/shared/lib/theme/theme_app.dart';
 import 'package:project_smm/widgets/favorites_page_widgets/favorites_page_body.dart';
-import 'package:provider/provider.dart';
 
 import 'search_page.dart';
 
@@ -27,6 +23,7 @@ class _FavouritesPageState extends State<FavouritesPage> {
       shouldLoadMore: false,
     ));
   SearchModel? searchModel;
+  String profileList = '';
 
   @override
   Widget build(BuildContext context) {
@@ -42,19 +39,13 @@ class _FavouritesPageState extends State<FavouritesPage> {
                   MaterialPageRoute(
                     builder: (BuildContext context) {
                       return SearchPage(
-                        isCall: isCall,
-                        searchModel: searchModel ?? SearchModel(),
-                      );
+                          isCall: isCall, searchModel: searchModel);
                     },
                   ),
                 ).then((value) {
-
                   searchModel = value;
-                  print (searchModel!.numberCalls);
-                  _bloc
-                      .add(FavouritesPageStartLoadingEvent(
-                      shouldLoadMore: false,
-                      searchModel: searchModel));
+                  _bloc.add(FavouritesPageStartLoadingEvent(
+                      shouldLoadMore: false, searchModel: searchModel));
                 });
               },
               icon: const Icon(
@@ -62,25 +53,6 @@ class _FavouritesPageState extends State<FavouritesPage> {
                 color: ThemeApp.secondaryColorTextAndIcons,
               ),
             ),
-            IconButton(
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (BuildContext context) {
-                      return Provider(
-                        create: (context) =>
-                            FiltersBloc()..add(FiltersStartLoadingEvent()),
-                        child: FilterChoiceChipPage(
-                          fromWhereOpen: AppRoutes.mainPage,
-                          isCall: isCall,
-                        ),
-                      );
-                    },
-                  ),
-                ).then((value) => setState(() {}));
-              },
-              icon: SvgPicture.asset('assets/images/icons/shared/filter.svg'),
-            )
           ],
         ),
       ),
@@ -88,6 +60,7 @@ class _FavouritesPageState extends State<FavouritesPage> {
           create: (context) => _bloc,
           child: RefreshIndicator(
               onRefresh: () async {
+                searchModel = null;
                 _bloc.add(FavouritesPageStartLoadingEvent(
                   shouldLoadMore: false,
                   searchModel: null,

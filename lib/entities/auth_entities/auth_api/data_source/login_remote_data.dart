@@ -16,7 +16,6 @@ class LoginData {
             'Content-Type': "application/json"
           },
           body: jsonEncode({'login': params.login, 'password': params.password}));
-      print(re.statusCode);
       if(re.statusCode == 200){
         final LoginModel body = LoginModel.fromJson(jsonDecode(utf8.decode(re.bodyBytes)));
       return body;
@@ -30,7 +29,7 @@ class LoginData {
     } catch(_){
       rethrow;
     }
-  }
+   }
 }
 class LoginParams{
   final String login;

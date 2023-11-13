@@ -79,28 +79,28 @@ class PieChartBrigades extends StatelessWidget {
                     children: [
                       LegendItemWidget(
                         color: ThemeApp.arrivalColor,
-                        text: AppLocalizations.of(context)!.transit,
+                        text: "${state.brigadesChartsModel.transit}, ${AppLocalizations.of(context)!.transit}",
                       ),
                       const SizedBox(
                         height: 12,
                       ),
                       LegendItemWidget(
                         color: ThemeApp.onServiceColor,
-                        text: AppLocalizations.of(context)!.service,
+                        text: "${state.brigadesChartsModel.service}, ${AppLocalizations.of(context)!.service}",
                       ),
                       const SizedBox(
                         height: 12,
                       ),
                       LegendItemWidget(
                         color: ThemeApp.hospitalizationColor,
-                        text: AppLocalizations.of(context)!.hospitalization,
+                        text: "${state.brigadesChartsModel.hospitalization}, ${AppLocalizations.of(context)!.hospitalization}",
                       ),
                       const SizedBox(
                         height: 12,
                       ),
                       LegendItemWidget(
                         color: ThemeApp.inHospitalColor,
-                        text: AppLocalizations.of(context)!.inHospital,
+                        text: "${state.brigadesChartsModel.inHospital}, ${AppLocalizations.of(context)!.inHospital}",
                       ),
                     ],
                   ),
@@ -110,21 +110,21 @@ class PieChartBrigades extends StatelessWidget {
                     children: [
                       LegendItemWidget(
                         color: ThemeApp.brigadeFreeColor,
-                        text: AppLocalizations.of(context)!.free,
+                        text: "${state.brigadesChartsModel.free}, ${AppLocalizations.of(context)!.free}",
                       ),
                       const SizedBox(
                         height: 12,
                       ),
                       LegendItemWidget(
                         color: ThemeApp.mandatoryReturnToPSColor,
-                        text: AppLocalizations.of(context)!.obligatedReturn,
+                        text: "${state.brigadesChartsModel.obligatedReturn}, ${AppLocalizations.of(context)!.obligatedReturn}",
                       ),
                       const SizedBox(
                         height: 12,
                       ),
                       LegendItemWidget(
                         color: ThemeApp.breakColor,
-                        text: AppLocalizations.of(context)!.other,
+                        text: "${state.brigadesChartsModel.other}, ${AppLocalizations.of(context)!.other}",
                       ),
                     ],
                   ),

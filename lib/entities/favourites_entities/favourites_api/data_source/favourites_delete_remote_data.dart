@@ -10,19 +10,20 @@ import 'package:project_smm/shared/lib/local_storage/local_storage.dart';
 
 class FavouritesDeleteData {
   http.Client client = http.Client();
+
   Future<BasicModel> fetch(int id, String whatDelete) async {
     try {
       var re = await client.delete(
-          Uri.http('smart103ala.kz', '/sd_mobile/api/$whatDelete/favorite/$id'),
-          headers: {
-            'Authorization': LocalStorage.getString(AppConstants.TOKEN),
-            'Content-Type': "application/json",
-          },);
-      print(LocalStorage.getString(AppConstants.TOKEN));
-      print(re.statusCode);
+        Uri.http('smart103ala.kz', '/sd_mobile/api/$whatDelete/favorite/$id'),
+        headers: {
+          'Authorization': LocalStorage.getString(AppConstants.TOKEN),
+          'Content-Type': "application/json",
+        },
+      );
+
       if (re.statusCode == 200) {
         final BasicModel body =
-        BasicModel.fromJson(jsonDecode(utf8.decode(re.bodyBytes)));
+            BasicModel.fromJson(jsonDecode(utf8.decode(re.bodyBytes)));
         return body;
       } else if (re.statusCode == 400) {
         throw UnAuthException(message: Errors.wrongLoginOrPassword);
@@ -38,4 +39,3 @@ class FavouritesDeleteData {
     }
   }
 }
-

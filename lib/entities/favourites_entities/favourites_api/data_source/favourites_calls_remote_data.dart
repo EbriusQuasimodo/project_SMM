@@ -11,6 +11,7 @@ import 'package:project_smm/entities/types/parameters_model/params_model.dart';
 
 class FavouritesCallsData {
   http.Client client = http.Client();
+
   Future<CallsModel> fetch(ParamsModel params) async {
     try {
       var re = await client.post(
@@ -20,11 +21,10 @@ class FavouritesCallsData {
             'Content-Type': "application/json",
           },
           body: json.encode(params));
-      print("favorites calls ${json.encode(params)}");
-      print("favorites calls ${re.statusCode}");
+
       if (re.statusCode == 200) {
         final CallsModel body =
-        CallsModel.fromJson(jsonDecode(utf8.decode(re.bodyBytes)));
+            CallsModel.fromJson(jsonDecode(utf8.decode(re.bodyBytes)));
         return body;
       } else if (re.statusCode == 400) {
         throw UnAuthException(message: Errors.wrongLoginOrPassword);
@@ -40,4 +40,3 @@ class FavouritesCallsData {
     }
   }
 }
-

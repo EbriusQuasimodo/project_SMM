@@ -21,11 +21,10 @@ class FavouritesBrigadesData {
             'Content-Type': "application/json",
           },
           body: json.encode(params));
-      print(LocalStorage.getString(AppConstants.TOKEN));
-      print(re.statusCode);
+
       if (re.statusCode == 200) {
         final BrigadesModel body =
-        BrigadesModel.fromJson(jsonDecode(utf8.decode(re.bodyBytes)));
+            BrigadesModel.fromJson(jsonDecode(utf8.decode(re.bodyBytes)));
         return body;
       } else if (re.statusCode == 400) {
         throw UnAuthException(message: Errors.wrongLoginOrPassword);

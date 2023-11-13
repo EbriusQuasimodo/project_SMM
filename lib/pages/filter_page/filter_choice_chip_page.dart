@@ -9,7 +9,6 @@ import 'package:project_smm/shared/constants/local_storage/local_storage_constan
 import 'package:project_smm/shared/lib/local_storage/local_storage.dart';
 import 'package:project_smm/shared/lib/routes/app_routes.dart';
 import 'package:project_smm/shared/lib/theme/theme_app.dart';
-import 'package:project_smm/shared/types/dictionary/dictionary_model.dart';
 import 'package:project_smm/shared/ui/buttons/primary_button/primary_button.dart';
 import 'package:project_smm/shared/ui/form_item/form_item_select_dictionary/filter_choice_chip_item.dart';
 import 'package:project_smm/widgets/filters_widgets/show_more_button.dart';
@@ -385,11 +384,6 @@ class _FilterChoiceChipPageState extends State<FilterChoiceChipPage> {
                                     AppRoutes.analytics) {
                                   return HomePage(
                                     selectedPage: 1,
-                                  );
-                                } else if (widget.fromWhereOpen ==
-                                    AppRoutes.favorites) {
-                                  return HomePage(
-                                    selectedPage: 2,
                                   );
                                 }
                                 return HomePage(
