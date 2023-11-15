@@ -18,6 +18,7 @@ class PieChartCalls extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ChartsBloc, ChartsState>(builder: (context, state) {
+      print(state.runtimeType);
       if (state is ChartsStartLoadingState) {
         return const Center(
           child: CircularProgressIndicator(),
@@ -83,28 +84,28 @@ class PieChartCalls extends StatelessWidget {
                     children: [
                       LegendItemWidget(
                         color: ThemeApp.queueColor,
-                        text: "кол-во: ${state.callsChartsModel.queue}, ${AppLocalizations.of(context)!.queue}",
+                        text: "${state.callsChartsModel.queue}, ${AppLocalizations.of(context)!.queue}",
                       ),
                       const SizedBox(
                         height: 12,
                       ),
                       LegendItemWidget(
                         color: ThemeApp.arrivalColor,
-                        text: "кол-во: ${state.callsChartsModel.transit}, ${AppLocalizations.of(context)!.transit}",
+                        text: "${state.callsChartsModel.transit}, ${AppLocalizations.of(context)!.transit}",
                       ),
                       const SizedBox(
                         height: 12,
                       ),
                       LegendItemWidget(
                         color: ThemeApp.onServiceColor,
-                        text: "кол-во: ${state.callsChartsModel.service}, ${AppLocalizations.of(context)!.service}",
+                        text: "${state.callsChartsModel.service}, ${AppLocalizations.of(context)!.service}",
                       ),
                       const SizedBox(
                         height: 12,
                       ),
                       LegendItemWidget(
                         color: ThemeApp.hospitalizationColor,
-                        text: "кол-во: ${state.callsChartsModel.hospitalization}, ${AppLocalizations.of(context)!.hospitalization}",
+                        text: "${state.callsChartsModel.hospitalization}, ${AppLocalizations.of(context)!.hospitalization}",
                       ),
                     ],
                   ),
@@ -115,21 +116,21 @@ class PieChartCalls extends StatelessWidget {
                     children: [
                       LegendItemWidget(
                         color: ThemeApp.inHospitalColor,
-                        text: "кол-во: ${state.callsChartsModel.inHospital}, ${AppLocalizations.of(context)!.inHospital}",
+                        text: "${state.callsChartsModel.inHospital}, ${AppLocalizations.of(context)!.inHospital}",
                       ),
                       const SizedBox(
                         height: 12,
                       ),
                       LegendItemWidget(
                         color: ThemeApp.onResultColor,
-                        text: "кол-во: ${state.callsChartsModel.result}, ${AppLocalizations.of(context)!.onResult}",
+                        text: "${state.callsChartsModel.result}, ${AppLocalizations.of(context)!.onResult}",
                       ),
                       const SizedBox(
                         height: 12,
                       ),
                       LegendItemWidget(
                         color: ThemeApp.inArchiveColor,
-                        text: "кол-во: ${state.callsChartsModel.archive}, ${AppLocalizations.of(context)!.archive}",
+                        text: "${state.callsChartsModel.archive}, ${AppLocalizations.of(context)!.archive}",
                       ),
                     ],
                   ),

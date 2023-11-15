@@ -128,7 +128,7 @@ class _CallsCardState extends State<CallsCard> {
                 children: [
                   TitleText(
                       text:
-                          '${AppLocalizations.of(context)!.call}'),
+                          '${AppLocalizations.of(context)!.call} ${widget.callsInfo!.dayNumber}'),
                   const SizedBox(
                     height: 6,
                   ),
@@ -167,8 +167,8 @@ class _CallsCardState extends State<CallsCard> {
                 Expanded(
                   child: Text(
                     LocalStorage.getString(AppConstants.LOCALE) == 'ru' || LocalStorage.getString(AppConstants.LOCALE) == ''
-                        ? widget.callsInfo!.reason!.name
-                        : widget.callsInfo!.reason!.nameAdd,
+                        ? 'код вызова: ${widget.callsInfo!.reason!.code}, ${widget.callsInfo!.reason!.name}'
+                        : 'код вызова: ${widget.callsInfo!.reason!.code}, ${widget.callsInfo!.reason!.nameAdd}',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
@@ -184,6 +184,7 @@ class _CallsCardState extends State<CallsCard> {
             height: 6,
           ),
           TextWithIcon(
+            textColor: ThemeApp.secondaryColorTextAndIcons,
             iconPath: 'assets/images/icons/shared/location.svg',
             text: '${widget.callsInfo!.street} ${widget.callsInfo!.house}',
           ),
@@ -202,8 +203,9 @@ class _CallsCardState extends State<CallsCard> {
             child: Row(
               children: [
                 TextWithIcon(
-                  iconPath: 'assets/images/icons/shared/car_grey.svg',
-                  text: '${widget.callsInfo!.dayNumber}',
+                  textColor: widget.callsInfo!.dutyOutfit?.brigade?.number != null ?ThemeApp.secondaryColorTextAndIcons : ThemeApp.queueColor,
+                  iconPath: widget.callsInfo!.dutyOutfit?.brigade?.number != null ?'assets/images/icons/shared/car_grey.svg' :'assets/images/icons/shared/car_red.svg',
+                  text: '${widget.callsInfo!.dutyOutfit?.brigade?.number ?? 'не назначено'}',
                 ),
                 const Spacer(),
                 MaterialButton(

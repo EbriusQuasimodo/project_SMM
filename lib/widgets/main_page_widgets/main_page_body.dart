@@ -237,6 +237,7 @@ class _MainPageBodyWidgetState extends State<MainPageBodyWidget> {
                           delegate: SliverChildBuilderDelegate(
                               (BuildContext context, int index) {
                             return BrigadesCard(
+                              index: index,
                               isFavouritePage: false,
                               onTapFavouriteButton: () {
                                 state.brigades![index].isFavorite!

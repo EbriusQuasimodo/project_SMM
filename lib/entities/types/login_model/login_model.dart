@@ -29,7 +29,7 @@ class UserModel {
   @JsonKey(name: 'token_create_at')
   String tokenCreateAt = '';
   PersonModel? person;
-  List<SubstationsListModel> substations = [];
+  List<SubstationsListModel>? substations = [];
 
   UserModel({
     required this.id,

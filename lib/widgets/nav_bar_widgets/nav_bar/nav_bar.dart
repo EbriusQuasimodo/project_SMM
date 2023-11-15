@@ -19,15 +19,19 @@ class NavBar extends StatefulWidget {
 
 class _NavBarState extends State<NavBar> {
 
-  List<Widget>? _pages;
+  final List<Widget> _pages= [
+    const MainPage(),
+    AnalyticsPage(),
+    const FavouritesPage(),
+    const ReportsPage(),
+    const ProfilePage(),
+  ];
   void onSelectPage(int index) {
-    _pages = [
-      MainPage(),
-      AnalyticsPage(),
-      const FavouritesPage(),
-      const ReportsPage(),
-      const ProfilePage(),
-    ];
+      _pages.removeAt(0);
+      _pages.insert(0, MainPage(key: GlobalKey()));
+      _pages.removeAt(2);
+      _pages.insert(2, FavouritesPage(key: GlobalKey()));
+
     if (widget.selectedPage == index) return;
     setState(
       () {
@@ -39,7 +43,10 @@ class _NavBarState extends State<NavBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: widget.selectedPage == 0 ? MainPage() : _pages?[widget.selectedPage!],
+      body: IndexedStack(
+          index: widget.selectedPage,
+          children: _pages,
+      ),
       bottomNavigationBar: SizedBox(
         height: 84,
         child: BottomNavigationBar(

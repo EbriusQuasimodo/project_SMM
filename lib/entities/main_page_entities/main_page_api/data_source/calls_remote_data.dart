@@ -11,6 +11,7 @@ import 'package:project_smm/entities/types/parameters_model/params_model.dart';
 
 class CallsData {
   http.Client client = http.Client();
+
   Future<CallsModel> fetch(ParamsModel params) async {
     try {
       var re = await client.post(
@@ -20,9 +21,7 @@ class CallsData {
             'Content-Type': "application/json",
           },
           body: json.encode(params));
-      print(LocalStorage.getString(AppConstants.TOKEN));
-      print(re.statusCode);
-      print("asdasdasd asd ${json.encode(params)} ");
+
       if (re.statusCode == 200) {
         final CallsModel body =
             CallsModel.fromJson(jsonDecode(utf8.decode(re.bodyBytes)));
@@ -41,4 +40,3 @@ class CallsData {
     }
   }
 }
-

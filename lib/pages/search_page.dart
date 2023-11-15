@@ -9,7 +9,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SearchPage extends StatefulWidget {
   bool isCall;
-  final SearchModel searchModel;
+  final SearchModel? searchModel;
+
 
   SearchPage({super.key, required this.isCall, required this.searchModel});
 
@@ -19,18 +20,18 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   final _formKey = GlobalKey<FormState>();
-  late final TextEditingController _controllerNumberCall = TextEditingController(text: "${widget.searchModel.numberCalls ?? ''}");
+  late final TextEditingController _controllerNumberCall = TextEditingController(text: "${widget.searchModel?.numberCalls ?? ''}");
 
-  late final TextEditingController _controllerFioCall = TextEditingController(text: widget.searchModel.fio ?? '');
-  late final TextEditingController _controllerApartmentCall = TextEditingController( text: widget.searchModel.apartment ?? '');
+  late final TextEditingController _controllerFioCall = TextEditingController(text: widget.searchModel?.fio ?? '');
+  late final TextEditingController _controllerApartmentCall = TextEditingController( text: widget.searchModel?.apartment ?? '');
 
-  late final TextEditingController _controllerStreetCall = TextEditingController( text: widget.searchModel.street ?? '');
-  late final TextEditingController _controllerHouseCall = TextEditingController( text: widget.searchModel.house ?? '');
+  late final TextEditingController _controllerStreetCall = TextEditingController( text: widget.searchModel?.street ?? '');
+  late final TextEditingController _controllerHouseCall = TextEditingController( text: widget.searchModel?.house ?? '');
 
   late final TextEditingController _controllerNumberBrigade =
-      TextEditingController(text: widget.searchModel.numberBrigades ?? '');
+      TextEditingController(text: widget.searchModel?.numberBrigades ?? '');
   late final TextEditingController _controllerProfileBrigade =
-      TextEditingController(text: String.fromCharCodes(widget.searchModel.profile ?? []) ?? '');
+      TextEditingController(text: widget.searchModel?.profile.map((i) => i.toString()).join(","));
 
   late final SearchModel? searchModel;
 
@@ -124,7 +125,7 @@ class _SearchPageState extends State<SearchPage> {
               searchModel = SearchModel(
                 numberCalls: _controllerNumberCall.text != ''
                     ? int.parse(_controllerNumberCall.text)
-                    : null,
+                    : 0,
                 numberBrigades: _controllerNumberBrigade.text,
                 fio: _controllerFioCall.text,
                 street: _controllerStreetCall.text,

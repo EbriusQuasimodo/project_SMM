@@ -39,8 +39,8 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
       person: json['person'] == null
           ? null
           : PersonModel.fromJson(json['person'] as Map<String, dynamic>),
-      substations: (json['substations'] as List<dynamic>)
-          .map((e) => SubstationsListModel.fromJson(e as Map<String, dynamic>))
+      substations: (json['substations'] as List<dynamic>?)
+          ?.map((e) => SubstationsListModel.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
@@ -60,7 +60,7 @@ Map<String, dynamic> _$UserModelToJson(UserModel instance) {
   }
 
   writeNotNull('person', instance.person);
-  val['substations'] = instance.substations;
+  writeNotNull('substations', instance.substations);
   return val;
 }
 

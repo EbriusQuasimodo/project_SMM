@@ -21,11 +21,10 @@ class BrigadesData {
             'Content-Type': "application/json",
           },
           body: json.encode(params));
-      print('23556g56 64fds gdfs gdas fdas  ${json.encode(params)}');
-      print('all brigades ${re.statusCode}');
+
       if (re.statusCode == 200) {
         final BrigadesModel body =
-        BrigadesModel.fromJson(jsonDecode(utf8.decode(re.bodyBytes)));
+            BrigadesModel.fromJson(jsonDecode(utf8.decode(re.bodyBytes)));
         return body;
       } else if (re.statusCode == 400) {
         throw UnAuthException(message: Errors.wrongLoginOrPassword);

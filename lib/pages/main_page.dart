@@ -46,21 +46,18 @@ class _MainPageState extends State<MainPage> {
                   MaterialPageRoute(
                     builder: (BuildContext context) {
                       return SearchPage(
-                        isCall: isCall,
-                        searchModel: searchModel ?? SearchModel(),
-                      );
+                          isCall: isCall, searchModel: searchModel);
                     },
                   ),
                 ).then((value) {
                   setState(() {
                     searchModel = value;
                   });
-                  _bloc
-                    .add(MainPageStartLoadingEvent(
-                        shouldLoadMore: false,
-                        callsStatus: [],
-                        brigadesStatus: [],
-                        searchModel: searchModel));
+                  _bloc.add(MainPageStartLoadingEvent(
+                      shouldLoadMore: false,
+                      callsStatus: [],
+                      brigadesStatus: [],
+                      searchModel: searchModel));
                 });
               },
               icon: const Icon(
@@ -94,12 +91,12 @@ class _MainPageState extends State<MainPage> {
           create: (context) => _bloc,
           child: RefreshIndicator(
               onRefresh: () async {
+                searchModel = null;
                 _bloc.add(MainPageStartLoadingEvent(
-                  shouldLoadMore: false,
-                  callsStatus: [],
-                  brigadesStatus: [],
-                  searchModel: null
-                ));
+                    shouldLoadMore: false,
+                    callsStatus: [],
+                    brigadesStatus: [],
+                    searchModel: null));
               },
               child: MainPageBodyWidget(
                 searchModel: searchModel,

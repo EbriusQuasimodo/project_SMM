@@ -16,12 +16,14 @@ class BrigadesCard extends StatefulWidget {
   final BrigadesListModel? brigadesInfo;
   final VoidCallback onTapFavouriteButton;
   final bool isFavouritePage;
+  final int index;
 
   const BrigadesCard({
     super.key,
     required this.brigadesInfo,
     required this.onTapFavouriteButton,
     required this.isFavouritePage,
+    required this.index,
   });
 
   @override
@@ -141,7 +143,7 @@ class _BrigadesCardState extends State<BrigadesCard> {
                 children: [
                   TitleText(
                       text:
-                          '${AppLocalizations.of(context)!.brigade}'),
+                          '${AppLocalizations.of(context)!.brigade} ${widget.brigadesInfo!.brigade!.number}'),
                   const SizedBox(
                     height: 6,
                   ),
@@ -205,12 +207,14 @@ class _BrigadesCardState extends State<BrigadesCard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextWithIcon(
-                        iconPath: 'assets/images/icons/shared/call_grey.svg',
-                        text: '${widget.brigadesInfo!.brigade!.number}'),
+                      textColor: widget.brigadesInfo!.calls?[widget.index].dayNumber != null ?ThemeApp.secondaryColorTextAndIcons :ThemeApp.queueColor,
+                        iconPath: widget.brigadesInfo!.calls?[widget.index].dayNumber != null ?'assets/images/icons/shared/call_grey.svg' :'assets/images/icons/shared/call_red.svg',
+                        text: '${widget.brigadesInfo!.calls?[widget.index].dayNumber ?? 'не назначен'}'),
                     const SizedBox(
                       height: 6,
                     ),
                     TextWithIcon(
+                        textColor: ThemeApp.secondaryColorTextAndIcons,
                         iconPath: 'assets/images/icons/shared/location.svg',
                         text:
                             '${LocalStorage.getString(AppConstants.LOCALE) == 'ru' || LocalStorage.getString(AppConstants.LOCALE) == '' ? widget.brigadesInfo!.substation!.name : widget.brigadesInfo!.substation!.nameAdd}'),

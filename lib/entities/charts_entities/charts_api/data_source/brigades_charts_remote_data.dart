@@ -11,6 +11,7 @@ import 'package:project_smm/entities/types/parameters_model/params_model.dart';
 
 class BrigadesChartData {
   http.Client client = http.Client();
+
   Future<BrigadesChartsModel> fetch(List<Parameters> params) async {
     try {
       var re = await client.post(
@@ -19,12 +20,11 @@ class BrigadesChartData {
             'Authorization': LocalStorage.getString(AppConstants.TOKEN),
             'Content-Type': "application/json",
           },
-          body: json.encode({"parameters" : params}));
-      print(LocalStorage.getString(AppConstants.TOKEN));
-      print(re.statusCode);
+          body: json.encode({"parameters": params}));
+
       if (re.statusCode == 200) {
         final BrigadesChartsModel body =
-        BrigadesChartsModel.fromJson(jsonDecode(utf8.decode(re.bodyBytes)));
+            BrigadesChartsModel.fromJson(jsonDecode(utf8.decode(re.bodyBytes)));
         return body;
       } else if (re.statusCode == 400) {
         throw UnAuthException(message: Errors.wrongLoginOrPassword);
@@ -40,4 +40,3 @@ class BrigadesChartData {
     }
   }
 }
-
