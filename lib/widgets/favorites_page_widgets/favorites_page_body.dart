@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project_smm/entities/favourites_entities/favourites_bloc/favourites_bloc.dart';
+import 'package:project_smm/entities/types/search_model/search_model.dart';
 import 'package:project_smm/features/calls_list_or_brigades_list/change_list_widget.dart';
 import 'package:project_smm/shared/constants/local_storage/local_storage_constants.dart';
 import 'package:project_smm/shared/lib/local_storage/local_storage.dart';
@@ -15,9 +16,11 @@ class FavouritesPageBodyWidget extends StatefulWidget {
   bool isCall;
   final VoidCallback onTapCallButton;
   final VoidCallback onTapBrigadeButton;
+  SearchModel? searchModel;
 
   FavouritesPageBodyWidget(
       {super.key,
+        this.searchModel,
       required this.isCall,
       required this.onTapCallButton,
       required this.onTapBrigadeButton});
@@ -46,6 +49,7 @@ class _FavouritesPageBodyWidgetState extends State<FavouritesPageBodyWidget> {
             scrollController.position.maxScrollExtent) {
           context.read<FavouritesBloc>().add(FavouritesPageStartLoadingEvent(
                 shouldLoadMore: true,
+              searchModel: widget.searchModel
               ));
         }
       },

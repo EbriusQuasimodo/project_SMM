@@ -21,6 +21,9 @@ class _SearchFormFieldState extends State<SearchFormField> {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12, left: 16, right: 16),
       child: TextFormField(
+        onTap:(){
+          widget.controller.clear();
+        },
         maxLength: 14,
         style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
         controller: widget.controller,

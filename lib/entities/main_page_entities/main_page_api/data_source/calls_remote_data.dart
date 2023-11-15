@@ -21,7 +21,7 @@ class CallsData {
             'Content-Type': "application/json",
           },
           body: json.encode(params));
-
+print(json.encode(params));
       if (re.statusCode == 200) {
         final CallsModel body =
             CallsModel.fromJson(jsonDecode(utf8.decode(re.bodyBytes)));

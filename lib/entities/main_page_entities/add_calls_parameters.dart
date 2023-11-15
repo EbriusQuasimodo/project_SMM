@@ -3,29 +3,43 @@ import 'package:project_smm/entities/types/search_model/search_model.dart';
 import 'package:project_smm/shared/constants/local_storage/local_storage_constants.dart';
 import 'package:project_smm/shared/lib/local_storage/local_storage.dart';
 
-List<Parameters> addCallsParameters(List<Parameters> callsParametersList){
-  if (LocalStorage.getList(AppConstants.CITYSTATIONLISTCALLS).isNotEmpty) {
+List<Parameters> addCallsParameters(List<Parameters> callsParametersList) {
+  if (LocalStorage
+      .getList(AppConstants.CITYSTATIONLISTCALLS)
+      .isNotEmpty) {
     callsParametersList.add(Parameters(
         field: 'city_station',
         op: 'in',
-        value: LocalStorage.getList(AppConstants.CITYSTATIONLISTCALLS).map(int.parse).toList()));
+        value: LocalStorage.getList(AppConstants.CITYSTATIONLISTCALLS).map(
+            int.parse).toList()));
   }
-  if (LocalStorage.getList(AppConstants.PRIORITYLISTCALLS).isNotEmpty) {
+  if (LocalStorage
+      .getList(AppConstants.PRIORITYLISTCALLS)
+      .isNotEmpty) {
     callsParametersList.add(Parameters(
         field: 'priority',
         op: 'in',
-        value: LocalStorage.getList(AppConstants.PRIORITYLISTCALLS).map(int.parse).toList()));
+        value: LocalStorage.getList(AppConstants.PRIORITYLISTCALLS).map(
+            int.parse).toList()));
   }
-  if (LocalStorage.getList(AppConstants.SUBSTATIONLISTCALLS).isNotEmpty) {
+  if (LocalStorage
+      .getList(AppConstants.SUBSTATIONLISTCALLS)
+      .isNotEmpty) {
     callsParametersList.add(Parameters(
         field: 'substation',
         op: 'in',
-        value: LocalStorage.getList(AppConstants.SUBSTATIONLISTCALLS).map(int.parse).toList()));
+        value: LocalStorage.getList(AppConstants.SUBSTATIONLISTCALLS).map(
+            int.parse).toList()));
   }
-return callsParametersList;
+  return callsParametersList;
 }
 
-List<Parameters> addSearchCallsParameters(List<Parameters> callsParametersList, SearchModel? searchModel){
+List<Parameters> addSearchCallsParameters(List<Parameters> callsParametersList,
+    SearchModel? searchModel) {
+  callsParametersList.removeWhere((element) =>
+  element.field == 'day_number' || element.field == 'patient_fio' ||
+      element.field == 'street' || element.field == 'house' ||
+      element.field == 'apartment');
   if (searchModel != null) {
     if (searchModel.numberCalls != 0) {
       callsParametersList.add(Parameters(

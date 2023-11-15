@@ -52,7 +52,9 @@ class _MainPageBodyWidgetState extends State<MainPageBodyWidget> {
               shouldLoadMore: true,
               callsStatus: statusFiltersCalls,
               brigadesStatus:
-                  statusFiltersBrigades));
+                  statusFiltersBrigades,
+            searchModel: widget.searchModel
+          ));
         }
       },
     );

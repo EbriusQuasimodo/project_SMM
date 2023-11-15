@@ -46,6 +46,21 @@ class _MainPageState extends State<MainPage> {
                   MaterialPageRoute(
                     builder: (BuildContext context) {
                       return SearchPage(
+                          onClearCallsSearchModel: (){
+                            setState(() {
+                              searchModel?.fio = '';
+                              searchModel?.apartment = '';
+                              searchModel?.street = '';
+                              searchModel?.house = '';
+                              searchModel?.numberCalls = 0;
+                            });
+                          },
+                          onClearBrigadesSearchModel: (){
+                            setState(() {
+                              searchModel?.numberBrigades = '';
+                              searchModel?.profile =[];
+                            });
+                          },
                           isCall: isCall, searchModel: searchModel);
                     },
                   ),
@@ -91,7 +106,9 @@ class _MainPageState extends State<MainPage> {
           create: (context) => _bloc,
           child: RefreshIndicator(
               onRefresh: () async {
-                searchModel = null;
+                setState(() {
+                  searchModel = null;
+                });
                 _bloc.add(MainPageStartLoadingEvent(
                     shouldLoadMore: false,
                     callsStatus: [],

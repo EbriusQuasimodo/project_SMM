@@ -101,7 +101,7 @@
   "ossmp" : "ОССМП",
   "smpAtPmsp" : "СМП при ПМСП",
   "averageArrivalTime" : "Среднее время доезда",
-  "deliveredToMo " : "Доставлены в МО",
+  "deliveredToMO" : "Доставлены в МО",
   "forHospitalization" : "на госпитализацию",
   "toProvideAssistance" : "для оказания помощи",
   "others" : "Прочие",

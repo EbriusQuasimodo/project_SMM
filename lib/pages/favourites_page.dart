@@ -39,11 +39,28 @@ class _FavouritesPageState extends State<FavouritesPage> {
                   MaterialPageRoute(
                     builder: (BuildContext context) {
                       return SearchPage(
+                          onClearCallsSearchModel: () {
+                            setState(() {
+                              searchModel?.fio = '';
+                              searchModel?.apartment = '';
+                              searchModel?.street = '';
+                              searchModel?.house = '';
+                              searchModel?.numberCalls = 0;
+                            });
+                          },
+                          onClearBrigadesSearchModel: () {
+                            setState(() {
+                              searchModel?.numberBrigades = '';
+                              searchModel?.profile = [];
+                            });
+                          },
                           isCall: isCall, searchModel: searchModel);
                     },
                   ),
                 ).then((value) {
-                  searchModel = value;
+                  setState(() {
+                    searchModel = value;
+                  });
                   _bloc.add(FavouritesPageStartLoadingEvent(
                       shouldLoadMore: false, searchModel: searchModel));
                 });
@@ -60,13 +77,16 @@ class _FavouritesPageState extends State<FavouritesPage> {
           create: (context) => _bloc,
           child: RefreshIndicator(
               onRefresh: () async {
-                searchModel = null;
+                setState(() {
+                  searchModel = null;
+                });
                 _bloc.add(FavouritesPageStartLoadingEvent(
                   shouldLoadMore: false,
                   searchModel: null,
                 ));
               },
               child: FavouritesPageBodyWidget(
+                searchModel: searchModel,
                 onTapCallButton: () {
                   setState(() {
                     isCall = true;

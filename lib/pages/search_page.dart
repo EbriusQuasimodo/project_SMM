@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:project_smm/entities/types/search_model/search_model.dart';
 import 'package:project_smm/features/filters_change_button/change_filters_widget.dart';
+import 'package:project_smm/shared/lib/theme/theme_app.dart';
 import 'package:project_smm/shared/ui/buttons/primary_button/primary_button.dart';
 import 'package:project_smm/widgets/search_widgets/search_form_field.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -10,9 +11,11 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class SearchPage extends StatefulWidget {
   bool isCall;
   final SearchModel? searchModel;
+  final VoidCallback onClearCallsSearchModel;
+  final VoidCallback onClearBrigadesSearchModel;
 
 
-  SearchPage({super.key, required this.isCall, required this.searchModel});
+  SearchPage({super.key, required this.isCall, required this.searchModel,required this.onClearCallsSearchModel, required this.onClearBrigadesSearchModel});
 
   @override
   State<SearchPage> createState() => _SearchPageState();
@@ -20,7 +23,7 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   final _formKey = GlobalKey<FormState>();
-  late final TextEditingController _controllerNumberCall = TextEditingController(text: "${widget.searchModel?.numberCalls ?? ''}");
+  late final TextEditingController _controllerNumberCall = TextEditingController(text: "${widget.searchModel?.numberCalls == 0 ?'' :widget.searchModel?.numberCalls ?? ''}");
 
   late final TextEditingController _controllerFioCall = TextEditingController(text: widget.searchModel?.fio ?? '');
   late final TextEditingController _controllerApartmentCall = TextEditingController( text: widget.searchModel?.apartment ?? '');
@@ -49,6 +52,41 @@ class _SearchPageState extends State<SearchPage> {
             child:
                 SvgPicture.asset('assets/images/icons/shared/arrow_back.svg'),
           ),
+          actions: [
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: MaterialButton(
+                onPressed: () {
+                  widget.isCall
+                      ? setState(() {
+                        widget.onClearCallsSearchModel();
+                  _controllerApartmentCall.clear();
+                  _controllerHouseCall.clear();
+                  _controllerStreetCall.clear();
+                  _controllerFioCall.clear();
+                  _controllerNumberCall.clear();
+                  })
+                      : setState(() {
+                        widget.onClearBrigadesSearchModel();
+                   _controllerNumberBrigade.clear();
+                   _controllerProfileBrigade.clear();
+                  });
+                },
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  side:
+                  const BorderSide(color: ThemeApp.primaryColor, width: 2),
+                ),
+                child: const Padding(
+                  padding: EdgeInsets.only(top: 10, bottom: 10),
+                  child: Text(
+                    'сброс',
+                    style: TextStyle(color: ThemeApp.primaryColor),
+                  ),
+                ),
+              ),
+            )
+          ],
           titleSpacing: 0,
         ),
       ),
