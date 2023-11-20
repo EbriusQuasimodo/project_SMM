@@ -4,7 +4,7 @@ import 'package:project_smm/entities/types/reports_model/reports_model.dart';
 List<StructureReportTable> getReportList(ReportsModel reportsModel) {
   return [
     StructureReportTable(false, 'Обращений', reportsModel.yesterday!.all,
-        reportsModel.today!.all, reportsModel.today!.all),
+        reportsModel.today!.all,0),
     StructureReportTable(
         false,
         'Повторные',
@@ -16,19 +16,18 @@ List<StructureReportTable> getReportList(ReportsModel reportsModel) {
         'Без выезда',
         reportsModel.yesterday!.withoutTransit.value,
         reportsModel.today!.withoutTransit.value,
-        reportsModel.today!.withoutTransit.value),
+        reportsModel.today!.withoutTransit.percent),
     StructureReportTable(
         false,
         'Безрезультатных',
         reportsModel.yesterday!.withoutResult.value,
         reportsModel.today!.withoutResult.value,
-        reportsModel.today!.withoutResult.value),
+        reportsModel.today!.withoutResult.percent),
     StructureReportTable(
         false,
         'Всего выездов',
         reportsModel.yesterday!.withTransit.all.value,
-        reportsModel.today!.withTransit.all.value,
-        reportsModel.today!.withTransit.all.value),
+        reportsModel.today!.withTransit.all.value,reportsModel.today!.withTransit.all.percent),
     StructureReportTable(
         true,
         '1-3 срочность',

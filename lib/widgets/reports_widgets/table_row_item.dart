@@ -13,14 +13,10 @@ class TableRowItem extends StatefulWidget {
 }
 
 class _TableRowItemState extends State<TableRowItem> {
-  double percent = 0;
+
 
   @override
   void initState() {
-    percent = widget.rowReportData.todayValue *
-            100 /
-            widget.rowReportData.yesterdayValue +
-        widget.rowReportData.todayValue;
     super.initState();
   }
 
@@ -106,7 +102,7 @@ class _TableRowItemState extends State<TableRowItem> {
                   width: 1,
                 )),
                 child: Text(
-                  '${percent.isNaN ? 0 : percent.isInfinite ? 0 : percent.toInt()}%',
+                  '${widget.rowReportData.todayPercent.toInt()}%',
                   style: TextStyle(
                       fontSize: widget.rowReportData.isSubparagraph ? 12 : 14,
                       fontWeight: FontWeight.w400,
