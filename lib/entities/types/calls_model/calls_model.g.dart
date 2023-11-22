@@ -37,11 +37,11 @@ CallsListModel _$CallsListModelFromJson(Map<String, dynamic> json) =>
       id: json['id'] as int,
       dayNumber: json['day_number'] as int,
       yearNumber: json['year_number'] as int,
-      receiptDate: json['receipt_date'] as String,
-      status: json['status'] as int,
-      street: json['street'] as String,
+      receiptDate: json['receipt_date'] as String?,
+      status: json['status'] as int?,
+      street: json['street'] as String?,
       street2: json['street2'] as String?,
-      house: json['house'] as String,
+      house: json['house'] as String?,
       apartment: json['apartment'] as String?,
       patientInfo: json['patient_info'] as String?,
       city: json['city'] == null
@@ -66,9 +66,6 @@ Map<String, dynamic> _$CallsListModelToJson(CallsListModel instance) {
     'id': instance.id,
     'day_number': instance.dayNumber,
     'year_number': instance.yearNumber,
-    'receipt_date': instance.receiptDate,
-    'status': instance.status,
-    'street': instance.street,
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -77,8 +74,11 @@ Map<String, dynamic> _$CallsListModelToJson(CallsListModel instance) {
     }
   }
 
+  writeNotNull('receipt_date', instance.receiptDate);
+  writeNotNull('status', instance.status);
+  writeNotNull('street', instance.street);
   writeNotNull('street2', instance.street2);
-  val['house'] = instance.house;
+  writeNotNull('house', instance.house);
   writeNotNull('apartment', instance.apartment);
   writeNotNull('patient_info', instance.patientInfo);
   writeNotNull('city', instance.city);

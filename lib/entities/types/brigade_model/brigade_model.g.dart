@@ -244,7 +244,7 @@ BrigadeCallsListModel _$BrigadeCallsListModelFromJson(
       status: json['status'] as int,
       street: json['street'] as String,
       street2: json['street2'] as String?,
-      house: json['house'] as String,
+      house: json['house'] as String?,
       apartment: json['apartment'] as String?,
       patientInfo: json['patient_info'] as String?,
     );
@@ -267,7 +267,7 @@ Map<String, dynamic> _$BrigadeCallsListModelToJson(
   }
 
   writeNotNull('street2', instance.street2);
-  val['house'] = instance.house;
+  writeNotNull('house', instance.house);
   writeNotNull('apartment', instance.apartment);
   writeNotNull('patient_info', instance.patientInfo);
   return val;

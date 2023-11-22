@@ -223,7 +223,7 @@ class _MainPageBodyWidgetState extends State<MainPageBodyWidget> {
                                     },
                                   ),
                                 )
-                                    : addToFavorite(state.calls![index].id);
+                                    : addToFavorite(state.calls![index].id, 'calls');
                               },
                               callsInfo: state.calls?[index],
                             );
@@ -239,27 +239,35 @@ class _MainPageBodyWidgetState extends State<MainPageBodyWidget> {
                           delegate: SliverChildBuilderDelegate(
                               (BuildContext context, int index) {
                             return BrigadesCard(
+                              dayNumber: state.brigades![index].calls?[0].dayNumber,
                               index: index,
                               isFavouritePage: false,
                               onTapFavouriteButton: () {
                                 state.brigades![index].isFavorite!
-                                    ? context.read<MainPageBloc>().add(
-                                  MainPageDeleteFavouritesEvent(
-                                    whatDelete: 'brigades',
-                                    id: state.brigades?[index].id,
+                                    ? showDialog(
+                                  context: context,
+                                  builder: (builder) => CustomDialogWithTwoButtons(
+                                    title: 'Удалить Бригаду ${state.brigades?[index].id} из избранного?',
+                                    onTapFirstButton: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    onTapSecondButton: () {
+                                      context.read<MainPageBloc>().add(
+                                        MainPageDeleteFavouritesEvent(
+                                          whatDelete: 'brigades',
+                                          id: state.brigades?[index].id,
+                                        ),
+                                      );
+                                      Navigator.of(context).pop();
+                                      context.read<MainPageBloc>().add(
+                                          MainPageStartLoadingEvent(
+                                              shouldLoadMore: false,
+                                              callsStatus: statusFiltersCalls,
+                                              brigadesStatus: statusFiltersBrigades));
+                                    },
                                   ),
                                 )
-                                    : context.read<MainPageBloc>().add(
-                                  MainPageAddFavouritesEvent(
-                                    whatAdd: 'brigades',
-                                    id: state.brigades?[index].id,
-                                  ),
-                                );
-                                context.read<MainPageBloc>().add(
-                                    MainPageStartLoadingEvent(
-                                        shouldLoadMore: false,
-                                        callsStatus: statusFiltersCalls,
-                                        brigadesStatus: statusFiltersBrigades));
+                                    : addToFavorite(state.brigades![index].id, 'brigades');
                               },
                               brigadesInfo: state.brigades?[index],
                             );
@@ -272,10 +280,10 @@ class _MainPageBodyWidgetState extends State<MainPageBodyWidget> {
       },
     );
   }
-  void addToFavorite(int id){
+  void addToFavorite(int id, String whatAdd){
     context.read<MainPageBloc>().add(
       MainPageAddFavouritesEvent(
-        whatAdd: 'calls',
+        whatAdd: whatAdd,
         id: id,
       ),
     );

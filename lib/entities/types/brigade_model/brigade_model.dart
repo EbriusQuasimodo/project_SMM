@@ -214,7 +214,7 @@ class BrigadeCallsListModel {
   final int status;
   final String street;
   final String? street2;
-  final String house;
+  final String? house;
   final String? apartment;
   @JsonKey(name: 'patient_info')
   final String? patientInfo;

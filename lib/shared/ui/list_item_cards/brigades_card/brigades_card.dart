@@ -17,6 +17,7 @@ class BrigadesCard extends StatefulWidget {
   final VoidCallback onTapFavouriteButton;
   final bool isFavouritePage;
   final int index;
+  final int? dayNumber;
 
   const BrigadesCard({
     super.key,
@@ -24,6 +25,7 @@ class BrigadesCard extends StatefulWidget {
     required this.onTapFavouriteButton,
     required this.isFavouritePage,
     required this.index,
+    required this.dayNumber,
   });
 
   @override
@@ -207,9 +209,9 @@ class _BrigadesCardState extends State<BrigadesCard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextWithIcon(
-                      textColor: widget.brigadesInfo!.calls?[widget.index].dayNumber != null ?ThemeApp.secondaryColorTextAndIcons :ThemeApp.queueColor,
-                        iconPath: widget.brigadesInfo!.calls?[widget.index].dayNumber != null ?'assets/images/icons/shared/call_grey.svg' :'assets/images/icons/shared/call_red.svg',
-                        text: '${widget.brigadesInfo!.calls?[widget.index].dayNumber ?? 'не назначен'}'),
+                      textColor: widget.dayNumber != null ?ThemeApp.secondaryColorTextAndIcons :ThemeApp.queueColor,
+                        iconPath: widget.dayNumber != null ?'assets/images/icons/shared/call_grey.svg' :'assets/images/icons/shared/call_red.svg',
+                        text: '${widget.dayNumber ?? 'не назначен'}'),
                     const SizedBox(
                       height: 6,
                     ),

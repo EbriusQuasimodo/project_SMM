@@ -96,14 +96,16 @@ class _CallsCardState extends State<CallsCard> {
   }
 
   void parseDate() {
-    DateTime parsedDate = DateTime.parse(
-        widget.callsInfo!.receiptDate.replaceAll('T', ' ').toString());
-    var utcDate = dateFormat.format(parsedDate); // pass the UTC time here
-    var localDate = dateFormat.parse(utcDate, true).toLocal().toString();
-    var utcTime = timeFormat.format(parsedDate); // pass the UTC time here
-    var localTime = timeFormat.parse(utcTime, true).toLocal().toString();
-    receiptDate = dateFormat.format(DateTime.parse(localDate));
-    receiptTime = timeFormat.format(DateTime.parse(localTime));
+    if (widget.callsInfo!.receiptDate != null) {
+      DateTime parsedDate = DateTime.parse(
+          widget.callsInfo!.receiptDate!.replaceAll('T', ' ').toString());
+      var utcDate = dateFormat.format(parsedDate); // pass the UTC time here
+      var localDate = dateFormat.parse(utcDate, true).toLocal().toString();
+      var utcTime = timeFormat.format(parsedDate); // pass the UTC time here
+      var localTime = timeFormat.parse(utcTime, true).toLocal().toString();
+      receiptDate = dateFormat.format(DateTime.parse(localDate));
+      receiptTime = timeFormat.format(DateTime.parse(localTime));
+    }
   }
 
   @override
@@ -166,7 +168,8 @@ class _CallsCardState extends State<CallsCard> {
                 ),
                 Expanded(
                   child: Text(
-                    LocalStorage.getString(AppConstants.LOCALE) == 'ru' || LocalStorage.getString(AppConstants.LOCALE) == ''
+                    LocalStorage.getString(AppConstants.LOCALE) == 'ru' ||
+                            LocalStorage.getString(AppConstants.LOCALE) == ''
                         ? 'код вызова: ${widget.callsInfo!.reason!.code}, ${widget.callsInfo!.reason!.name}'
                         : 'код вызова: ${widget.callsInfo!.reason!.code}, ${widget.callsInfo!.reason!.nameAdd}',
                     maxLines: 1,
@@ -203,9 +206,16 @@ class _CallsCardState extends State<CallsCard> {
             child: Row(
               children: [
                 TextWithIcon(
-                  textColor: widget.callsInfo!.dutyOutfit?.brigade?.number != null ?ThemeApp.secondaryColorTextAndIcons : ThemeApp.queueColor,
-                  iconPath: widget.callsInfo!.dutyOutfit?.brigade?.number != null ?'assets/images/icons/shared/car_grey.svg' :'assets/images/icons/shared/car_red.svg',
-                  text: '${widget.callsInfo!.dutyOutfit?.brigade?.number ?? 'не назначено'}',
+                  textColor:
+                      widget.callsInfo!.dutyOutfit?.brigade?.number != null
+                          ? ThemeApp.secondaryColorTextAndIcons
+                          : ThemeApp.queueColor,
+                  iconPath:
+                      widget.callsInfo!.dutyOutfit?.brigade?.number != null
+                          ? 'assets/images/icons/shared/car_grey.svg'
+                          : 'assets/images/icons/shared/car_red.svg',
+                  text:
+                      '${widget.callsInfo!.dutyOutfit?.brigade?.number ?? 'не назначено'}',
                 ),
                 const Spacer(),
                 MaterialButton(

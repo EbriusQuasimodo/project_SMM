@@ -154,20 +154,31 @@ class _FavouritesPageBodyWidgetState extends State<FavouritesPageBodyWidget> {
                           delegate: SliverChildBuilderDelegate(
                               (BuildContext context, int index) {
                             return BrigadesCard(
+                              dayNumber: state.brigades![index].calls?[0].dayNumber,
                               index: index,
                               isFavouritePage: true,
                               onTapFavouriteButton: () {
-                                context.read<FavouritesBloc>().add(
-                                      FavouritesPageDeleteEvent(
-                                        whatDelete: 'brigades',
-                                        id: state.brigades?[index].id,
-                                      ),
-                                    );
-                                context
-                                    .read<FavouritesBloc>()
-                                    .add(FavouritesPageStartLoadingEvent(
-                                      shouldLoadMore: false,
-                                    ));
+                                showDialog(
+                                  context: context,
+                                  builder: (builder) => CustomDialogWithTwoButtons(
+                                    title: 'Удалить Бригаду ${state.brigades?[index].id} из избранного?',
+                                    onTapFirstButton: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    onTapSecondButton: () {
+                                      context.read<FavouritesBloc>().add(
+                                        FavouritesPageDeleteEvent(
+                                          whatDelete: 'brigades',
+                                          id: state.brigades?[index].id,
+                                        ),
+                                      );
+                                      Navigator.of(context).pop();
+                                      context.read<FavouritesBloc>().add(
+                                          FavouritesPageStartLoadingEvent(
+                                              shouldLoadMore: false,));
+                                    },
+                                  ),
+                                );
                               },
                               brigadesInfo: state.brigades?[index],
                             );

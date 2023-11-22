@@ -6,15 +6,14 @@ class TableRowItem extends StatefulWidget {
   final StructureReportTable rowReportData;
   final int index;
 
-  const TableRowItem({super.key, required this.rowReportData, required this.index});
+  const TableRowItem(
+      {super.key, required this.rowReportData, required this.index});
 
   @override
   State<TableRowItem> createState() => _TableRowItemState();
 }
 
 class _TableRowItemState extends State<TableRowItem> {
-
-
   @override
   void initState() {
     super.initState();
@@ -102,7 +101,9 @@ class _TableRowItemState extends State<TableRowItem> {
                   width: 1,
                 )),
                 child: Text(
-                  '${widget.rowReportData.todayPercent.toInt()}%',
+                  widget.rowReportData.todayPercent != 0
+                      ? '${widget.rowReportData.todayPercent.toInt()}%'
+                      : '-',
                   style: TextStyle(
                       fontSize: widget.rowReportData.isSubparagraph ? 12 : 14,
                       fontWeight: FontWeight.w400,

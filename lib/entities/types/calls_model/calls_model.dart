@@ -31,11 +31,11 @@ class CallsListModel {
   @JsonKey(name: 'year_number')
   final int yearNumber;
   @JsonKey(name: 'receipt_date')
-  final String receiptDate;
-  final int status;
-  final String street;
+  final String? receiptDate;
+  final int? status;
+  final String? street;
   final String? street2;
-  final String house;
+  final String? house;
   final String? apartment;
   @JsonKey(name: 'patient_info')
   final String? patientInfo;
