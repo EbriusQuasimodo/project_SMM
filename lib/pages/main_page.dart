@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart' hide Badge;
+import 'package:badges/badges.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -7,6 +8,8 @@ import 'package:project_smm/entities/main_page_entities/main_page_bloc/main_page
 import 'package:project_smm/entities/types/search_model/search_model.dart';
 import 'package:project_smm/pages/filter_page/filter_choice_chip_page.dart';
 import 'package:project_smm/pages/search_page.dart';
+import 'package:project_smm/shared/constants/local_storage/local_storage_constants.dart';
+import 'package:project_smm/shared/lib/local_storage/local_storage.dart';
 import 'package:project_smm/widgets/main_page_widgets/main_page_body.dart';
 import 'package:project_smm/shared/lib/routes/app_routes.dart';
 import 'package:project_smm/shared/lib/theme/theme_app.dart';
@@ -31,6 +34,20 @@ class _MainPageState extends State<MainPage> {
         callsStatus: [],
         brigadesStatus: [],
         searchModel: searchModel));
+  List<String> filters = [];
+
+  @override
+  void initState() {
+    setState(() {
+      filters = LocalStorage.getList(AppConstants.CITYSTATIONLISTCALLS) +
+          LocalStorage.getList(AppConstants.SUBSTATIONLISTCALLS) +
+          LocalStorage.getList(AppConstants.PRIORITYLISTCALLS) +
+          LocalStorage.getList(AppConstants.CITYSTATIONLISTBRIGADES) +
+          LocalStorage.getList(AppConstants.SUBSTATIONLISTBRIGADES);
+    });
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +63,7 @@ class _MainPageState extends State<MainPage> {
                   MaterialPageRoute(
                     builder: (BuildContext context) {
                       return SearchPage(
-                          onClearCallsSearchModel: (){
+                          onClearCallsSearchModel: () {
                             setState(() {
                               searchModel?.fio = '';
                               searchModel?.apartment = '';
@@ -55,13 +72,14 @@ class _MainPageState extends State<MainPage> {
                               searchModel?.numberCalls = 0;
                             });
                           },
-                          onClearBrigadesSearchModel: (){
+                          onClearBrigadesSearchModel: () {
                             setState(() {
                               searchModel?.numberBrigades = '';
-                              searchModel?.profile =[];
+                              searchModel?.profile = [];
                             });
                           },
-                          isCall: isCall, searchModel: searchModel);
+                          isCall: isCall,
+                          searchModel: searchModel);
                     },
                   ),
                 ).then((value) {
@@ -80,25 +98,33 @@ class _MainPageState extends State<MainPage> {
                 color: ThemeApp.secondaryColorTextAndIcons,
               ),
             ),
-            IconButton(
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (BuildContext context) {
-                      return Provider(
-                        create: (context) =>
-                            FiltersBloc()..add(FiltersStartLoadingEvent()),
-                        child: FilterChoiceChipPage(
-                          fromWhereOpen: AppRoutes.mainPage,
-                          isCall: isCall,
-                        ),
-                      );
-                    },
+             Badge(
+               badgeStyle: BadgeStyle(badgeColor: ThemeApp.primaryColor),
+              showBadge: filters.isNotEmpty,
+               position: BadgePosition.topEnd(top: -5, end: 2),
+                    badgeContent: Text("${filters.length}", style: TextStyle(color: ThemeApp.whiteColor),),
+                    child: IconButton(
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (BuildContext context) {
+                              return Provider(
+                                create: (context) => FiltersBloc()
+                                  ..add(FiltersStartLoadingEvent()),
+                                child: FilterChoiceChipPage(
+                                  fromWhereOpen: AppRoutes.mainPage,
+                                  isCall: isCall,
+                                ),
+                              );
+                            },
+                          ),
+                        ).then((value) => setState(() {}));
+                      },
+                      icon: SvgPicture.asset(
+                          'assets/images/icons/shared/filter.svg'),
+                    ),
                   ),
-                ).then((value) => setState(() {}));
-              },
-              icon: SvgPicture.asset('assets/images/icons/shared/filter.svg'),
-            )
+
           ],
         ),
       ),

@@ -100,6 +100,37 @@ class _FilterChoiceChipPageState extends State<FilterChoiceChipPage> {
     }
   }
 
+  void saveFilters(){
+    LocalStorage.setList(
+        AppConstants.CITYSTATIONLISTCALLS,
+        cacheCityCalls.map((i) => i.toString()).toList());
+
+    LocalStorage.setList(
+        AppConstants.PRIORITYLISTCALLS,
+        cachePriorityCalls
+            .map((i) => i.toString())
+            .toList());
+
+    LocalStorage.setList(
+        AppConstants.SUBSTATIONLISTCALLS,
+        cacheSubstationCalls
+            .map((i) => i.toString())
+            .toList());
+    LocalStorage.setList(
+        AppConstants.CITYSTATIONLISTBRIGADES,
+        cacheCityBrigades
+            .map((i) => i.toString())
+            .toList());
+
+    LocalStorage.setList(
+        AppConstants.SUBSTATIONLISTBRIGADES,
+        cacheSubstationBrigades
+            .map((i) => i.toString())
+            .toList());
+
+  }
+
+
   @override
   Widget build(BuildContext context) {
 
@@ -110,7 +141,23 @@ class _FilterChoiceChipPageState extends State<FilterChoiceChipPage> {
           title: Text(AppLocalizations.of(context)!.filterPage),
           leading: MaterialButton(
             onPressed: () {
-              Navigator.of(context).pop();
+              saveFilters();
+              Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) {
+                    if (widget.fromWhereOpen == AppRoutes.reports) {
+                      return HomePage(
+                        selectedPage: 3,
+                      );
+                    } else if (widget.fromWhereOpen ==
+                        AppRoutes.analytics) {
+                      return HomePage(
+                        selectedPage: 1,
+                      );
+                    }
+                    return HomePage(
+                      selectedPage: 0,
+                    );
+                  }), (route) => false);
             },
             child:
             SvgPicture.asset('assets/images/icons/shared/arrow_back.svg'),
@@ -347,33 +394,7 @@ class _FilterChoiceChipPageState extends State<FilterChoiceChipPage> {
                     ),
                     PrimaryButton(
                         onTap: () {
-                          LocalStorage.setList(
-                              AppConstants.CITYSTATIONLISTCALLS,
-                              cacheCityCalls.map((i) => i.toString()).toList());
-
-                          LocalStorage.setList(
-                              AppConstants.PRIORITYLISTCALLS,
-                              cachePriorityCalls
-                                  .map((i) => i.toString())
-                                  .toList());
-
-                          LocalStorage.setList(
-                              AppConstants.SUBSTATIONLISTCALLS,
-                              cacheSubstationCalls
-                                  .map((i) => i.toString())
-                                  .toList());
-                          LocalStorage.setList(
-                              AppConstants.CITYSTATIONLISTBRIGADES,
-                              cacheCityBrigades
-                                  .map((i) => i.toString())
-                                  .toList());
-
-                          LocalStorage.setList(
-                              AppConstants.SUBSTATIONLISTBRIGADES,
-                              cacheSubstationBrigades
-                                  .map((i) => i.toString())
-                                  .toList());
-
+                          saveFilters();
                           Navigator.of(context).pushAndRemoveUntil(
                               MaterialPageRoute(builder: (context) {
                                 if (widget.fromWhereOpen == AppRoutes.reports) {

@@ -9,5 +9,5 @@ class StructureReportTable {
 
   final int todayValue;
 
-  final num todayPercent;
+  final num? todayPercent;
 }

@@ -4,7 +4,7 @@ import 'package:project_smm/entities/types/reports_model/reports_model.dart';
 List<StructureReportTable> getReportList(ReportsModel reportsModel) {
   return [
     StructureReportTable(false, 'Обращений', reportsModel.yesterday!.all,
-        reportsModel.today!.all,0),
+        reportsModel.today!.all,null),
     StructureReportTable(
         false,
         'Повторные',
@@ -99,37 +99,37 @@ List<StructureReportTable> getReportList(ReportsModel reportsModel) {
         'Среднее время оказания помощи',
         reportsModel.yesterday!.avgHealTime.value.toInt(),
         reportsModel.today!.avgHealTime.value.toInt(),
-        0),
+        null),
     StructureReportTable(
         true,
         'ОССМП',
         reportsModel.yesterday!.avgHealTime.polyclinicValue.toInt(),
         reportsModel.today!.avgHealTime.polyclinicValue.toInt(),
-        0),
+        null),
     StructureReportTable(
         true,
         'СМП при ПМСП',
         reportsModel.yesterday!.avgHealTime.noPolyclinicValue.toInt(),
         reportsModel.today!.avgHealTime.noPolyclinicValue.toInt(),
-        0),
+        null),
     StructureReportTable(
         false,
         'Среднее время доезда',
         reportsModel.yesterday!.avgArriveTime.value.toInt(),
         reportsModel.today!.avgArriveTime.value.toInt(),
-        0),
+        null),
     StructureReportTable(
         true,
         'ОССМП',
         reportsModel.yesterday!.avgArriveTime.polyclinicValue.toInt(),
         reportsModel.today!.avgArriveTime.polyclinicValue.toInt(),
-        0),
+        null),
     StructureReportTable(
         true,
         'СМП при ПМСП',
         reportsModel.yesterday!.avgArriveTime.noPolyclinicValue.toInt(),
         reportsModel.today!.avgArriveTime.noPolyclinicValue.toInt(),
-        0),
+        null),
     StructureReportTable(
         false,
         'Доставлены в МО',

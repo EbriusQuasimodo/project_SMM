@@ -18,6 +18,7 @@ class PieChartCalls extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ChartsBloc, ChartsState>(builder: (context, state) {
+
       print(state.runtimeType);
       if (state is ChartsStartLoadingState) {
         return const Center(
@@ -35,6 +36,7 @@ class PieChartCalls extends StatelessWidget {
           child: Text(state.message),
         );
       } else if (state is ChartsDoneState) {
+        print(state.callsChartsModel.all);
         final dataMap = <String, double>{
           AppLocalizations.of(context)!.queue: state.callsChartsModel.queue.toDouble(),
           AppLocalizations.of(context)!.transit: state.callsChartsModel.transit.toDouble(),

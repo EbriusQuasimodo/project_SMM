@@ -101,8 +101,8 @@ class _TableRowItemState extends State<TableRowItem> {
                   width: 1,
                 )),
                 child: Text(
-                  widget.rowReportData.todayPercent != 0
-                      ? '${widget.rowReportData.todayPercent.toInt()}%'
+                  widget.rowReportData.todayPercent != null
+                      ? '${widget.rowReportData.todayPercent?.toInt()}%'
                       : '-',
                   style: TextStyle(
                       fontSize: widget.rowReportData.isSubparagraph ? 12 : 14,

@@ -1,8 +1,11 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Badge;
+import 'package:badges/badges.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:project_smm/entities/charts_entities/charts_bloc/charts_bloc.dart';
 import 'package:project_smm/entities/filter_entities/filter_bloc/filters_bloc.dart';
 import 'package:project_smm/pages/filter_page/filter_choice_chip_page.dart';
+import 'package:project_smm/shared/constants/local_storage/local_storage_constants.dart';
+import 'package:project_smm/shared/lib/local_storage/local_storage.dart';
 import 'package:project_smm/shared/lib/routes/app_routes.dart';
 import 'package:project_smm/shared/lib/theme/theme_app.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -21,6 +24,20 @@ class AnalyticsPage extends StatefulWidget {
 class _AnalyticsPageState extends State<AnalyticsPage> {
   late final ChartsBloc _bloc = ChartsBloc()..add(ChartsStartLoadingEvent());
 
+  List<String> filters =[];
+
+  @override
+  void initState() {
+    setState(() {
+      filters = LocalStorage.getList(AppConstants.CITYSTATIONLISTCALLS) +
+          LocalStorage.getList(AppConstants.SUBSTATIONLISTCALLS) +
+          LocalStorage.getList(AppConstants.PRIORITYLISTCALLS) +
+          LocalStorage.getList(AppConstants.CITYSTATIONLISTBRIGADES) +
+          LocalStorage.getList(AppConstants.SUBSTATIONLISTBRIGADES);
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,25 +46,32 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
         child: AppBar(
           title: Text(AppLocalizations.of(context)!.analyticsPage),
           actions: [
-            IconButton(
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (BuildContext context) {
-                      return Provider(
-                        create: (context) =>
-                            FiltersBloc()..add(FiltersStartLoadingEvent()),
-                        child: FilterChoiceChipPage(
-                          fromWhereOpen: AppRoutes.analytics,
-                          isCall: true,
-                        ),
-                      );
-                    },
-                  ),
-                ).then((value) => setState((){}));
-              },
-              icon: SvgPicture.asset('assets/images/icons/shared/filter.svg'),
-            )
+            Badge(
+              badgeStyle: BadgeStyle(badgeColor: ThemeApp.primaryColor),
+              showBadge: filters.isNotEmpty,
+              position: BadgePosition.topEnd(top: -5, end: 2),
+              badgeContent: Text("${filters.length}", style: TextStyle(color: ThemeApp.whiteColor),),
+              child: IconButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (BuildContext context) {
+                        return Provider(
+                          create: (context) =>
+                          FiltersBloc()..add(FiltersStartLoadingEvent()),
+                          child: FilterChoiceChipPage(
+                            fromWhereOpen: AppRoutes.analytics,
+                            isCall: true,
+                          ),
+                        );
+                      },
+                    ),
+                  ).then((value) => setState((){}));
+                },
+                icon: SvgPicture.asset(
+                    'assets/images/icons/shared/filter.svg'),
+              ),
+            ),
           ],
         ),
       ),
