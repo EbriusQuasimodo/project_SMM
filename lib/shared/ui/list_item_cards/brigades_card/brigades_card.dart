@@ -12,6 +12,7 @@ import 'package:project_smm/shared/ui/list_item_cards/text_with_icon.dart';
 import 'package:project_smm/shared/ui/list_item_cards/title_text.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+
 class BrigadesCard extends StatefulWidget {
   final BrigadesListModel? brigadesInfo;
   final VoidCallback onTapFavouriteButton;
@@ -37,9 +38,9 @@ class _BrigadesCardState extends State<BrigadesCard> {
 
   String statusStartTime = '';
 
-  DateFormat dateFormat = DateFormat.yMd('ru');
+  DateFormat dateFormat = DateFormat.yMd('kk');
 
-  DateFormat timeFormat = DateFormat.Hm('ru');
+  DateFormat timeFormat = DateFormat.Hm('kk');
   String statusName = '';
   late Color statusColor;
 
@@ -111,14 +112,15 @@ class _BrigadesCardState extends State<BrigadesCard> {
   }
 
   void parseDate() {
+    print(DateTime.now().timeZoneOffset);
     DateTime parsedDate = DateTime.parse(widget.brigadesInfo!.statusStartTime !=
             null
         ? widget.brigadesInfo!.statusStartTime!.replaceAll('T', ' ').toString()
         : widget.brigadesInfo!.shiftStart.replaceAll('T', ' ').toString());
     var utcDate = dateFormat.format(parsedDate); // pass the UTC time here
-    var localDate = dateFormat.parse(utcDate, true).toLocal().toString();
+    var localDate = dateFormat.parse(utcDate, true).toUtc().toString();
     var utcTime = timeFormat.format(parsedDate); // pass the UTC time here
-    var localTime = timeFormat.parse(utcTime, true).toLocal().toString();
+    var localTime = timeFormat.parse(utcTime, true).toUtc().toString();
     statusStartDate = dateFormat.format(DateTime.parse(localDate));
     statusStartTime = timeFormat.format(DateTime.parse(localTime));
   }

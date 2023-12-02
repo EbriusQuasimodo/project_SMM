@@ -100,9 +100,9 @@ class _CallsCardState extends State<CallsCard> {
       DateTime parsedDate = DateTime.parse(
           widget.callsInfo!.receiptDate!.replaceAll('T', ' ').toString());
       var utcDate = dateFormat.format(parsedDate); // pass the UTC time here
-      var localDate = dateFormat.parse(utcDate, true).toLocal().toString();
+      var localDate = dateFormat.parse(utcDate, true).toUtc().toString();
       var utcTime = timeFormat.format(parsedDate); // pass the UTC time here
-      var localTime = timeFormat.parse(utcTime, true).toLocal().toString();
+      var localTime = timeFormat.parse(utcTime, true).toUtc().toString();
       receiptDate = dateFormat.format(DateTime.parse(localDate));
       receiptTime = timeFormat.format(DateTime.parse(localTime));
     }

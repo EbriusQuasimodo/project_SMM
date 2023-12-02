@@ -11,7 +11,10 @@ import 'package:project_smm/widgets/analytics_widgets/legend_item_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class PieChartBrigades extends StatelessWidget {
   const PieChartBrigades({super.key});
-
+  String mathPercent(int all, int numberOfElements){
+    double percent = numberOfElements * 100 / all;
+    return percent.toStringAsFixed(2);
+  }
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ChartsBloc, ChartsState>(builder: (context, state) {
@@ -79,28 +82,36 @@ class PieChartBrigades extends StatelessWidget {
                     children: [
                       LegendItemWidget(
                         color: ThemeApp.arrivalColor,
-                        text: "${state.brigadesChartsModel.transit}, ${AppLocalizations.of(context)!.transit}",
+                        legendName: "${AppLocalizations.of(context)!.transit}",
+                        numberOfElements: '${state.brigadesChartsModel.transit} вызовов - ${mathPercent(state.brigadesChartsModel.all, state.brigadesChartsModel.transit)}%',
+
                       ),
                       const SizedBox(
                         height: 12,
                       ),
                       LegendItemWidget(
                         color: ThemeApp.onServiceColor,
-                        text: "${state.brigadesChartsModel.service}, ${AppLocalizations.of(context)!.service}",
+                        legendName: "${AppLocalizations.of(context)!.service}",
+                        numberOfElements: '${state.brigadesChartsModel.service} вызовов - ${mathPercent(state.brigadesChartsModel.all, state.brigadesChartsModel.service)}%',
+
                       ),
                       const SizedBox(
                         height: 12,
                       ),
                       LegendItemWidget(
                         color: ThemeApp.hospitalizationColor,
-                        text: "${state.brigadesChartsModel.hospitalization}, ${AppLocalizations.of(context)!.hospitalization}",
+                        legendName: "${AppLocalizations.of(context)!.hospitalization}",
+                        numberOfElements: '${state.brigadesChartsModel.hospitalization} вызовов - ${mathPercent(state.brigadesChartsModel.all, state.brigadesChartsModel.hospitalization)}%',
+
                       ),
                       const SizedBox(
                         height: 12,
                       ),
                       LegendItemWidget(
                         color: ThemeApp.inHospitalColor,
-                        text: "${state.brigadesChartsModel.inHospital}, ${AppLocalizations.of(context)!.inHospital}",
+                        legendName: "${AppLocalizations.of(context)!.inHospital}",
+                        numberOfElements: '${state.brigadesChartsModel.inHospital} вызовов - ${mathPercent(state.brigadesChartsModel.all, state.brigadesChartsModel.inHospital)}%',
+
                       ),
                     ],
                   ),
@@ -110,21 +121,27 @@ class PieChartBrigades extends StatelessWidget {
                     children: [
                       LegendItemWidget(
                         color: ThemeApp.brigadeFreeColor,
-                        text: "${state.brigadesChartsModel.free}, ${AppLocalizations.of(context)!.free}",
+                        legendName: "${AppLocalizations.of(context)!.free}",
+                        numberOfElements: '${state.brigadesChartsModel.free} вызовов - ${mathPercent(state.brigadesChartsModel.all, state.brigadesChartsModel.free)}%',
+
                       ),
                       const SizedBox(
                         height: 12,
                       ),
                       LegendItemWidget(
                         color: ThemeApp.mandatoryReturnToPSColor,
-                        text: "${state.brigadesChartsModel.obligatedReturn}, ${AppLocalizations.of(context)!.obligatedReturn}",
+                        legendName: "${AppLocalizations.of(context)!.obligatedReturn}",
+                        numberOfElements: '${state.brigadesChartsModel.obligatedReturn} вызовов - ${mathPercent(state.brigadesChartsModel.all, state.brigadesChartsModel.obligatedReturn)}%',
+
                       ),
                       const SizedBox(
                         height: 12,
                       ),
                       LegendItemWidget(
                         color: ThemeApp.breakColor,
-                        text: "${state.brigadesChartsModel.other}, ${AppLocalizations.of(context)!.other}",
+                        legendName: "${AppLocalizations.of(context)!.other}",
+                        numberOfElements: '${state.brigadesChartsModel.other} вызовов - ${mathPercent(state.brigadesChartsModel.all, state.brigadesChartsModel.other)}%',
+
                       ),
                     ],
                   ),

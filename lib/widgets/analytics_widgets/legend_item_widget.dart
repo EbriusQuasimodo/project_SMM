@@ -3,12 +3,13 @@ import 'package:project_smm/shared/lib/theme/theme_app.dart';
 
 class LegendItemWidget extends StatelessWidget {
   final Color? color;
-  final String? text;
-
+  final String? legendName;
+  final String? numberOfElements;
   const LegendItemWidget({
     super.key,
     this.color,
-    this.text,
+    this.legendName,
+    this.numberOfElements
   });
 
   @override
@@ -26,13 +27,26 @@ class LegendItemWidget extends StatelessWidget {
         const SizedBox(
           width: 3,
         ),
-        Text(
-          text!,
-          style: const TextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.w500,
-            color: ThemeApp.secondaryColorTextAndIcons,
-          ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              legendName!,
+              style: const TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w500,
+                color: ThemeApp.secondaryColorTextAndIcons,
+              ),
+            ),
+            Text(
+              numberOfElements!,
+              style: const TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w400,
+                color: ThemeApp.tertiaryColorTextAndIcons,
+              ),
+            ),
+          ],
         )
       ],
     );

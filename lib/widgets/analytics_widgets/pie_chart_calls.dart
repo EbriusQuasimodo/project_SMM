@@ -15,6 +15,11 @@ import 'legend_item_widget.dart';
 class PieChartCalls extends StatelessWidget {
   const PieChartCalls({super.key});
 
+  String mathPercent(int all, int numberOfElements){
+    double percent = numberOfElements * 100 / all;
+    return percent.toStringAsFixed(2);
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ChartsBloc, ChartsState>(builder: (context, state) {
@@ -86,28 +91,32 @@ class PieChartCalls extends StatelessWidget {
                     children: [
                       LegendItemWidget(
                         color: ThemeApp.queueColor,
-                        text: "${state.callsChartsModel.queue}, ${AppLocalizations.of(context)!.queue}",
+                        legendName: " ${AppLocalizations.of(context)!.queue}",
+                        numberOfElements: '${state.callsChartsModel.queue} вызовов - ${mathPercent(state.callsChartsModel.all, state.callsChartsModel.queue)}%',
                       ),
                       const SizedBox(
                         height: 12,
                       ),
                       LegendItemWidget(
                         color: ThemeApp.arrivalColor,
-                        text: "${state.callsChartsModel.transit}, ${AppLocalizations.of(context)!.transit}",
+                        legendName: "${AppLocalizations.of(context)!.transit}",
+                        numberOfElements: '${state.callsChartsModel.transit} вызовов - ${mathPercent(state.callsChartsModel.all, state.callsChartsModel.transit)}%',
                       ),
                       const SizedBox(
                         height: 12,
                       ),
                       LegendItemWidget(
                         color: ThemeApp.onServiceColor,
-                        text: "${state.callsChartsModel.service}, ${AppLocalizations.of(context)!.service}",
+                        legendName: "${AppLocalizations.of(context)!.service}",
+                        numberOfElements: '${state.callsChartsModel.service} вызовов - ${mathPercent(state.callsChartsModel.all, state.callsChartsModel.service)}%',
                       ),
                       const SizedBox(
                         height: 12,
                       ),
                       LegendItemWidget(
                         color: ThemeApp.hospitalizationColor,
-                        text: "${state.callsChartsModel.hospitalization}, ${AppLocalizations.of(context)!.hospitalization}",
+                        legendName: "${AppLocalizations.of(context)!.hospitalization}",
+                        numberOfElements: '${state.callsChartsModel.hospitalization} вызовов - ${mathPercent(state.callsChartsModel.all, state.callsChartsModel.hospitalization)}%',
                       ),
                     ],
                   ),
@@ -118,21 +127,24 @@ class PieChartCalls extends StatelessWidget {
                     children: [
                       LegendItemWidget(
                         color: ThemeApp.inHospitalColor,
-                        text: "${state.callsChartsModel.inHospital}, ${AppLocalizations.of(context)!.inHospital}",
+                        legendName: "${AppLocalizations.of(context)!.inHospital}",
+                        numberOfElements: '${state.callsChartsModel.inHospital} вызовов - ${mathPercent(state.callsChartsModel.all, state.callsChartsModel.inHospital)}%',
                       ),
                       const SizedBox(
                         height: 12,
                       ),
                       LegendItemWidget(
                         color: ThemeApp.onResultColor,
-                        text: "${state.callsChartsModel.result}, ${AppLocalizations.of(context)!.onResult}",
+                        legendName: "${AppLocalizations.of(context)!.onResult}",
+                        numberOfElements: '${state.callsChartsModel.result} вызовов - ${mathPercent(state.callsChartsModel.all, state.callsChartsModel.result)}%',
                       ),
                       const SizedBox(
                         height: 12,
                       ),
                       LegendItemWidget(
                         color: ThemeApp.inArchiveColor,
-                        text: "${state.callsChartsModel.archive}, ${AppLocalizations.of(context)!.archive}",
+                        legendName: "${AppLocalizations.of(context)!.archive}",
+                        numberOfElements: '${state.callsChartsModel.archive} вызовов - ${mathPercent(state.callsChartsModel.all, state.callsChartsModel.archive)}%',
                       ),
                     ],
                   ),
