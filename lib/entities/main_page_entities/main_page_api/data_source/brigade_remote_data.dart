@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:project_smm/entities/types/brigade_model/brigade_model.dart';
+import 'package:project_smm/shared/api/urls.dart';
 import 'package:project_smm/shared/constants/errors_constants/errors_constants.dart';
 import 'package:project_smm/shared/constants/local_storage/local_storage_constants.dart';
 import 'package:project_smm/shared/lib/errors/exceptions/exceptions.dart';
@@ -15,7 +16,9 @@ class BrigadesData {
   Future<BrigadesModel> fetch(ParamsModel params) async {
     try {
       var re = await client.post(
-          Uri.http('smart103ala.kz', '/sd_mobile/api/brigades/operative'),
+          Urls.api.brigadesOperative.replace(
+              path: Urls.api.brigadesOperative.path
+          ),
           headers: {
             'Authorization': LocalStorage.getString(AppConstants.TOKEN),
             'Content-Type': "application/json",

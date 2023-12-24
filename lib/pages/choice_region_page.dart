@@ -28,22 +28,22 @@ class ChoiceRegionPage extends StatelessWidget {
             const SizedBox(
               height: 12,
             ),
-            const ChoiceRegionButton(),
-            const SizedBox(
-              height: 12,
-            ),
+           // const ChoiceRegionButton(),
+           //  const SizedBox(
+           //    height: 12,
+           //  ),
             PrimaryButton(
                 onTap: () {
-                  if (LocalStorage.getInt(AppConstants.REGIONINDEX) != -1 &&
-                      LocalStorage.getString(AppConstants.REGION) != '') {
+                  // if (LocalStorage.getInt(AppConstants.REGIONINDEX) != -1 &&
+                  //     LocalStorage.getString(AppConstants.REGION) != '') {
                     Navigator.of(context).pushNamed(AppRoutes.auth);
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Не выбран регион'),
-                      ),
-                    );
-                  }
+                  // } else {
+                  //   ScaffoldMessenger.of(context).showSnackBar(
+                  //     const SnackBar(
+                  //       content: Text('Не выбран регион'),
+                  //     ),
+                  //   );
+                  // }
                 },
                 buttonName: AppLocalizations.of(context)!.signInApp),
             const Spacer(),

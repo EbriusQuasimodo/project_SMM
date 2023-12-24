@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:project_smm/entities/types/charts_model/calls_charts_model.dart';
+import 'package:project_smm/shared/api/urls.dart';
 import 'package:project_smm/shared/constants/errors_constants/errors_constants.dart';
 import 'package:project_smm/shared/constants/local_storage/local_storage_constants.dart';
 import 'package:project_smm/shared/lib/errors/exceptions/exceptions.dart';
@@ -15,7 +16,9 @@ class CallsChartData {
   Future<CallsChartsModel> fetch(List<Parameters> params) async {
     try {
       var re = await client.post(
-          Uri.http('smart103ala.kz', '/sd_mobile/api/charts/calls/statuses'),
+          Urls.api.callsCharts.replace(
+              path: Urls.api.callsCharts.path
+          ),
           headers: {
             'Authorization': LocalStorage.getString(AppConstants.TOKEN),
             'Content-Type': "application/json",

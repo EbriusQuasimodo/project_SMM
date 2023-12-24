@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:project_smm/entities/types/login_model/login_model.dart';
+import 'package:project_smm/shared/api/urls.dart';
 import 'package:project_smm/shared/constants/errors_constants/errors_constants.dart';
 import 'package:project_smm/shared/lib/errors/exceptions/exceptions.dart';
 
@@ -11,11 +12,14 @@ class LoginData {
 
   Future<LoginModel> fetch(LoginParams params) async {
     try {
-      var re = await client.post(Uri.http('smart103ala.kz','/sd_mobile/api/login'),
+      var re = await client.post(Urls.api.login.replace(
+          path: Urls.api.login.path
+      ),
           headers: {
             'Content-Type': "application/json"
           },
           body: jsonEncode({'login': params.login, 'password': params.password}));
+      print(re.request);
       if(re.statusCode == 200){
         final LoginModel body = LoginModel.fromJson(jsonDecode(utf8.decode(re.bodyBytes)));
       return body;

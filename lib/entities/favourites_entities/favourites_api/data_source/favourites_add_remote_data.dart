@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:project_smm/entities/types/basic_model.dart';
+import 'package:project_smm/shared/api/urls.dart';
 import 'package:project_smm/shared/constants/errors_constants/errors_constants.dart';
 import 'package:project_smm/shared/constants/local_storage/local_storage_constants.dart';
 import 'package:project_smm/shared/lib/errors/exceptions/exceptions.dart';
@@ -13,8 +14,13 @@ class FavouritesAddData {
 
   Future<BasicModel> fetch(int id, String whatAdd) async {
     try {
-      var re = await client.post(
-        Uri.http('smart103ala.kz', '/sd_mobile/api/$whatAdd/favorite/$id'),
+      var re = await client.post(whatAdd == 'calls' ?
+        Urls.api.callsFavorite.replace(
+            path: "${Urls.api.callsFavorite.path}/$id"
+        )
+      : Urls.api.brigadesFavorite.replace(
+          path: "${Urls.api.brigadesFavorite.path}/$id"
+      ),
         headers: {
           'Authorization': LocalStorage.getString(AppConstants.TOKEN),
           'Content-Type': "application/json",

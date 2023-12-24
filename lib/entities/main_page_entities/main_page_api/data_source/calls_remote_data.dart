@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:project_smm/entities/types/calls_model/calls_model.dart';
+import 'package:project_smm/shared/api/urls.dart';
 import 'package:project_smm/shared/constants/errors_constants/errors_constants.dart';
 import 'package:project_smm/shared/constants/local_storage/local_storage_constants.dart';
 import 'package:project_smm/shared/lib/errors/exceptions/exceptions.dart';
@@ -15,13 +16,14 @@ class CallsData {
   Future<CallsModel> fetch(ParamsModel params) async {
     try {
       var re = await client.post(
-          Uri.http('smart103ala.kz', '/sd_mobile/api/calls/operative'),
+          Urls.api.callsOperative.replace(
+              path: Urls.api.callsOperative.path
+          ),
           headers: {
             'Authorization': LocalStorage.getString(AppConstants.TOKEN),
             'Content-Type': "application/json",
           },
           body: json.encode(params));
-print(json.encode(params));
       if (re.statusCode == 200) {
         final CallsModel body =
             CallsModel.fromJson(jsonDecode(utf8.decode(re.bodyBytes)));
