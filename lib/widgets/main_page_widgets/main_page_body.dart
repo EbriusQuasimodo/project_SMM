@@ -203,7 +203,7 @@ class _MainPageBodyWidgetState extends State<MainPageBodyWidget> {
                                     ? showDialog(
                                   context: context,
                                   builder: (builder) => CustomDialogWithTwoButtons(
-                                    title: AppLocalizations.of(context)!.deleteItemFromFavorite(AppLocalizations.of(context)!.call, "${state.calls?[index].id}"),
+                                    title: AppLocalizations.of(context)!.deleteItemFromFavorite(AppLocalizations.of(context)!.call, "${state.calls?[index].dayNumber}"),
                                     onTapFirstButton: () {
                                       Navigator.of(context).pop();
                                     },
@@ -247,7 +247,7 @@ class _MainPageBodyWidgetState extends State<MainPageBodyWidget> {
                                     ? showDialog(
                                   context: context,
                                   builder: (builder) => CustomDialogWithTwoButtons(
-                                    title: 'Удалить Бригаду ${state.brigades?[index].id} из избранного?',
+                                    title: 'Удалить Бригаду ${state.brigades![index].brigade?.number} из избранного?',
                                     onTapFirstButton: () {
                                       Navigator.of(context).pop();
                                     },

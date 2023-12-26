@@ -119,7 +119,7 @@ class _FavouritesPageBodyWidgetState extends State<FavouritesPageBodyWidget> {
                                     title: AppLocalizations.of(context)!
                                         .deleteItemFromFavorite(
                                             AppLocalizations.of(context)!.call,
-                                            "${state.calls?[index].id}"),
+                                            "${state.calls?[index].dayNumber}"),
                                     onTapFirstButton: () {
                                       Navigator.of(context).pop();
                                     },
@@ -161,7 +161,7 @@ class _FavouritesPageBodyWidgetState extends State<FavouritesPageBodyWidget> {
                                 showDialog(
                                   context: context,
                                   builder: (builder) => CustomDialogWithTwoButtons(
-                                    title: 'Удалить Бригаду ${state.brigades?[index].id} из избранного?',
+                                    title: 'Удалить Бригаду ${state.brigades![index].brigade?.number} из избранного?',
                                     onTapFirstButton: () {
                                       Navigator.of(context).pop();
                                     },
